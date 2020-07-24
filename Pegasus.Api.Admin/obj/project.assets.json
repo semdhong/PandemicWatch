@@ -5486,11 +5486,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Api.Admin\\Pegasus.Api.Admin.csproj",
+      "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Api.Admin\\Pegasus.Api.Admin.csproj",
       "projectName": "Pegasus.Api.Admin",
-      "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Api.Admin\\Pegasus.Api.Admin.csproj",
+      "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Api.Admin\\Pegasus.Api.Admin.csproj",
       "packagesPath": "C:\\Users\\semdhong\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Api.Admin\\obj\\",
+      "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Api.Admin\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -5510,14 +5510,14 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Data\\Pegasus.Data.csproj": {
-              "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Data\\Pegasus.Data.csproj"
+            "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Data\\Pegasus.Data.csproj": {
+              "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Data\\Pegasus.Data.csproj"
             },
-            "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Repository\\Pegasus.Repository.csproj": {
-              "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Repository\\Pegasus.Repository.csproj"
+            "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Repository\\Pegasus.Repository.csproj": {
+              "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Repository\\Pegasus.Repository.csproj"
             },
-            "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Services\\Pegasus.Services.csproj": {
-              "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Services\\Pegasus.Services.csproj"
+            "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Services\\Pegasus.Services.csproj": {
+              "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Services\\Pegasus.Services.csproj"
             }
           }
         }

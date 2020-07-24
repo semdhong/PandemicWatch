@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Data\\Pegasus.Data.csproj": {}
+    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Data\\Pegasus.Data.csproj": {}
   },
   "projects": {
-    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Data\\Pegasus.Data.csproj": {
+    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Data\\Pegasus.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Data\\Pegasus.Data.csproj",
+        "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Data\\Pegasus.Data.csproj",
         "projectName": "Pegasus.Data",
-        "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Data\\Pegasus.Data.csproj",
+        "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Data\\Pegasus.Data.csproj",
         "packagesPath": "C:\\Users\\semdhong\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Data\\obj\\",
+        "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"

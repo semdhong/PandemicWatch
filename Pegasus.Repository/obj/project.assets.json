@@ -5359,11 +5359,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Repository\\Pegasus.Repository.csproj",
+      "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Repository\\Pegasus.Repository.csproj",
       "projectName": "Pegasus.Repository",
-      "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Repository\\Pegasus.Repository.csproj",
+      "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Repository\\Pegasus.Repository.csproj",
       "packagesPath": "C:\\Users\\semdhong\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Repository\\obj\\",
+      "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Repository\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -5383,8 +5383,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Data\\Pegasus.Data.csproj": {
-              "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Data\\Pegasus.Data.csproj"
+            "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Data\\Pegasus.Data.csproj": {
+              "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Data\\Pegasus.Data.csproj"
             }
           }
         }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.UI.Admin\\Pegasus.UI.Admin.csproj": {}
+    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.UI.Admin\\Pegasus.UI.Admin.csproj": {}
   },
   "projects": {
-    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Models\\Pegasus.Models.csproj": {
+    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Models\\Pegasus.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Models\\Pegasus.Models.csproj",
+        "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Models\\Pegasus.Models.csproj",
         "projectName": "Pegasus.Models",
-        "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Models\\Pegasus.Models.csproj",
+        "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Models\\Pegasus.Models.csproj",
         "packagesPath": "C:\\Users\\semdhong\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Models\\obj\\",
+        "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Models\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -60,14 +60,14 @@
         }
       }
     },
-    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.UI.Admin\\Pegasus.UI.Admin.csproj": {
+    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.UI.Admin\\Pegasus.UI.Admin.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.UI.Admin\\Pegasus.UI.Admin.csproj",
+        "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.UI.Admin\\Pegasus.UI.Admin.csproj",
         "projectName": "Pegasus.UI.Admin",
-        "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.UI.Admin\\Pegasus.UI.Admin.csproj",
+        "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.UI.Admin\\Pegasus.UI.Admin.csproj",
         "packagesPath": "C:\\Users\\semdhong\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.UI.Admin\\obj\\",
+        "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.UI.Admin\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -87,8 +87,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Models\\Pegasus.Models.csproj": {
-                "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Models\\Pegasus.Models.csproj"
+              "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Models\\Pegasus.Models.csproj": {
+                "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Models\\Pegasus.Models.csproj"
               }
             }
           }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Services\\Pegasus.Services.csproj": {}
+    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Services\\Pegasus.Services.csproj": {}
   },
   "projects": {
-    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Data\\Pegasus.Data.csproj": {
+    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Data\\Pegasus.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Data\\Pegasus.Data.csproj",
+        "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Data\\Pegasus.Data.csproj",
         "projectName": "Pegasus.Data",
-        "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Data\\Pegasus.Data.csproj",
+        "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Data\\Pegasus.Data.csproj",
         "packagesPath": "C:\\Users\\semdhong\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Data\\obj\\",
+        "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -84,14 +84,14 @@
         }
       }
     },
-    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Models\\Pegasus.Models.csproj": {
+    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Models\\Pegasus.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Models\\Pegasus.Models.csproj",
+        "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Models\\Pegasus.Models.csproj",
         "projectName": "Pegasus.Models",
-        "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Models\\Pegasus.Models.csproj",
+        "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Models\\Pegasus.Models.csproj",
         "packagesPath": "C:\\Users\\semdhong\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Models\\obj\\",
+        "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Models\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -140,14 +140,14 @@
         }
       }
     },
-    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Repository\\Pegasus.Repository.csproj": {
+    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Repository\\Pegasus.Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Repository\\Pegasus.Repository.csproj",
+        "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Repository\\Pegasus.Repository.csproj",
         "projectName": "Pegasus.Repository",
-        "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Repository\\Pegasus.Repository.csproj",
+        "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Repository\\Pegasus.Repository.csproj",
         "packagesPath": "C:\\Users\\semdhong\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Repository\\obj\\",
+        "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Repository\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -167,8 +167,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Data\\Pegasus.Data.csproj": {
-                "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Data\\Pegasus.Data.csproj"
+              "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Data\\Pegasus.Data.csproj": {
+                "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Data\\Pegasus.Data.csproj"
               }
             }
           }
@@ -200,14 +200,14 @@
         }
       }
     },
-    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Services\\Pegasus.Services.csproj": {
+    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Services\\Pegasus.Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Services\\Pegasus.Services.csproj",
+        "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Services\\Pegasus.Services.csproj",
         "projectName": "Pegasus.Services",
-        "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Services\\Pegasus.Services.csproj",
+        "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Services\\Pegasus.Services.csproj",
         "packagesPath": "C:\\Users\\semdhong\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Services\\obj\\",
+        "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Services\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -227,11 +227,11 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Models\\Pegasus.Models.csproj": {
-                "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Models\\Pegasus.Models.csproj"
+              "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Models\\Pegasus.Models.csproj": {
+                "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Models\\Pegasus.Models.csproj"
               },
-              "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Repository\\Pegasus.Repository.csproj": {
-                "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Repository\\Pegasus.Repository.csproj"
+              "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Repository\\Pegasus.Repository.csproj": {
+                "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Repository\\Pegasus.Repository.csproj"
               }
             }
           }

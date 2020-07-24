@@ -28,7 +28,23 @@ namespace Pegasus.Data
         public string PersonStatus { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? DateCreated { get; set; }
+        [Column(TypeName = "text")]
+        public string Address { get; set; }
+        [Column(TypeName = "text")]
+        public string Contact { get; set; }
+        public bool? BrgyVerified { get; set; }
+        public bool? CHDOHVerified { get; set; }
+        public int? Agent { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime? SwabTestDate { get; set; }
+        [Column(TypeName = "text")]
+        public string BrgyRemarks { get; set; }
+        [Column(TypeName = "text")]
+        public string CHDOHRemarks { get; set; }
 
+        [ForeignKey(nameof(Agent))]
+        [InverseProperty(nameof(UserAgents.PersonProfile))]
+        public virtual UserAgents AgentNavigation { get; set; }
         [ForeignKey(nameof(BrgyId))]
         [InverseProperty(nameof(Barangay.PersonProfile))]
         public virtual Barangay Brgy { get; set; }
