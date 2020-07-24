@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2bajSAUdOkxYPlXt5tHRsMmNLcPzYXTr/eLTTTSwOu30iT2WRw8yG5685gfQVPiryHKC6GgAqDXq9A7VpcNxlQ==",
+  "dgSpecHash": "RMd5X9VOA2s0v6EFqdwOiTwhMWWAPoub4wZ5ee685cTJTwYh91lFxqJz/1UXimi7vE78JOdZ4F7fkd/SvW3tEA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Data\\Pegasus.Data.csproj",
+  "projectFilePath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Data\\Pegasus.Data.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\semdhong\\.nuget\\packages\\microsoft.aspnetcore.blazor.httpclient\\3.2.0-preview3.20168.3\\microsoft.aspnetcore.blazor.httpclient.3.2.0-preview3.20168.3.nupkg.sha512",
     "C:\\Users\\semdhong\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",

@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Models\\Pegasus.Models.csproj",
+      "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Models\\Pegasus.Models.csproj",
       "projectName": "Pegasus.Models",
-      "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Models\\Pegasus.Models.csproj",
+      "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Models\\Pegasus.Models.csproj",
       "packagesPath": "C:\\Users\\semdhong\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\josh\\Pegasus.Models\\obj\\",
+      "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Models\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"
