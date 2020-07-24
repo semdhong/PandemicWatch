@@ -1,0 +1,56 @@
+﻿@page "/brgymap"
+@inject HttpClient http
+@inject NavigationManager navmgr
+
+
+
+<h3>Select Barangay from the TAB List</h3>
+<hr />
+@code {
+    List<BarangayModel> brgy = new List<BarangayModel>();
+    List<PersonProfilesModel> persons = new List<PersonProfilesModel>();
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadBarangays();
+        
+    }
+
+    async Task LoadBarangays()
+    {
+        brgy = await http.GetJsonAsync<List<BarangayModel>>("https://pegasusapiadmin.azurewebsites.net/api/Barangay");
+
+    }
+
+
+}
+
+<RadzenTabs>
+    <Tabs>
+        @foreach (var br in brgy)
+        {
+
+            
+            <RadzenTabsItem Text="@br.BarangayName">
+
+                <RadzenDataList PageSize="6" WrapItems="true" AllowPaging="true" Data="@br.persons.Where(x=>x.PersonStatus=="P")" TItem="PersonProfilesModel">
+                    <Template Context="person">
+                        <RadzenCard Style="width:400px;">
+                            <div class="row">
+                                <div class="col-md-6">
+
+
+                                    <a href="/personmap/@person.Id">
+                                        <RadzenImage Path="css/images/positiveperson.png" Style="width:100px;" />
+                                        <b>@person.Fullname</b>
+                                    </a>
+                                </div>
+
+                            </div>
+
+                        </RadzenCard>
+                    </Template>
+                </RadzenDataList>
+            </RadzenTabsItem>
+        }
+    </Tabs>
+</RadzenTabs>

@@ -1,0 +1,35 @@
+﻿@page "/fetchdata"
+@inject HttpClient _httpclient;
+@using  Pegasus.Models
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+@if (brgy.Count == 0)
+{<p>No Records Found</p>}
+<table>
+    <thead>
+        <tr>Lgu</tr>
+    </thead>
+    <tbody>
+        @foreach (var br in brgy)
+        {
+            <tr>
+                <td>@br.LguName</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+@code{
+    List<Pegasus.Models.Maintenance.LguProfileModel> brgy = new List<Models.Maintenance.LguProfileModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        {
+            brgy = await _httpclient.GetJsonAsync<List<Pegasus.Models.Maintenance.LguProfileModel>>("https://localhost:44399/api/LguProfile");
+        }
+
+    }
+}

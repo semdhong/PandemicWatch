@@ -1,0 +1,356 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Api.Admin\\Pegasus.Api.Admin.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Api.Admin\\Pegasus.Api.Admin.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Api.Admin\\Pegasus.Api.Admin.csproj",
+        "projectName": "Pegasus.Api.Admin",
+        "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Api.Admin\\Pegasus.Api.Admin.csproj",
+        "packagesPath": "C:\\Users\\semdhong\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Api.Admin\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\semdhong\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {
+              "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Data\\Pegasus.Data.csproj": {
+                "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Data\\Pegasus.Data.csproj"
+              },
+              "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Repository\\Pegasus.Repository.csproj": {
+                "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Repository\\Pegasus.Repository.csproj"
+              },
+              "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Services\\Pegasus.Services.csproj": {
+                "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Services\\Pegasus.Services.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[3.1.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.6, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Data\\Pegasus.Data.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Data\\Pegasus.Data.csproj",
+        "projectName": "Pegasus.Data",
+        "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Data\\Pegasus.Data.csproj",
+        "packagesPath": "C:\\Users\\semdhong\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Data\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\semdhong\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.AspNetCore.Blazor.HttpClient": {
+              "target": "Package",
+              "version": "[3.2.0-preview3.20168.3, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[3.1.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.6, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Models\\Pegasus.Models.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Models\\Pegasus.Models.csproj",
+        "projectName": "Pegasus.Models",
+        "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Models\\Pegasus.Models.csproj",
+        "packagesPath": "C:\\Users\\semdhong\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Models\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\semdhong\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Repository\\Pegasus.Repository.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Repository\\Pegasus.Repository.csproj",
+        "projectName": "Pegasus.Repository",
+        "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Repository\\Pegasus.Repository.csproj",
+        "packagesPath": "C:\\Users\\semdhong\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Repository\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\semdhong\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {
+              "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Data\\Pegasus.Data.csproj": {
+                "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Data\\Pegasus.Data.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Services\\Pegasus.Services.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Services\\Pegasus.Services.csproj",
+        "projectName": "Pegasus.Services",
+        "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Services\\Pegasus.Services.csproj",
+        "packagesPath": "C:\\Users\\semdhong\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Services\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\semdhong\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {
+              "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Models\\Pegasus.Models.csproj": {
+                "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Models\\Pegasus.Models.csproj"
+              },
+              "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Repository\\Pegasus.Repository.csproj": {
+                "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pegasus.Repository\\Pegasus.Repository.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
