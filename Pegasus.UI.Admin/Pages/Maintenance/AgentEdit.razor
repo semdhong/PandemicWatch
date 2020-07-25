@@ -1,8 +1,26 @@
-﻿@page "/maintenance/agents/{agentId:int}"
-<h3>Agents</h3>
+﻿@page "/maintenance/agents/edit/{agentId:int}"
+@inject HttpClient http
+@inject NavigationManager navmgr
 
-<h3>AgentEdit</h3>
+<h3>Edit Agent</h3>
+<b>PIN: @agentModel.PIN</b>
+<AgentForm agentModel="@agentModel" ButtonText="Save" OnValidSubmit="@EditBrgy" />
 
 @code {
+    [Parameter] public int agentId { get; set; }
+    AgentModel agentModel = new AgentModel();
 
+    protected async override Task OnParametersSetAsync()
+    {
+        //brgymodel = await http.GetJsonAsync<Pegasus.Models.Maintenance.BarangayModel>($"https://pegasusapiadmin.azurewebsites.net/api/Barangay/" + brgyId);
+        agentModel = await http.GetJsonAsync<AgentModel>($"https://localhost:44399/api/Agent/" + agentId);
+    }
+
+    async Task EditBrgy()
+    {
+        //await http.PutJsonAsync("https://pegasusapiadmin.azurewebsites.net/api/Barangay", agentId);
+        await http.PutJsonAsync("https://localhost:44399/api/Agent", agentId);
+        navmgr.NavigateTo("/maintenance/agents");
+    }
 }
+

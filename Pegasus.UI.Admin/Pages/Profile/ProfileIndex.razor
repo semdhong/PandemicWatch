@@ -20,12 +20,44 @@ else
         <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="20"
                     AllowSorting="true" Data="@person" TItem="PersonProfilesModel" ColumnWidth="200px">
             <Columns>
-
-                <RadzenGridColumn TItem="PersonProfilesModel" Property="Fullname" Title="Fullname" />
-                <RadzenGridColumn TItem="PersonProfilesModel" Property="Barangay.BarangayName" Title="Barangay" />
                 <RadzenGridColumn TItem="PersonProfilesModel" Bubble="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px">
                     <Template Context="person">
                         <RadzenButton Icon="edit" Size="ButtonSize.Medium" Click="@(args =>  EditRow(person))">
+                        </RadzenButton>
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="PersonProfilesModel" Property="Fullname" Title="Fullname" />
+                <RadzenGridColumn TItem="PersonProfilesModel" Property="Barangay.BarangayName" Title="Barangay" />
+
+                <RadzenGridColumn TItem="PersonProfilesModel" Bubble="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px">
+                    <Template Context="person">
+                        @if (!person.BrgyVerified.HasValue)
+                        {
+                            <RadzenButton Icon="how_to_reg" Size="ButtonSize.Medium" Click="@(args =>  Verify(person))" Text="Verify" >
+                            </RadzenButton>
+                            <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Text="Confirm" Disabled="true">
+                            </RadzenButton>
+                        }
+                        @if (person.BrgyVerified.Value)
+                        {
+                            <RadzenButton Icon="how_to_reg" Size="ButtonSize.Medium"  Text="Verified" Disabled="true">
+                            </RadzenButton>
+                            <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Click="@(args =>  Confirm(person))" Text="Confirm">
+                            </RadzenButton>
+                        }
+                        @if (person.CHDOHVerified.Value && person.BrgyVerified.Value)
+                        {
+                            <RadzenButton Icon="how_to_reg" Size="ButtonSize.Medium" Text="Verified" Disabled="true">
+                            </RadzenButton>
+                            <RadzenButton Icon="medical_services" Size="ButtonSize.Medium"  Text="Confirmed" Disabled="true">
+                            </RadzenButton>
+                        }
+
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="PersonProfilesModel" Bubble="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px">
+                    <Template Context="person">
+                        <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Click="@(args =>  EditRow(person))">
                         </RadzenButton>
                     </Template>
                 </RadzenGridColumn>
@@ -55,6 +87,15 @@ else
 
     }
     void EditRow(PersonProfilesModel person)
+    {
+        navmgr.NavigateTo("/cases/edit/" + person.Id);
+    }
+
+    void Verify(PersonProfilesModel person)
+    {
+        navmgr.NavigateTo("/cases/edit/" + person.Id);
+    }
+    void Confirm(PersonProfilesModel person)
     {
         navmgr.NavigateTo("/cases/edit/" + person.Id);
     }

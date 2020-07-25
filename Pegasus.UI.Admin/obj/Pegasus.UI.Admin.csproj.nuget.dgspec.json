@@ -102,6 +102,10 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "Blazored.Modal": {
+              "target": "Package",
+              "version": "[5.0.2, )"
+            },
             "Microsoft.AspNetCore.Blazor.HttpClient": {
               "target": "Package",
               "version": "[3.2.0-preview3.20168.3, )"

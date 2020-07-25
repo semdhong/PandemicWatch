@@ -1,8 +1,18 @@
 ﻿@page "/maintenance/agents/create"
-<h3>Agents</h3>
+@inject HttpClient http
+@inject NavigationManager navmgr
 
-<h3>AgentCreate</h3>
+<h3>Create new Agent</h3>
+<AgentForm agentModel="agentModel" ButtonText="Create" OnValidSubmit="@CreateAgent" />
 
 @code {
 
+    AgentModel agentModel = new AgentModel();
+
+    async Task CreateAgent()
+    {
+        //await http.PostJsonAsync("https://pegasusapiadmin.azurewebsites.net/api/Barangay", brgymodel);
+        await http.PutJsonAsync("https://localhost:44399/api/Agent", agentModel);
+        navmgr.NavigateTo("/maintenance/agents");
+    }
 }

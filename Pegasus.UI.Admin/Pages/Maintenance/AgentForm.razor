@@ -1,5 +1,31 @@
-﻿<h3>AgentForm</h3>
+﻿<EditForm Model="@agentModel" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>Name</label>
+        <div>
+            <InputText class="col-md-4 form-control" @bind-Value="@agentModel.Fullname" />
+            <ValidationMessage For="@(() => agentModel.Fullname)" />
+        </div>
+    </div>
+    <label>Department</label>
+    <div class="form-group">
+        <div>
+            <InputText class="col-md-4 form-control" @bind-Value="@agentModel.Department" />
+            <ValidationMessage For="@(() => agentModel.Department)" />
+        </div>
+    </div>
 
+    <div class="form-group">
+        <button type="submit" class="btn btn-dark">
+            @ButtonText
+        </button>
+    </div>
+
+
+</EditForm>
 @code {
 
+    [Parameter] public AgentModel agentModel { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
 }
