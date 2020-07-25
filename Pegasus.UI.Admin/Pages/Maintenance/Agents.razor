@@ -3,69 +3,51 @@
 @inject HttpClient http
 @inject IJSRuntime js
 
+<a class="btn btn-success" href="/agents/create">Create New</a>
+<br />
 
-<a class="btn btn-success" href="maintenance/brgy/create">Create New</a>
-@if (brgy == null)
+@if (person == null)
 {
-    <p><em>Loading...</em></p>
-}
+    <p><em>Loading...</em></p> }
 else
 {
+    <div class="col-10">
+        <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="20"
+                    AllowSorting="true" Data="@person" TItem="PersonProfilesModel" ColumnWidth="200px">
+            <Columns>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th></th>
-
-                <th>LGU</th>
-                <th>Name</th>
-                <th>Address</th>
-
-
-
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var br in brgy)
-            {
-                <tr>
-                    <td>
-                        <a class="btn btn-info" href="/maintenance/brgy/edit/@br.Id">Edit</a>
-                        <a class="btn btn-danger" @onclick="@(()=>DeleteClient(br.Id))">Delete</a>
-                    </td>
-
-                    <td>@br.BarangayLgu</td>
-                    <td>@br.BarangayName</td>
-                    <td>@br.BarangayAddress</td>
+                <RadzenGridColumn TItem="PersonProfilesModel" Property="Fullname" Title="Fullname" />
+                <RadzenGridColumn TItem="PersonProfilesModel" Property="Barangay.BarangayName" Title="Barangay" />
+                <RadzenGridColumn TItem="PersonProfilesModel" Bubble="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px">
+                    <Template Context="person">
+                        <RadzenButton Icon="edit" Size="ButtonSize.Medium" Click="@(args =>  EditRow(person))">
+                        </RadzenButton>
+                    </Template>
+                </RadzenGridColumn>
 
 
-
-                </tr>
-            }
-        </tbody>
-    </table>
+            </Columns>
+        </RadzenGrid>
+    </div>
 }
 
 @code {
-    List<BarangayModel> brgy { get; set; }
+    List<AgentModel> agentmodel { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadBarangays();
+        await LoadAgents();
     }
 
-    async Task LoadBarangays()
+    async Task LoadAgents()
     {
-        brgy = await http.GetJsonAsync<List<BarangayModel>>("https://pegasusapiadmin.azurewebsites.net/api/Barangay");
+        //agentmodel = await http.GetJsonAsync<List<AgentModel>>("https://pegasusapiadmin.azurewebsites.net/api/Barangay");
+        agentmodel = await http.GetJsonAsync<List<AgentModel>>("https://localhost:44399/api/Agent");
+
+
+
+
     }
 
-    async Task DeleteClient(int clientId)
-    {
-        var clientSelected = brgy.First(x => x.Id == clientId);
-        if (await js.InvokeAsync<bool>("confirm", $"Do you want to delete {clientSelected.BarangayName}?"))
-        {
-            await http.DeleteAsync($"client/{clientId}");
-            await LoadBarangays();
-        }
-    }
+
 }

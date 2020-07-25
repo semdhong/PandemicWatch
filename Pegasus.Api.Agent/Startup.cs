@@ -48,7 +48,7 @@ namespace Pegasus.Api.Agent
             }
 
             app.UseHttpsRedirection();
-
+            app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseRouting();
 
             app.UseAuthorization();

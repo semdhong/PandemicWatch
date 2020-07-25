@@ -52,7 +52,7 @@ namespace Pegasus.Api.Admin
             }
 
             app.UseHttpsRedirection();
-
+            app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseRouting();
 
             app.UseAuthorization();
