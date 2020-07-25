@@ -23,6 +23,10 @@
       {
          "HasPrimaryKey": true,
          "Name": "[dbo].[PersonProfile]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[UserAgents]"
       }
    ],
    "UseDatabaseNames": true,

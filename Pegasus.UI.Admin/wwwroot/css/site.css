@@ -180,4 +180,13 @@ app {
         /* Never collapse the sidebar for wide screens */
         display: block;
     }
+
+    #qrcode {
+      
+    width:100px;
+    height:100px;
+    text-align: center;
+
+
+    }
 }

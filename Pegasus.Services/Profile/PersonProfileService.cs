@@ -4,6 +4,7 @@ using Pegasus.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -104,6 +105,13 @@ namespace Pegasus.Services.Profile
                 BrgyRemarks = x.BrgyRemarks,
                 CHDOHRemarks = x.CHDOHRemarks,
                 SwabTestDate = x.SwabTestDate,
+                Barangay = new Models.Maintenance.BarangayModel
+                {
+                    Id = x.Brgy.Id,
+                    LguId = x.LguId,
+                    BarangayAddress = x.Brgy.BarangayAddress,
+                    BarangayName = x.Brgy.BarangayName,
+                }
             }).FirstOrDefault(x => x.Id == id);
         }
 
@@ -200,10 +208,12 @@ namespace Pegasus.Services.Profile
 
         private string GetQrCode(PersonProfilesModel model)
         {
-            string lgu = _repoLgu.GetAll().FirstOrDefault(x => x.Id == model.LguId.Value).LguName;
-            string brgy = _repoBarangay.GetAll().FirstOrDefault(x => x.Id == model.BgryId.Value).BarangayName;
 
-            return lgu + " " + brgy + " " + model.Fullname;
+            var brgy = _repoBarangay.GetAll().FirstOrDefault(x => x.Id == model.BgryId.Value);
+           var lgu = _repoLgu.GetAll().FirstOrDefault(x => x.Id == brgy.LguId).LguName;
+           
+
+            return lgu + " " + brgy.BarangayName + " " + model.Fullname;
 
         }
 

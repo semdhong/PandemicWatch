@@ -35,5 +35,19 @@
 
     <script src="_framework/blazor.server.js"></script>
     <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
+    <script src="html5-qrcode.js"></script>
+    <script src="qrcode.js"></script>
+    <script type="text/javascript">
+        function updateQRCode(text) {
+
+            var element = document.getElementById("qrcode");
+
+
+            element.appendChild(showQRCode(text));
+
+        }
+
+
+    </script>
 </body>
 </html>

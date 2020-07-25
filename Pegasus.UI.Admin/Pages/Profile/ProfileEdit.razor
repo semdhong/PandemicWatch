@@ -1,0 +1,43 @@
+﻿@page "/cases/edit/{brgyId:int}"
+@inject HttpClient http
+@inject NavigationManager navmgr
+@inject IJSRuntime js
+<h3>Update Profile</h3>
+
+
+<div class="row">
+    <div class="form-group rounded-circle border border-info">
+      
+        <RadzenImage Path="css/images/person.png" Style="width:150px;" />
+    </div>
+        <div class="col-md-4">
+            <div id="qrcode"></div>
+        </div>
+
+    </div>
+    <ProfileForm Person="@Person" ButtonText="Save" OnValidSubmit="@EditBrgy" />
+
+    @code {
+        [Parameter] public int brgyId { get; set; }
+        PersonProfilesModel Person = new PersonProfilesModel();
+
+        protected async override Task OnInitializedAsync()
+        {
+            Person = await http.GetJsonAsync<PersonProfilesModel>($"https://localhost:44326/api/Person/" + brgyId);
+        }
+
+        async Task EditBrgy()
+        {
+            await http.PutJsonAsync("https://localhost:44326/api/Person", Person);
+            navmgr.NavigateTo("/cases");
+        }
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                await js.InvokeVoidAsync("updateQRCode", Person.QrCode ?? "");
+            }
+
+        }
+    }
+
