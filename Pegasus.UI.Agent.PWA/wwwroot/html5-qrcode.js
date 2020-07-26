@@ -22,7 +22,7 @@ function showQRCode(text) {
   var QRCodeVersion = 15; // 1-40 see http://www.denso-wave.com/qrcode/qrgene2-e.html
 	
 	var canvas=document.createElement('canvas');
-	var qrCanvasContext = canvas.getContext('2d');
+	var qrCanvasContext = canvas.getContext('1d');
   try {
     // QR Code Error Correction Capability 
     // Higher levels improves error correction capability while decreasing the amount of data QR Code size.
