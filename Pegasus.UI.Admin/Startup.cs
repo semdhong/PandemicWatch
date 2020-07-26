@@ -17,6 +17,9 @@ using Pegasus.UI.Admin.Areas.Identity;
 using Pegasus.UI.Admin.Data;
 using System.Net.Http;
 using Radzen;
+using Blazored.Modal;
+using Microsoft.AspNetCore.ResponseCompression;
+
 namespace Pegasus.UI.Admin
 {
     public class Startup
@@ -38,9 +41,14 @@ namespace Pegasus.UI.Admin
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<HttpClient>();
-
+            services.AddBlazoredModal();
             services.AddScoped<DialogService>();
             services.AddScoped<NotificationService>();
+            services.AddSignalRCore();
+            services.AddResponseCompression(opts =>
+            {
+                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "application/octet-stream" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +77,7 @@ namespace Pegasus.UI.Admin
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<BroadcastHub>("/broadcastHub");
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
