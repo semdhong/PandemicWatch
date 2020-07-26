@@ -916,7 +916,6 @@ C:\Users\Hagutin\Documents\GitHub\PandemicWatch\Pegasus.UI.Agent.PWA\bin\Debug\n
 C:\Users\Hagutin\Documents\GitHub\PandemicWatch\Pegasus.UI.Agent.PWA\bin\Debug\netstandard2.1\System.Text.Encodings.Web.dll
 C:\Users\Hagutin\Documents\GitHub\PandemicWatch\Pegasus.UI.Agent.PWA\bin\Debug\netstandard2.1\System.Text.Json.dll
 C:\Users\Hagutin\Documents\GitHub\PandemicWatch\Pegasus.UI.Agent.PWA\bin\Debug\netstandard2.1\System.Threading.Tasks.Extensions.dll
-C:\Users\Hagutin\Documents\GitHub\PandemicWatch\Pegasus.UI.Agent.PWA\obj\Debug\netstandard2.1\Pegasus.UI.Agent.PWA.csprojAssemblyReference.cache
 C:\Users\Hagutin\Documents\GitHub\PandemicWatch\Pegasus.UI.Agent.PWA\obj\Debug\netstandard2.1\Pegasus.UI.Agent.PWA.AssemblyInfoInputs.cache
 C:\Users\Hagutin\Documents\GitHub\PandemicWatch\Pegasus.UI.Agent.PWA\obj\Debug\netstandard2.1\Pegasus.UI.Agent.PWA.AssemblyInfo.cs
 C:\Users\Hagutin\Documents\GitHub\PandemicWatch\Pegasus.UI.Agent.PWA\obj\Debug\netstandard2.1\Pegasus.UI.Agent.PWA.RazorComponent.input.cache
@@ -1171,7 +1170,6 @@ C:\Users\Hagutin\Documents\GitHub\PandemicWatch\Pegasus.UI.Agent.PWA\obj\Debug\n
 C:\Users\Hagutin\Documents\GitHub\PandemicWatch\Pegasus.UI.Agent.PWA\obj\Debug\netstandard2.1\compressed\_framework\_bin\System.Reflection.Emit.ILGeneration.dll.br
 C:\Users\Hagutin\Documents\GitHub\PandemicWatch\Pegasus.UI.Agent.PWA\obj\Debug\netstandard2.1\compressed\_framework\_bin\System.Reflection.Emit.dll.br
 C:\Users\Hagutin\Documents\GitHub\PandemicWatch\Pegasus.UI.Agent.PWA\obj\Debug\netstandard2.1\compressed\_framework\_bin\System.Linq.Dynamic.Core.pdb.br
-C:\Users\Hagutin\Documents\GitHub\PandemicWatch\Pegasus.UI.Agent.PWA\obj\Debug\netstandard2.1\integrity\G2x3hx6furau9EnVF7_Dvr8AlzLssz8x1osv_Z0joEo=.hash
 C:\Users\Hagutin\Documents\GitHub\PandemicWatch\Pegasus.UI.Agent.PWA\obj\Debug\netstandard2.1\integrity\OaKKXeII_bMj5HdazpbZ3m4YXrZNasq5sWzau_RZSsQ=.hash
 C:\Users\Hagutin\Documents\GitHub\PandemicWatch\Pegasus.UI.Agent.PWA\obj\Debug\netstandard2.1\integrity\mcDgy9jZFs35awvh4p70hVDyA9TvRDoam1Oq0zfuS4w=.hash
 C:\Users\Hagutin\Documents\GitHub\PandemicWatch\Pegasus.UI.Agent.PWA\obj\Debug\netstandard2.1\integrity\FRxTAUwns0yLmOKswKrGLRcX1onHkB4Q3KgV52JEn-I=.hash
