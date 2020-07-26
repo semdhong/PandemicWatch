@@ -111,6 +111,27 @@ using Pegasus.Models.Profiles;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 15 "C:\Users\Hagutin\Documents\GitHub\PandemicWatch\Pegasus.UI.Admin\_Imports.razor"
+using Blazored;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 16 "C:\Users\Hagutin\Documents\GitHub\PandemicWatch\Pegasus.UI.Admin\_Imports.razor"
+using Blazored.Modal;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 17 "C:\Users\Hagutin\Documents\GitHub\PandemicWatch\Pegasus.UI.Admin\_Imports.razor"
+using Blazored.Modal.Services;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/maintenance/lguprofile/create")]
     public partial class LguProfileCreate : Microsoft.AspNetCore.Components.ComponentBase
     {

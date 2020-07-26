@@ -1,7 +1,7 @@
 ﻿
 @inject HttpClient http
 
-
+@inject NavigationManager navmgr
 
 <EditForm Model="@Person" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator />
@@ -13,42 +13,54 @@
     <div class="form-group">
         <label>Name</label>
         <div>
-            <InputText class="col-md-4 form-control" @bind-Value="@Person.Fullname" />
+            <Radzen.Blazor.RadzenTextBox class="col-md-4 form-control" @bind-Value="@Person.Fullname" />
             <ValidationMessage For="@(() => Person.Fullname)" />
         </div>
     </div>
     <label>Barangay</label>
     <div class="form-group">
-        <div>
-            <select class="col-md-4 form-control" @bind="@Person.BgryId">
-                @if (brgyprofile != null)
-                {
-                    @foreach (var lgu in brgyprofile)
-                    {
-                        <option value="@lgu.Id">@lgu.BarangayName</option>
-                    }
-                }
-            </select>
-        </div>
+
+        <RadzenDropDown AllowClear="false" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" @bind-Value="@Person.BgryId" Placeholder="Select Barangay" Data="@brgyprofile" TextProperty="BarangayName" ValueProperty="Id"
+                        Style="margin-bottom: 20px; width:300px;">
+
+        </RadzenDropDown>
     </div>
     <div class="form-group">
         <label>Address</label>
         <div>
-            <InputText class="col-md-4 form-control" @bind-Value="@Person.Address" />
+            <Radzen.Blazor.RadzenTextBox class="col-md-4 form-control" @bind-Value="@Person.Address" />
             <ValidationMessage For="@(() => Person.Address)" />
         </div>
     </div>
     <div class="form-group">
         <label>Contact Number</label>
         <div>
-            <InputText class="col-md-4 form-control" @bind-Value="@Person.Contact" />
+            <Radzen.Blazor.RadzenTextBox class="col-md-4 form-control" @bind-Value="@Person.Contact" />
             <ValidationMessage For="@(() => Person.Contact)" />
         </div>
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-dark">
-            @ButtonText
-        </button>
+        <label>Swab Testing Date</label>
+        <div>
+            <RadzenDatePicker @bind-Value="@Person.SwabTestDate" DateFormat="d" />
+            <ValidationMessage For="@(() => Person.Contact)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Address</label>
+        <div>
+            <Radzen.Blazor.RadzenTextArea @bind-Value="@Person.Address" />
+            <ValidationMessage For="@(() => Person.Contact)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <RadzenButton ButtonType="ButtonType.Submit" Text="@ButtonText" Icon="save" Style="margin-bottom: 20px; width: 150px" />
+
+
+    </div>
+    <div class="form-group">
+
+        <RadzenButton Click="@((args) => Click(args, "Back"))" Text="Back" Icon="arrow_back" Style="margin-bottom: 20px; width: 150px" />
     </div>
 </EditForm>
 
@@ -62,7 +74,7 @@
     protected override async Task OnInitializedAsync()
     {
         await LoadLguProfile();
-       
+
     }
 
     async Task LoadLguProfile()
@@ -70,5 +82,8 @@
         brgyprofile = await http.GetJsonAsync<List<BarangayModel>>("https://localhost:44399/api/Barangay");
     }
 
-   
+    void Click(MouseEventArgs args, string buttonName)
+    {
+        navmgr.NavigateTo("/cases");
+    }
 }

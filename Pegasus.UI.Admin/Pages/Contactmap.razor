@@ -10,7 +10,7 @@
             <li>
                 <!--Positive Person-->
                 <div class="user">
-                    <RadzenImage Path="css/images/positiveperson.png" Style="width:100px;" />
+                    <RadzenImage Path="css/images/person.png" Style="width:100px;" />
                     <div class="name">@principalpersonsmodel.Fullname</div>
                     <Radzen.Blazor.RadzenLabel>Confirmed COVID-19 Positive</Radzen.Blazor.RadzenLabel>
 
@@ -26,7 +26,7 @@
                     <li>
                         <div class="user">
                            
-                            <RadzenImage Path="css/images/positiveperson.png" Style="width:100px;" />
+                            <RadzenImage Path="css/images/person.png" Style="width:100px;" />
                             <div class="name">@direct.Fullname</div>
                             
 
@@ -38,7 +38,7 @@
                             <li>
                                 <div class="user">
                                     <a href="/personmap/@secondperson.Id">
-                                        <RadzenImage Path="css/images/positiveperson.png" Style="width:100px;" />
+                                        <RadzenImage Path="css/images/person.png" Style="width:100px;" />
                                         <b>@secondperson.Fullname</b>
                                     </a>
 
@@ -64,9 +64,9 @@
 
     protected async override Task OnParametersSetAsync()
     {
-        contactpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://pegasusapiadmin.azurewebsites.net/api/Contacts/" + personId);
-        principalpersonsmodel = await http.GetJsonAsync<PersonProfilesModel>($"https://pegasusapiadmin.azurewebsites.net/api/Person/" + personId);
-        allpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://pegasusapiadmin.azurewebsites.net/api/Person/");
+        contactpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://localhost:44399/api/Contacts/" + personId);
+        principalpersonsmodel = await http.GetJsonAsync<PersonProfilesModel>($"https://localhost:44399/api/Person/" + personId);
+        allpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://localhost:44399/api/Person/");
     }
 
      void GetSecondLevel(int id)

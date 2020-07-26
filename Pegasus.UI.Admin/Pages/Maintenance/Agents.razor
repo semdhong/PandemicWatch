@@ -1,26 +1,26 @@
 ﻿<h3>Agents</h3>
-@page "/maintenance/brgy"
+@page "/maintenance/agents"
 @inject HttpClient http
 @inject IJSRuntime js
-
-<a class="btn btn-success" href="/agents/create">Create New</a>
+@inject NavigationManager navmgr
+<a class="btn btn-success" href="/maintenance/agents/create">Create New</a>
 <br />
 
-@if (person == null)
+@if (agentmodel == null)
 {
     <p><em>Loading...</em></p> }
 else
 {
     <div class="col-10">
         <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="20"
-                    AllowSorting="true" Data="@person" TItem="PersonProfilesModel" ColumnWidth="200px">
+                    AllowSorting="true" Data="@agentmodel" TItem="AgentModel" ColumnWidth="200px">
             <Columns>
-
-                <RadzenGridColumn TItem="PersonProfilesModel" Property="Fullname" Title="Fullname" />
-                <RadzenGridColumn TItem="PersonProfilesModel" Property="Barangay.BarangayName" Title="Barangay" />
-                <RadzenGridColumn TItem="PersonProfilesModel" Bubble="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px">
-                    <Template Context="person">
-                        <RadzenButton Icon="edit" Size="ButtonSize.Medium" Click="@(args =>  EditRow(person))">
+                <RadzenGridColumn TItem="AgentModel" Property="PIN" Title="PIN" />
+                <RadzenGridColumn TItem="AgentModel" Property="Fullname" Title="Fullname" />
+                <RadzenGridColumn TItem="AgentModel" Property="Department" Title="Department" />
+                <RadzenGridColumn TItem="AgentModel" Bubble="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px">
+                    <Template Context="agent">
+                        <RadzenButton Icon="edit" Size="ButtonSize.Medium" Click="@(args =>  EditRow(agent))">
                         </RadzenButton>
                     </Template>
                 </RadzenGridColumn>
@@ -44,10 +44,10 @@ else
         //agentmodel = await http.GetJsonAsync<List<AgentModel>>("https://pegasusapiadmin.azurewebsites.net/api/Barangay");
         agentmodel = await http.GetJsonAsync<List<AgentModel>>("https://localhost:44399/api/Agent");
 
-
-
-
     }
-
+    void EditRow(AgentModel agent)
+    {
+        navmgr.NavigateTo("/maintenance/agents/edit/" + agent.Id);
+    }
 
 }

@@ -40,6 +40,7 @@ namespace Pegasus.Api.Admin
             services.AddTransient<IBarangayProfile, BarangayProfile>();
             services.AddTransient<ILguProfileService, LguProfileService>();
             services.AddTransient<IPersonProfileService, PersonProfileService>();
+            services.AddTransient<IUserAgentService, UserAgentService>();
 
         }
 

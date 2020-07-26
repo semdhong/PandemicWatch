@@ -1,0 +1,25 @@
+﻿@page "/dialogverification"
+
+@inject HttpClient http
+
+<RadzenCard Style="padding: 20px;">
+    <p Style="margin-bottom: 10px;">We verify that Mr/Ms/Mrs. @personmodelq.Fullname is a resident of @personmodelq.Barangay.BarangayName.</p>
+    <div class="row">
+        <div class="col-md-12">
+            <RadzenButton Icon="edit" Size="ButtonSize.Medium" Click="@(args =>  Verify(personmodelq))" Text="Verify">
+            </RadzenButton>
+        </div>
+    </div>
+
+</RadzenCard>
+@code {
+    [Parameter] public int personId { get; set; }
+    [Parameter] public PersonProfilesModel personmodelq { get; set; }
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+    async void Verify(PersonProfilesModel person)
+    {
+        person.BrgyVerified = true;
+        await http.PutJsonAsync("https://localhost:44326/api/Person", personmodelq);
+        await BlazoredModal.Close(ModalResult.Ok<PersonProfilesModel>(personmodelq));
+    }
+}

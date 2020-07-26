@@ -2,6 +2,7 @@
 @inject HttpClient http
 @inject IJSRuntime js
 @inject NavigationManager navmgr
+@using Microsoft.AspNetCore.SignalR
 <center><h3>Cases</h3></center>
 <br />
 
@@ -16,17 +17,107 @@
     <p><em>Loading...</em></p> }
 else
 {
-    <div class="col-10">
+    <div class="col-12">
         <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="20"
-                    AllowSorting="true" Data="@person" TItem="PersonProfilesModel" ColumnWidth="200px">
+                    AllowSorting="true" Data="@person" TItem="PersonProfilesModel" ColumnWidth="300px">
             <Columns>
-
-                <RadzenGridColumn TItem="PersonProfilesModel" Property="Fullname" Title="Fullname" />
-                <RadzenGridColumn TItem="PersonProfilesModel" Property="Barangay.BarangayName" Title="Barangay" />
-                <RadzenGridColumn TItem="PersonProfilesModel" Bubble="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px">
+                <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px" Title="View Profile">
                     <Template Context="person">
                         <RadzenButton Icon="edit" Size="ButtonSize.Medium" Click="@(args =>  EditRow(person))">
                         </RadzenButton>
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="PersonProfilesModel" Property="Fullname" Title="Fullname" />
+                <RadzenGridColumn TItem="PersonProfilesModel" Property="Barangay.BarangayName" Title="Barangay" />
+                <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px" Title="Status">
+                    <Template Context="person">
+                        @switch (person.PersonStatus)
+                        {
+                            case "P":
+                                <h4 class="badge badge-danger">Positive</h4>
+                                 break;
+                            case "N":
+                                <h4 class="badge badge-success">Negative</h4>
+                                 break;
+                            case "D":
+                                <h4 class="badge badge-secondary">Direct Contact</h4>
+                                 break;
+                            case "S":
+                                <h4 class="badge badge-secondary">Secondary Contact</h4>
+                                 break;
+
+                        };
+
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px" Title="Verification">
+                    <Template Context="person">
+                        @if (person.CHDOHVerified.HasValue && person.BrgyVerified.HasValue)
+                        {
+                        @if (person.CHDOHVerified.Value && person.BrgyVerified.Value)
+                            {
+                                <Radzen.Blazor.RadzenIcon Icon="verified_user" />
+
+                            }
+                    }
+
+                    @if (person.BrgyVerified.HasValue && !person.CHDOHVerified.HasValue)
+                        {
+                            <Radzen.Blazor.RadzenIcon Icon="verified_user" />
+                        }
+                    @if (!person.BrgyVerified.HasValue)
+                        {
+                            <RadzenButton Icon="how_to_reg" Size="ButtonSize.Medium" Click="@(args=> Verify(person))" Text="Verify" />
+
+
+                        }
+
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="150px" Title="Confirmation">
+                    <Template Context="person">
+
+                        @if (!person.CHDOHVerified.HasValue && !person.BrgyVerified.HasValue)
+                        {
+                            <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Disabled="true" Text="Confirm">
+                            </RadzenButton>
+                        }
+                    @if (person.CHDOHVerified.HasValue && person.BrgyVerified.HasValue)
+                        {
+                        @if (person.CHDOHVerified.Value && person.BrgyVerified.Value)
+                            {
+                                <Radzen.Blazor.RadzenIcon Icon="verified_user" />
+
+                            }
+
+                    }
+
+
+                    @if (person.BrgyVerified.HasValue && !person.CHDOHVerified.HasValue)
+                        {
+
+                            <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Click="@(args=> Confirm(person))" Text="Confirm">
+                            </RadzenButton>
+                        }
+
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="PersonProfilesModel" Bubble="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px" Title="Quarantine Days">
+                    <Template Context="person">
+                        @if (person.CHDOHVerified.HasValue && person.BrgyVerified.HasValue)
+                        {
+                        @if (person.CHDOHVerified.Value && person.BrgyVerified.Value)
+                            {
+                                <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Text="Q Days">
+                                </RadzenButton>
+
+                            }
+                            else
+                        {
+                                <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Text="Q Days" Disabled="true">
+                                </RadzenButton>
+                            }
+                    }
                     </Template>
                 </RadzenGridColumn>
 
@@ -38,26 +129,75 @@ else
 
 @code {
 
-    List<PersonProfilesModel> person = new List<PersonProfilesModel>();
-    string SearchTerm { get; set; } = "";
+                                       List<PersonProfilesModel> person = new List<PersonProfilesModel>();
+                                       string SearchTerm { get; set; } = "";
 
-    IEnumerable<PersonProfilesModel> persons;
-
+                                       IEnumerable<PersonProfilesModel> persons;
+                                       RadzenGrid<PersonProfilesModel> grid;
     protected override async Task OnInitializedAsync()
-    {
-        await LoadBarangays();
+                               {
 
-    }
 
-    async Task LoadBarangays()
-    {
-        person = await http.GetJsonAsync<List<PersonProfilesModel>>("https://localhost:44326/api/Person");
+                                   await LoadBarangays();
 
-    }
-    void EditRow(PersonProfilesModel person)
-    {
-        navmgr.NavigateTo("/cases/edit/" + person.Id);
-    }
 
-    List<PersonProfilesModel> FilteredName => person.Where(i => i.Fullname.ToLower().Contains(SearchTerm.ToLower())).ToList();
-}
+
+                               }
+
+                               async Task LoadBarangays()
+                               {
+                                   person = await http.GetJsonAsync<List<PersonProfilesModel>>("https://localhost:44326/api/Person");
+
+                               }
+                               async Task LoadData(LoadDataArgs args)
+                               {
+                                   await LoadBarangays();
+                                   StateHasChanged();
+
+                               }
+                               void EditRow(PersonProfilesModel person)
+                               {
+                                   navmgr.NavigateTo("/cases/edit/" + person.Id);
+                               }
+
+                               [CascadingParameter] public IModalService Modal { get; set; }
+
+
+
+                               async Task Verify(PersonProfilesModel person)
+                               {
+                                   var parameters = new ModalParameters();
+                                   parameters.Add(nameof(DialogVerification.personmodelq), person);
+
+                                   var formModal = Modal.Show<DialogVerification>("Verification", parameters);
+                                   var result = await formModal.Result;
+                                   if (result.Cancelled)
+                                   {
+
+                                   }
+                                   else
+                                   {
+                                       await LoadBarangays();
+                                   }
+
+                               }
+                               async Task Confirm(PersonProfilesModel person)
+                               {
+                                   var parameters = new ModalParameters();
+                                   parameters.Add(nameof(DialogVerification.personmodelq), person);
+
+                                   var formModal = Modal.Show<DialogConfirmation>("Confirmation", parameters);
+                                   var result = await formModal.Result;
+                                   if (result.Cancelled)
+                                   {
+
+                                   }
+                                   else
+                                   {
+                                       await LoadBarangays();
+                                   }
+                               }
+
+
+                               List<PersonProfilesModel> FilteredName => person.Where(i => i.Fullname.ToLower().Contains(SearchTerm.ToLower())).ToList();
+                           }
