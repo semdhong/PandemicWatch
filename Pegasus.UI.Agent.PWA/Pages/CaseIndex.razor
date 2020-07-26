@@ -6,8 +6,6 @@
 
 <input type="text" placeholder="Search Name" size="50" @bind-value="SearchTerm" @bind-value:event="oninput" /> &nbsp; &nbsp; Showing @FilteredName.Count out of @person.Count
 <br /><br />
-<a class="btn btn-success" href="/cases/create">Create New</a>
-<br />
 
 @if (person == null)
 {
