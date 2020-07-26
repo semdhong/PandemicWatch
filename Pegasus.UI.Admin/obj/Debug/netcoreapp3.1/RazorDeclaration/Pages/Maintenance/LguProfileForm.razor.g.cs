@@ -111,6 +111,27 @@ using Pegasus.Models.Profiles;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 15 "C:\Users\semdhong\Documents\GitHub\PEGASUS\Pandemic Watch\PandemicWatch\Pegasus.UI.Admin\_Imports.razor"
+using Blazored;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 16 "C:\Users\semdhong\Documents\GitHub\PEGASUS\Pandemic Watch\PandemicWatch\Pegasus.UI.Admin\_Imports.razor"
+using Blazored.Modal;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 17 "C:\Users\semdhong\Documents\GitHub\PEGASUS\Pandemic Watch\PandemicWatch\Pegasus.UI.Admin\_Imports.razor"
+using Blazored.Modal.Services;
+
+#line default
+#line hidden
+#nullable disable
     public partial class LguProfileForm : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998

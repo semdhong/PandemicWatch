@@ -49,7 +49,7 @@
     <div class="form-group">
         <label>Address</label>
         <div>
-            <RadzenDatePicker @bind-Value="@Person.SwabTestDate" DateFormat="d" />
+            <Radzen.Blazor.RadzenTextArea @bind-Value="@Person.Address" />
             <ValidationMessage For="@(() => Person.Contact)" />
         </div>
     </div>

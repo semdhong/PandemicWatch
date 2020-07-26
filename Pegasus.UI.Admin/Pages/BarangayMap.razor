@@ -17,7 +17,7 @@
 
     async Task LoadBarangays()
     {
-        brgy = await http.GetJsonAsync<List<BarangayModel>>("https://pegasusapiadmin.azurewebsites.net/api/Barangay");
+        brgy = await http.GetJsonAsync<List<BarangayModel>>("https://localhost:44399/api/Barangay");
 
     }
 
@@ -40,7 +40,7 @@
 
 
                                     <a href="/personmap/@person.Id">
-                                        <RadzenImage Path="css/images/positiveperson.png" Style="width:100px;" />
+                                        <RadzenImage Path="css/images/person.png" Style="width:100px;" />
                                         <b>@person.Fullname</b>
                                     </a>
                                 </div>

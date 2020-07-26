@@ -1,0 +1,25 @@
+﻿@page "/dialogconfirmation"
+
+@inject HttpClient http
+
+<RadzenCard Style="padding: 20px;">
+    <p Style="margin-bottom: 10px;">We confirm that Mr/Ms/Mrs. @personmodelq.Fullname is a resident from @personmodelq.Barangay.BarangayName endorsed to us.</p>
+    <div class="row">
+        <div class="col-md-12">
+            <RadzenButton Icon="edit" Size="ButtonSize.Medium" Click="@(args =>  Confirm(personmodelq))" Text="Confirm" />
+     
+        </div>
+    </div>
+
+</RadzenCard>
+@code {
+    [Parameter] public int personId { get; set; }
+    [Parameter] public PersonProfilesModel personmodelq { get; set; }
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+    async void Confirm(PersonProfilesModel person)
+    {
+        person.CHDOHVerified = true;
+        await http.PutJsonAsync("https://localhost:44326/api/Person", personmodelq);
+        await BlazoredModal.Close(ModalResult.Ok<PersonProfilesModel>(personmodelq));
+    }
+}
