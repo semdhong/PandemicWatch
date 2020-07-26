@@ -97,6 +97,20 @@ using Blazored.Typeahead;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 13 "C:\Users\Hagutin\Documents\GitHub\PandemicWatch\Pegasus.UI.Agent.PWA\_Imports.razor"
+using Radzen;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 14 "C:\Users\Hagutin\Documents\GitHub\PandemicWatch\Pegasus.UI.Agent.PWA\_Imports.razor"
+using Radzen.Blazor;
+
+#line default
+#line hidden
+#nullable disable
     public partial class CaseForm : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
