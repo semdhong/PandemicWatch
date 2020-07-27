@@ -1,51 +1,49 @@
 ﻿@page "/cases/contactedperson/{contactId:int}"
 @inject HttpClient http
 @inject NavigationManager navmgr
+@inject IJSRuntime js
 
+<div class="row">
+    <img class="avatar" src="/image/peronicon.png" style="width: 200px; height: 200px" alt="Avatar" />
+    <div class="col-md-4">
+        <div id="qrcode"></div>
+    </div>
 
- <img class="avatar" src="/image/peronicon.png" alt="Avatar"/>
+</div>
 
-
-<div>
+<div class="col-12">
+ <div>
     <label>Name :</label>
     @brgymodel.Fullname
 </div>
 <div>
-    <label>Contact Number : </label> 
+    <label>Contact Number : </label>
     @brgymodel.Contact
 </div>
-<a class="btn btn-success" href="cases/createcontact/@brgymodel.Id">Add New Contact</a>
-<br />
+</div>
+
+
 @if (person == null)
 {
-    <p><em>Loading...</em></p> }
+    <p><em>Loading...</em></p>
+}
 else
 {
+<div class="col-12">
+    <div>
+    <RadzenButton Size="ButtonSize.Medium" Click="@(args =>  CreateContact(brgymodel))" Text="Add New Contact" />
+    </div><br />
+    <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="20"
+                AllowSorting="true" Data="@person" TItem="PersonProfilesModel" ColumnWidth="200px">
+        <Columns>
 
+            <RadzenGridColumn TItem="PersonProfilesModel" Property="Fullname" Title="Fullname" />
+            <RadzenGridColumn TItem="PersonProfilesModel" Filterable="false" Property="Barangay.BarangayName" Title="Barangay" />
+            <RadzenGridColumn TItem="PersonProfilesModel" Filterable="false" Property="PersonStatus" Title="Status" />
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Barangay</th>
-                <th>Status</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var per in person)
-            {
-                <tr>
-
-                    <td>@per.Fullname</td>
-                    <td>@per.Barangay.BarangayName</td>
-                    <td>@per.PersonStatus</td>
-                    <td>@per.QrCode</td>
-
-                </tr>
-            }
-        </tbody>
-    </table>
+        </Columns>
+    </RadzenGrid>
+</div>
 }
 
 @code {
@@ -53,7 +51,6 @@ else
     List<PersonProfilesModel> person = new List<PersonProfilesModel>();
 
     [Parameter] public int contactId { get; set; }
-
     PersonProfilesModel brgymodel = new PersonProfilesModel();
 
     protected async override Task OnParametersSetAsync()
@@ -69,6 +66,9 @@ else
     {
         person = await http.GetFromJsonAsync<List<PersonProfilesModel>>("https://localhost:44326/api/Contacts/" + contactId);
     }
-
+    void CreateContact(PersonProfilesModel brgymodel)
+    {
+        navmgr.NavigateTo("/cases/createcontact/" + brgymodel.Id);
+    }
 }
 
