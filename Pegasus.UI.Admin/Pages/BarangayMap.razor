@@ -42,6 +42,25 @@
                                     <a href="/personmap/@person.Id">
                                         <RadzenImage Path="css/images/person.png" Style="width:100px;" />
                                         <b>@person.Fullname</b>
+                                        @switch (person.PersonStatus)
+                                        {
+                                            case "P":
+                                                <h4 class="badge badge-danger">Positive</h4>
+                                                break;
+                                            case "N":
+                                                <h4 class="badge badge-success">Negative</h4>
+                                                break;
+                                            case "D":
+                                                <h4 class="badge badge-warning">PUI</h4>
+                                                break;
+                                            case "S":
+                                                <h4 class="badge badge-secondary">PUM</h4>
+                                                break;
+                                            default:
+                                                <h4 class="badge badge-dark">Unknown</h4>
+                                                break;
+
+                                        }
                                     </a>
                                 </div>
 
