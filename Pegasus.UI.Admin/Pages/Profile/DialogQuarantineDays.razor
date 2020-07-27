@@ -1,0 +1,33 @@
+﻿@page "/dialogquarantine"
+
+@inject HttpClient http
+
+<RadzenCard Style="padding: 20px;">
+    <p Style="margin-bottom: 10px;">We confirm that Mr/Ms/Mrs. @personmodelq.Fullname is a resident from @personmodelq.Barangay.BarangayName to undergo on Quarantine Period.</p>
+    <div class="row">
+        <div class="col-md-12">
+            <RadzenSelectBar @bind-Value="@personmodelq.QDays" TValue="int?"  Style="margin-bottom: 20px;">
+                <Items>
+                    <RadzenSelectBarItem Text="1-7 Days" Value="7" />
+                    <RadzenSelectBarItem Text="1-15 Days" Value="15" />
+                    <RadzenSelectBarItem Text="1-30 Days" Value="30" />
+                </Items>
+            </RadzenSelectBar>
+            <RadzenButton Icon="edit" Size="ButtonSize.Medium" Click="@(args =>  Confirm(personmodelq))" Text="Confirm" />
+
+        </div>
+    </div>
+
+</RadzenCard>
+@code {
+    [Parameter] public int personId { get; set; }
+    [Parameter] public PersonProfilesModel personmodelq { get; set; }
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+    async void Confirm(PersonProfilesModel person)
+    {
+        person.QDateStarted = DateTime.Now;
+        person.QDateEnded = DateTime.Now.AddDays(person.QDays.Value - 1);
+        await http.PutJsonAsync("https://localhost:44326/api/Person", personmodelq);
+        await BlazoredModal.Close(ModalResult.Ok<PersonProfilesModel>(personmodelq));
+    }
+}

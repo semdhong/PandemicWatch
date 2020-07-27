@@ -1,6 +1,6 @@
 ﻿
 @inject HttpClient http
-@inject IJSRuntime js
+
 
 
     <EditForm Model="@Person" OnValidSubmit="OnValidSubmit">
@@ -64,8 +64,5 @@
     {
         brgyprofile = await http.GetFromJsonAsync<List<BarangayModel>>("https://localhost:44399/api/Barangay");
     }
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await js.InvokeVoidAsync("updateQRCode", Person.QrCode??"");
-    }
+   
     }

@@ -2,7 +2,8 @@
 @page "/personmap/{personId:int}"
 @inject HttpClient http
 @inject NavigationManager navmgr
-<h3>Contact Tracing</h3>
+@using System.Threading;
+<h3>Contact Tracing @Count</h3>
 
 <div class="pg-orgchart">
     <div class="org-chart">
@@ -18,38 +19,39 @@
                 @if (contactpersonsmodel != null)
                 {
 
-                <ul>
-                    @foreach (var direct in contactpersonsmodel)
-                    {
+                    <ul>
+                        @foreach (var direct in contactpersonsmodel)
+                        {
 
-                        GetSecondLevel(direct.Id);
-                    <li>
-                        <div class="user">
-                           
-                            <RadzenImage Path="css/images/person.png" Style="width:100px;" />
-                            <div class="name">@direct.Fullname</div>
-                            
-
-
-                        </div>
-                       @if (secondperson != null)
-                       {
-                        <ul>
+                            GetSecondLevel(direct.Id);
                             <li>
                                 <div class="user">
-                                    <a href="/personmap/@secondperson.Id">
-                                        <RadzenImage Path="css/images/person.png" Style="width:100px;" />
-                                        <b>@secondperson.Fullname</b>
-                                    </a>
+
+                                    <RadzenImage Path="css/images/person.png" Style="width:100px;" />
+                                    <div class="name">@direct.Fullname</div>
+
+
 
                                 </div>
+                              
+                                <ul>
+                                    @if (secondperson != null)
+                                    {   
+                                        <li>
+                                            <div class="user">
+                                                <a href="/personmap/@secondperson.Id">
+                                                    <RadzenImage Path="css/images/person.png" Style="width:100px;" />
+                                                    <b>@secondperson.Fullname</b>
+                                                </a>
+
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
                             </li>
-                           
-                        </ul>}
-                    </li>
-                   
-                    }
-                </ul>
+
+                        }
+                    </ul>
                 }
             </li>
         </ul>
@@ -61,16 +63,55 @@
     PersonProfilesModel principalpersonsmodel = new PersonProfilesModel();
     PersonProfilesModel secondperson = new PersonProfilesModel();
     List<PersonProfilesModel> allpersonsmodel = new List<PersonProfilesModel>();
+    public int Count { get; set; }
+    BroadcastHub hub = new BroadcastHub();
 
-    protected async override Task OnParametersSetAsync()
+    protected async override Task OnInitializedAsync()
+    {
+        contactpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://localhost:44399/api/Contacts/" + personId);
+        principalpersonsmodel = await http.GetJsonAsync<PersonProfilesModel>($"https://localhost:44399/api/Person/" + personId);
+        allpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://localhost:44399/api/Person/");
+        StartCountdown();
+    }
+
+    //protected async override Task OnParametersSetAsync()
+    //{
+
+    //    contactpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://localhost:44399/api/Contacts/" + personId);
+    //    principalpersonsmodel = await http.GetJsonAsync<PersonProfilesModel>($"https://localhost:44399/api/Person/" + personId);
+    //    allpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://localhost:44399/api/Person/");
+    //    StartCountdown();
+    //}
+    async Task ReloadData()
     {
         contactpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://localhost:44399/api/Contacts/" + personId);
         principalpersonsmodel = await http.GetJsonAsync<PersonProfilesModel>($"https://localhost:44399/api/Person/" + personId);
         allpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://localhost:44399/api/Person/");
     }
 
-     void GetSecondLevel(int id)
+    void GetSecondLevel(int id)
     {
         secondperson = allpersonsmodel.FirstOrDefault(x => x.PrincipalPersonId == id);
+    }
+    
+    void StartCountdown()
+    { var dc = new List<PersonProfilesModel>();
+      
+        var timer = new Timer(new TimerCallback(_ =>
+        {
+
+            Count++;
+            var task = Task.Run(async () => await ReloadData());
+            // Note that the following line is necessary because otherwise
+            // Blazor would not recognize the state change and not refresh the UI
+            InvokeAsync(() =>
+            {
+              
+                StateHasChanged();
+            });
+
+        }), null, 1000, 1000);
+      
+
     }
 }

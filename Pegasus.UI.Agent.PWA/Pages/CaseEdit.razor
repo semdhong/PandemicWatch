@@ -1,8 +1,9 @@
 ﻿@page "/cases/edit/{brgyId:int}"
 @inject HttpClient http
 @inject NavigationManager navmgr
-
+@inject IJSRuntime js
 <h3>Edit Barangay</h3>
+<div id="qrcode"></div>
 <CaseForm Person="@brgymodel" ButtonText="Save" OnValidSubmit="@EditBrgy" />
 
 @code {
@@ -18,6 +19,14 @@
     {
         await http.PutAsJsonAsync("https://localhost:44326/api/Person", brgymodel);
         navmgr.NavigateTo("/cases");
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await js.InvokeVoidAsync("updateQRCode", brgymodel.QrCode ?? "");
+        }
+
     }
 }
 

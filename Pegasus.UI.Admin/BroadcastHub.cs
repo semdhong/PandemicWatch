@@ -9,9 +9,13 @@ namespace Pegasus.UI.Admin
 {
     public class BroadcastHub:Hub
     {
-        public async Task SendMessage()
+        public  string _mess { get; set; }
+        public async Task SendMessage(string user, string message)
         {
-            await Clients.All.SendAsync("ReceiveMessage");
+            _mess = message;
+            await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
+
+        
     }
 }

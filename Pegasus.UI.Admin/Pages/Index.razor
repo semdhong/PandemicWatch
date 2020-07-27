@@ -1,22 +1,32 @@
 ﻿@page "/"
-<div class="col-12">
-    <div class="row">
-        <Radzen.Blazor.RadzenCard>
+@inject NavigationManager navmgr
 
-
-
-           
-                <a href="brgymap">  <Radzen.Blazor.RadzenButton Text="Barangay Map" href="" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" /></a>
+<div class="center">
       
-          
-
-        </Radzen.Blazor.RadzenCard>
-        <Radzen.Blazor.RadzenCard>
 
 
-                <a href="cases">  <Radzen.Blazor.RadzenButton Text="Cases" href="" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" /></a>
+    <div class="col-md-4 center">
        
-        </Radzen.Blazor.RadzenCard>
+        <RadzenCard>
 
+            <RadzenImage Path="css/images/PandemicWatch.png" Style="width:200px" class="center" />
+            <RadzenLogin AllowRegister="false" AllowResetPassword="false" Username="@userName" Password="@password"
+                         Login="@((args) => Login(args, "Login with default values"))"
+                         Style="margin-bottom: 20px;" />
+            <RadzenImage Path="css/images/pegasus logo.png" Style="width:100px" class="float-right"/>
+        </RadzenCard>
     </div>
 </div>
+@code {
+    string userName = "admin";
+    string password = "admin";
+
+    Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
+
+    void Login(LoginArgs args, string name)
+    {
+        navmgr.NavigateTo("/brgymap");
+    }
+
+
+}
