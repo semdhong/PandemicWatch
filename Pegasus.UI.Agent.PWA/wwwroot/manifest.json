@@ -1,6 +1,6 @@
 {
-  "name": "Pegasus.UI.Agent.PWA",
-  "short_name": "Pegasus.UI.Agent.PWA",
+  "name": "Pandemic Watch Agent",
+  "short_name": "Pegasus Agent",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",

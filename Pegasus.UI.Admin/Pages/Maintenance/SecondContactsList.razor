@@ -23,6 +23,6 @@
 
     async Task LoadLguProfile()
     {
-        secondpersonsmodel = await http.GetJsonAsync<PersonProfilesModel>($"https://localhost:44399/api/SecondContacts/" + directpersonsmodel.Id);
+        secondpersonsmodel = await http.GetJsonAsync<PersonProfilesModel>($"https://pegasusapiadmin.azurewebsites.net/api/SecondContacts/" + directpersonsmodel.Id);
     }
 }

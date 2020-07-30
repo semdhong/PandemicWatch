@@ -12,7 +12,8 @@
 
     async Task CreateCase()
     {
-        await http.PutJsonAsync("https://localhost:44326/api/Person", Persons);
+        Persons.PersonStatus = "P";
+        await http.PutJsonAsync("https://pegasusapiagent.azurewebsites.net/api/Person", Persons);
         navmgr.NavigateTo("/cases");
     }
 }

@@ -3,66 +3,67 @@
 
 @inject NavigationManager navmgr
 
-<EditForm Model="@Person" OnValidSubmit="OnValidSubmit">
-    <DataAnnotationsValidator />
+    <EditForm Model="@Person" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator />
 
-    <div class="form-group">
-        <div id="qrcode"></div>
-    </div>
-
-    <div class="form-group">
-        <label>Name</label>
-        <div>
-            <Radzen.Blazor.RadzenTextBox class="col-md-4 form-control" @bind-Value="@Person.Fullname" />
-            <ValidationMessage For="@(() => Person.Fullname)" />
+        <div class="form-group">
+            <div id="qrcode"></div>
         </div>
-    </div>
-    <label>Barangay</label>
-    <div class="form-group">
 
-        <RadzenDropDown AllowClear="false" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" @bind-Value="@Person.BgryId" Placeholder="Select Barangay" Data="@brgyprofile" TextProperty="BarangayName" ValueProperty="Id"
-                        Style="margin-bottom: 20px; width:300px;">
-
-        </RadzenDropDown>
-    </div>
-    <div class="form-group">
-        <label>Address</label>
-        <div>
-            <Radzen.Blazor.RadzenTextBox class="col-md-4 form-control" @bind-Value="@Person.Address" />
-            <ValidationMessage For="@(() => Person.Address)" />
+        <div class="form-group">
+            <label>Name</label>
+            <div>
+                <Radzen.Blazor.RadzenTextBox class="col-md-4 form-control" @bind-Value="@Person.Fullname" />
+                <ValidationMessage For="@(() => Person.Fullname)" />
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label>Contact Number</label>
-        <div>
-            <Radzen.Blazor.RadzenTextBox class="col-md-4 form-control" @bind-Value="@Person.Contact" />
-            <ValidationMessage For="@(() => Person.Contact)" />
+        
+        <label>Barangay</label>
+        <div class="form-group">
+
+            <RadzenDropDown AllowClear="false" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" @bind-Value="@Person.BgryId" Placeholder="Select Barangay" Data="@brgyprofile" TextProperty="BarangayName" ValueProperty="Id"
+                            Style="margin-bottom: 20px; width:300px;">
+
+            </RadzenDropDown>
         </div>
-    </div>
-    <div class="form-group">
-        <label>Swab Testing Date</label>
-        <div>
-            <RadzenDatePicker @bind-Value="@Person.SwabTestDate" DateFormat="d" />
-            <ValidationMessage For="@(() => Person.Contact)" />
+        <div class="form-group">
+            <label>Address</label>
+            <div>
+                <Radzen.Blazor.RadzenTextBox class="col-md-4 form-control" @bind-Value="@Person.Address" />
+                <ValidationMessage For="@(() => Person.Address)" />
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label>Address</label>
-        <div>
-            <Radzen.Blazor.RadzenTextArea @bind-Value="@Person.Address" />
-            <ValidationMessage For="@(() => Person.Contact)" />
+        <div class="form-group">
+            <label>Contact Number</label>
+            <div>
+                <Radzen.Blazor.RadzenTextBox class="col-md-4 form-control" @bind-Value="@Person.Contact" />
+                <ValidationMessage For="@(() => Person.Contact)" />
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <RadzenButton ButtonType="ButtonType.Submit" Text="@ButtonText" Icon="save" Style="margin-bottom: 20px; width: 150px" />
+        <div class="form-group">
+            <label>Swab Testing Date</label>
+            <div>
+                <RadzenDatePicker @bind-Value="@Person.SwabTestDate" DateFormat="d" />
+                <ValidationMessage For="@(() => Person.Contact)" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Address</label>
+            <div>
+                <Radzen.Blazor.RadzenTextArea @bind-Value="@Person.Address" />
+                <ValidationMessage For="@(() => Person.Contact)" />
+            </div>
+        </div>
+        <div class="form-group">
+            <RadzenButton ButtonType="ButtonType.Submit" Text="@ButtonText" Icon="save" Style="margin-bottom: 20px; width: 150px" />
 
 
-    </div>
-    <div class="form-group">
+        </div>
+        <div class="form-group">
 
-        <RadzenButton Click="@((args) => Click(args, "Back"))" Text="Back" Icon="arrow_back" Style="margin-bottom: 20px; width: 150px" />
-    </div>
-</EditForm>
+            <RadzenButton Click="@((args) => Click(args, "Back"))" Text="Back" Icon="arrow_back" Style="margin-bottom: 20px; width: 150px" />
+        </div>
+    </EditForm>
 
 @code {
     [Parameter] public PersonProfilesModel Person { get; set; }
@@ -79,7 +80,7 @@
 
     async Task LoadLguProfile()
     {
-        brgyprofile = await http.GetJsonAsync<List<BarangayModel>>("https://localhost:44399/api/Barangay");
+        brgyprofile = await http.GetJsonAsync<List<BarangayModel>>("https://pegasusapiadmin.azurewebsites.net/api/Barangay");
     }
 
     void Click(MouseEventArgs args, string buttonName)

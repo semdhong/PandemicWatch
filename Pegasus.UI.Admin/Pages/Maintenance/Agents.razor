@@ -42,7 +42,7 @@ else
     async Task LoadAgents()
     {
         //agentmodel = await http.GetJsonAsync<List<AgentModel>>("https://pegasusapiadmin.azurewebsites.net/api/Barangay");
-        agentmodel = await http.GetJsonAsync<List<AgentModel>>("https://localhost:44399/api/Agent");
+        agentmodel = await http.GetJsonAsync<List<AgentModel>>("https://pegasusapiadmin.azurewebsites.net/api/Agent");
 
     }
     void EditRow(AgentModel agent)

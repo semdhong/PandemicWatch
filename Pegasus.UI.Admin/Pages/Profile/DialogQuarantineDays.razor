@@ -27,7 +27,7 @@
     {
         person.QDateStarted = DateTime.Now;
         person.QDateEnded = DateTime.Now.AddDays(person.QDays.Value - 1);
-        await http.PutJsonAsync("https://localhost:44326/api/Person", personmodelq);
+        await http.PutJsonAsync("https://pegasusapiagent.azurewebsites.net/api/Person", personmodelq);
         await BlazoredModal.Close(ModalResult.Ok<PersonProfilesModel>(personmodelq));
     }
 }

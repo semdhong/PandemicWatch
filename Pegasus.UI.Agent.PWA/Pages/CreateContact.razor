@@ -14,8 +14,8 @@
     async Task CreateCase()
     {
         Persons.PrincipalPersonId = principalId;
-
-        await http.PutAsJsonAsync("https://localhost:44326/api/Person", Persons);
+        Persons.PersonStatus = "S";
+        await http.PutAsJsonAsync("https://pegasusapiagent.azurewebsites.net/api/Person", Persons);
         navmgr.NavigateTo("/cases/contactedperson/" + principalId);
     }
 }

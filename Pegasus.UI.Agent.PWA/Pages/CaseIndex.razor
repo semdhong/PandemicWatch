@@ -46,7 +46,7 @@ else
 
             async Task LoadBarangays()
             {
-                person = await http.GetFromJsonAsync<List<PersonProfilesModel>>("https://localhost:44326/api/Person");
+                person = await http.GetFromJsonAsync<List<PersonProfilesModel>>("https://pegasusapiagent.azurewebsites.net/api/Person");
 
             }
             void EditRow(PersonProfilesModel person)

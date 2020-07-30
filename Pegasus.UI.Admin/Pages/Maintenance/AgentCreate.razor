@@ -12,7 +12,7 @@
     async Task CreateAgent()
     {
         //await http.PostJsonAsync("https://pegasusapiadmin.azurewebsites.net/api/Barangay", brgymodel);
-        await http.PutJsonAsync("https://localhost:44399/api/Agent", agentModel);
+        await http.PutJsonAsync("https://pegasusapiadmin.azurewebsites.net/api/Agent", agentModel);
         navmgr.NavigateTo("/maintenance/agents");
     }
 }

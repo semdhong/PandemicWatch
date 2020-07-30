@@ -1,32 +1,29 @@
 ﻿@page "/cases/edit/{brgyId:int}"
 @inject HttpClient http
 @inject NavigationManager navmgr
-@inject IJSRuntime js
-<h3>Edit Barangay</h3>
-<div id="qrcode"></div>
+@using Syncfusion.EJ2.Blazor.BarcodeGenerator
+<h3>Edit Person</h3>
+@if (brgymodel.QrCode != null)
+{
+       <EjsQRCodeGenerator Width="200px" Height="150px" Value="@brgymodel.QrCode" >
+           <QRCodeGeneratorDisplayText text="QR Code"></QRCodeGeneratorDisplayText>
+</EjsQRCodeGenerator>}
 <CaseForm Person="@brgymodel" ButtonText="Save" OnValidSubmit="@EditBrgy" />
 
 @code {
     [Parameter] public int brgyId { get; set; }
     PersonProfilesModel brgymodel = new PersonProfilesModel();
 
-    protected async override Task OnParametersSetAsync()
+    protected async override Task OnInitializedAsync()
     {
-        brgymodel = await http.GetFromJsonAsync<PersonProfilesModel>($"https://localhost:44326/api/Person/" + brgyId);
+        brgymodel = await http.GetFromJsonAsync<PersonProfilesModel>($"https://pegasusapiagent.azurewebsites.net/api/Person/" + brgyId);
     }
 
     async Task EditBrgy()
     {
-        await http.PutAsJsonAsync("https://localhost:44326/api/Person", brgymodel);
+        await http.PutAsJsonAsync("https://pegasusapiagent.azurewebsites.net/api/Person", brgymodel);
         navmgr.NavigateTo("/cases");
     }
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await js.InvokeVoidAsync("updateQRCode", brgymodel.QrCode ?? "");
-        }
-
-    }
+    
 }
 

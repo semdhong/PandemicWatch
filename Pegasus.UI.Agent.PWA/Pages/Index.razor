@@ -1,61 +1,56 @@
 ﻿@page "/"
-@using Microsoft.AspNetCore.SignalR.Client
-@inject NavigationManager NavigationManager
-@implements IDisposable
+@inject IJSRuntime js
+<div id="pincode">
+    <div class="table">
+        <div class="cell">
 
-<div class="form-group">
-    <label>
-        User:
-        <input @bind="userInput" />
-    </label>
+            <div id="anleitung">
+                <p>
+                    <strong>Please enter the Agent PIN-Code.</strong><br>
+                </p>
+            </div>
+
+            <div id="fields">
+                <div class="grid">
+                    <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
+                    <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
+                    <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
+                    <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
+                </div>
+            </div>
+
+            <div id="numbers">
+                <div class="grid">
+                    <div class="grid__col grid__col--1-of-3"><button>1</button></div>
+                    <div class="grid__col grid__col--1-of-3"><button>2</button></div>
+                    <div class="grid__col grid__col--1-of-3"><button>3</button></div>
+
+                    <div class="grid__col grid__col--1-of-3"><button>4</button></div>
+                    <div class="grid__col grid__col--1-of-3"><button>5</button></div>
+                    <div class="grid__col grid__col--1-of-3"><button>6</button></div>
+
+                    <div class="grid__col grid__col--1-of-3"><button>7</button></div>
+                    <div class="grid__col grid__col--1-of-3"><button>8</button></div>
+                    <div class="grid__col grid__col--1-of-3"><button>9</button></div>
+
+                    <div class="grid__col grid__col--1-of-3"></div>
+                    <div class="grid__col grid__col--1-of-3"><button>0</button></div>
+                    <div class="grid__col grid__col--1-of-3"></div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
-<div class="form-group">
-    <label>
-        Message:
-        <input @bind="messageInput" size="50" />
-    </label>
-</div>
-<button @onclick="Send" disabled="@(!IsConnected)">Send</button>
-
-<hr>
-
-<ul id="messagesList">
-    @foreach (var message in messages)
+<div id="restartbtn">RESTART</div>
+@code{
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        <li>@message</li>
-    }
-</ul>
-
-@code {
-    private HubConnection hubConnection;
-    private List<string> messages = new List<string>();
-    private string userInput;
-    private string messageInput;
-
-    protected override async Task OnInitializedAsync()
-    {
-        hubConnection = new HubConnectionBuilder()
-            .WithUrl(NavigationManager.ToAbsoluteUri("https://localhost:44376/broadcastHub"))
-            .Build();
-
-        hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
+        if (firstRender)
         {
-            var encodedMsg = $"{user}: {message}";
-            messages.Add(encodedMsg);
-            StateHasChanged();
-        });
+            await js.InvokeVoidAsync("initpin");
+        }
 
-        await hubConnection.StartAsync();
-    }
-
-    Task Send() =>
-        hubConnection.SendAsync("SendMessage", userInput, messageInput);
-
-    public bool IsConnected =>
-        hubConnection.State == HubConnectionState.Connected;
-
-    public void Dispose()
-    {
-        _ = hubConnection.DisposeAsync();
     }
 }

@@ -62,7 +62,7 @@
 
     async Task LoadLguProfile()
     {
-        brgyprofile = await http.GetFromJsonAsync<List<BarangayModel>>("https://localhost:44399/api/Barangay");
+        brgyprofile = await http.GetFromJsonAsync<List<BarangayModel>>("https://pegasusapiadmin.azurewebsites.net/api/Barangay");
     }
    
     }

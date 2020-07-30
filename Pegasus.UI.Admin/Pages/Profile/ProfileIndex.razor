@@ -2,7 +2,7 @@
 @inject HttpClient http
 @inject IJSRuntime js
 @inject NavigationManager navmgr
-@using Microsoft.AspNetCore.SignalR
+
 <center><h3>Cases</h3></center>
 <br />
 
@@ -165,7 +165,7 @@ else
 
     async Task LoadBarangays()
     {
-        person = await http.GetJsonAsync<List<PersonProfilesModel>>("https://localhost:44326/api/Person");
+        person = await http.GetJsonAsync<List<PersonProfilesModel>>("https://pegasusapiagent.azurewebsites.net/api/Person");
 
     }
     async Task LoadData(LoadDataArgs args)

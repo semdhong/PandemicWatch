@@ -2,24 +2,28 @@
 @inject HttpClient http
 @inject NavigationManager navmgr
 @inject IJSRuntime js
-
+@using Syncfusion.EJ2.Blazor.BarcodeGenerator
 <div class="row">
     <img class="avatar" src="/image/peronicon.png" style="width: 200px; height: 200px" alt="Avatar" />
     <div class="col-md-4">
-        <div id="qrcode"></div>
+        @if (brgymodel.QrCode != null)
+{
+        <EjsQRCodeGenerator Width="200px" Height="150px" Value="@brgymodel.QrCode">
+            <QRCodeGeneratorDisplayText text="QR Code"></QRCodeGeneratorDisplayText>
+        </EjsQRCodeGenerator>}
     </div>
 
 </div>
 
 <div class="col-12">
- <div>
-    <label>Name :</label>
-    @brgymodel.Fullname
-</div>
-<div>
-    <label>Contact Number : </label>
-    @brgymodel.Contact
-</div>
+    <div>
+        <label>Name :</label>
+        @brgymodel.Fullname
+    </div>
+    <div>
+        <label>Contact Number : </label>
+        @brgymodel.Contact
+    </div>
 </div>
 
 
@@ -29,21 +33,21 @@
 }
 else
 {
-<div class="col-12">
-    <div>
-    <RadzenButton Size="ButtonSize.Medium" Click="@(args =>  CreateContact(brgymodel))" Text="Add New Contact" />
-    </div><br />
-    <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="20"
-                AllowSorting="true" Data="@person" TItem="PersonProfilesModel" ColumnWidth="200px">
-        <Columns>
+    <div class="col-12">
+        <div>
+            <RadzenButton Size="ButtonSize.Medium" Click="@(args =>  CreateContact(brgymodel))" Text="Add New Contact" />
+        </div><br />
+        <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="20"
+                    AllowSorting="true" Data="@person" TItem="PersonProfilesModel" ColumnWidth="200px">
+            <Columns>
 
-            <RadzenGridColumn TItem="PersonProfilesModel" Property="Fullname" Title="Fullname" />
-            <RadzenGridColumn TItem="PersonProfilesModel" Filterable="false" Property="Barangay.BarangayName" Title="Barangay" />
-            <RadzenGridColumn TItem="PersonProfilesModel" Filterable="false" Property="PersonStatus" Title="Status" />
+                <RadzenGridColumn TItem="PersonProfilesModel" Property="Fullname" Title="Fullname" />
+                <RadzenGridColumn TItem="PersonProfilesModel" Filterable="false" Property="Barangay.BarangayName" Title="Barangay" />
+                <RadzenGridColumn TItem="PersonProfilesModel" Filterable="false" Property="PersonStatus" Title="Status" />
 
-        </Columns>
-    </RadzenGrid>
-</div>
+            </Columns>
+        </RadzenGrid>
+    </div>
 }
 
 @code {
@@ -55,7 +59,7 @@ else
 
     protected async override Task OnParametersSetAsync()
     {
-        brgymodel = await http.GetFromJsonAsync<PersonProfilesModel>($"https://localhost:44326/api/Person/" + contactId);
+        brgymodel = await http.GetFromJsonAsync<PersonProfilesModel>($"https://pegasusapiagent.azurewebsites.net/api/Person/" + contactId);
     }
     protected override async Task OnInitializedAsync()
     {
@@ -64,11 +68,12 @@ else
 
     async Task LoadContactedPerson()
     {
-        person = await http.GetFromJsonAsync<List<PersonProfilesModel>>("https://localhost:44326/api/Contacts/" + contactId);
+        person = await http.GetFromJsonAsync<List<PersonProfilesModel>>("https://pegasusapiagent.azurewebsites.net/api/Contacts/" + contactId);
     }
     void CreateContact(PersonProfilesModel brgymodel)
     {
         navmgr.NavigateTo("/cases/createcontact/" + brgymodel.Id);
     }
+    
 }
 

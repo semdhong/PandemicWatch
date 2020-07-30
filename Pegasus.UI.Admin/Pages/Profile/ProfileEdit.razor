@@ -23,12 +23,12 @@
 
         protected async override Task OnInitializedAsync()
         {
-            Person = await http.GetJsonAsync<PersonProfilesModel>($"https://localhost:44326/api/Person/" + brgyId);
+            Person = await http.GetJsonAsync<PersonProfilesModel>($"https://pegasusapiagent.azurewebsites.net/api/Person/" + brgyId);
         }
 
         async Task EditBrgy()
         {
-            await http.PutJsonAsync("https://localhost:44326/api/Person", Person);
+            await http.PutJsonAsync("https://pegasusapiagent.azurewebsites.net/api/Person", Person);
             navmgr.NavigateTo("/cases");
         }
         protected override async Task OnAfterRenderAsync(bool firstRender)

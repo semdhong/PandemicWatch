@@ -12,8 +12,9 @@
     PersonProfilesModel Persons = new PersonProfilesModel();
 
     async Task CreateCase()
-    { 
-    await http.PutAsJsonAsync("https://localhost:44326/api/Person", Persons);
-    navmgr.NavigateTo("/cases");
-    } 
+    {
+        Persons.PersonStatus = "D";
+        await http.PutAsJsonAsync("https://pegasusapiagent.azurewebsites.net/api/Person", Persons);
+        navmgr.NavigateTo("/cases");
+    }
     }

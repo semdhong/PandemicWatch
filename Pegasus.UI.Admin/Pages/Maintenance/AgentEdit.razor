@@ -13,13 +13,13 @@
     protected async override Task OnParametersSetAsync()
     {
         //brgymodel = await http.GetJsonAsync<Pegasus.Models.Maintenance.BarangayModel>($"https://pegasusapiadmin.azurewebsites.net/api/Barangay/" + brgyId);
-        agentModel = await http.GetJsonAsync<AgentModel>($"https://localhost:44399/api/Agent/" + agentId);
+        agentModel = await http.GetJsonAsync<AgentModel>($"https://pegasusapiadmin.azurewebsites.net/api/Agent/" + agentId);
     }
 
     async Task EditBrgy()
     {
         //await http.PutJsonAsync("https://pegasusapiadmin.azurewebsites.net/api/Barangay", agentId);
-        await http.PutJsonAsync("https://localhost:44399/api/Agent", agentId);
+        await http.PutJsonAsync("https://pegasusapiadmin.azurewebsites.net/api/Agent", agentId);
         navmgr.NavigateTo("/maintenance/agents");
     }
 }

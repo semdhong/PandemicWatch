@@ -13,7 +13,7 @@
                 <div class="user">
                     <RadzenImage Path="css/images/person.png" Style="width:100px;" />
                     <div class="name">@principalpersonsmodel.Fullname</div>
-                    @switch (person.PersonStatus)
+                    @switch (principalpersonsmodel.PersonStatus)
                     {
                         case "P":
                             <h4 class="badge badge-danger">Positive</h4>
@@ -124,25 +124,25 @@
 
     protected async override Task OnInitializedAsync()
     {
-        contactpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://localhost:44399/api/Contacts/" + personId);
-        principalpersonsmodel = await http.GetJsonAsync<PersonProfilesModel>($"https://localhost:44399/api/Person/" + personId);
-        allpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://localhost:44399/api/Person/");
+        contactpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://pegasusapiadmin.azurewebsites.net/api/Contacts/" + personId);
+        principalpersonsmodel = await http.GetJsonAsync<PersonProfilesModel>($"https://pegasusapiadmin.azurewebsites.net/api/Person/" + personId);
+        allpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://pegasusapiadmin.azurewebsites.net/api/Person/");
         StartCountdown();
     }
 
     //protected async override Task OnParametersSetAsync()
     //{
 
-    //    contactpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://localhost:44399/api/Contacts/" + personId);
-    //    principalpersonsmodel = await http.GetJsonAsync<PersonProfilesModel>($"https://localhost:44399/api/Person/" + personId);
-    //    allpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://localhost:44399/api/Person/");
+    //    contactpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://pegasusapiadmin.azurewebsites.net/api/Contacts/" + personId);
+    //    principalpersonsmodel = await http.GetJsonAsync<PersonProfilesModel>($"https://pegasusapiadmin.azurewebsites.net/api/Person/" + personId);
+    //    allpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://pegasusapiadmin.azurewebsites.net/api/Person/");
     //    StartCountdown();
     //}
     async Task ReloadData()
     {
-        contactpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://localhost:44399/api/Contacts/" + personId);
-        principalpersonsmodel = await http.GetJsonAsync<PersonProfilesModel>($"https://localhost:44399/api/Person/" + personId);
-        allpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://localhost:44399/api/Person/");
+        contactpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://pegasusapiadmin.azurewebsites.net/api/Contacts/" + personId);
+        principalpersonsmodel = await http.GetJsonAsync<PersonProfilesModel>($"https://pegasusapiadmin.azurewebsites.net/api/Person/" + personId);
+        allpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://pegasusapiadmin.azurewebsites.net/api/Person/");
     }
 
     void GetSecondLevel(int id)

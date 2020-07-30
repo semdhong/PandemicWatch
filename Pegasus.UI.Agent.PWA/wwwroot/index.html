@@ -4,14 +4,16 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Pegasus.UI.Agent.PWA</title>
+    <title>Pandemic Watch Agent</title>
     <base href="/" />
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
     <link href="manifest.json" rel="manifest" />
     <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
+    <link rel="stylesheet" href="_content/Radzen.Blazor/css/default-base.css">
     <link href="_content/Blazored.Typeahead/blazored-typeahead.css" rel="stylesheet" />
-   
+    <link href="css/pincod.css" rel="stylesheet" />
+    <link href="https://cdn.syncfusion.com/ej2/17.4.46/fabric.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -22,24 +24,74 @@
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
+    <script src="https://cdn.syncfusion.com/ej2/17.4.46/dist/ej2.min.js"></script>
+    <script src="https://cdn.syncfusion.com/ej2/17.4.46/dist/ejs.interop-ie.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="_framework/blazor.webassembly.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
     <script src="_content/Blazored.Typeahead/blazored-typeahead.js"></script>
-   
-    <script src="html5-qrcode.js"></script>
-    <script src="qrcode.js"></script>
+    <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
+
 
     <script type="text/javascript">
-        function updateQRCode(text) {
+        
+        function initpin() {
+            jQuery(document).ready(function ($) {
+                $(document).ready(function () {
+                    // http://www.jsfuck.com/
+                    var pin =
+                        +!![] +
+                        [] +
+                        (!+[] + !![] + []) +
+                        (!+[] + !![] + !![] + []) +
+                        (!+[] + !![] + !![] + !![] + []);
+                    var enterCode = "";
+                    enterCode.toString();
 
-            var element = document.getElementById("qrcode");
+                    $("#numbers button").click(function () {
+                        var clickedNumber = $(this).text().toString();
+                        enterCode = enterCode + clickedNumber;
+                        var lengthCode = parseInt(enterCode.length);
+                        lengthCode--;
+                        $("#fields .numberfield:eq(" + lengthCode + ")").addClass("active");
 
-           
-                element.appendChild(showQRCode(text));
+                        if (lengthCode == 3) {
+                            // Check the PIN
+                            if (enterCode == pin) {
+                                // Right PIN!
+                                $("#fields .numberfield").addClass("right");
+                                $("#numbers").addClass("hide");
+                                $("#anleitung p").html("Amazing!<br>You entered the correct Code!");
+                                window.location.replace('/cases');
+                            } else {
+                                // Wrong PIN!
+                                $("#fields").addClass("miss");
+                                enterCode = "";
+                                setTimeout(function () {
+                                    $("#fields .numberfield").removeClass("active");
+                                }, 200);
+                                setTimeout(function () {
+                                    $("#fields").removeClass("miss");
+                                }, 500);
+                            }
+                        } else {
+                        }
+                    });
 
+                    $("#restartbtn").click(function () {
+                        enterCode = "";
+                        $("#fields .numberfield").removeClass("active");
+                        $("#fields .numberfield").removeClass("right");
+                        $("#numbers").removeClass("hide");
+                        $("#anleitung p").html(
+                            "<strong>Please enter the correct PIN-Code.</strong><br> It is: 1234 / Also try a wrong code"
+                        );
+                    });
+                });
+            });
         }
 
-       
     </script>
 </body>
 
