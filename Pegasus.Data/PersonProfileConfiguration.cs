@@ -19,6 +19,11 @@ namespace Pegasus.Data
                 .WithMany(p => p.PersonProfile)
                 .HasForeignKey(d => d.BrgyId)
                 .HasConstraintName("FK_PersonProfile_Barangay1");
+
+            entity.HasOne(d => d.IsolationCenterNavigation)
+                .WithMany(p => p.PersonProfile)
+                .HasForeignKey(d => d.IsolationCenter)
+                .HasConstraintName("FK_PersonProfile_IsolationCenters");
         }
     }
 }

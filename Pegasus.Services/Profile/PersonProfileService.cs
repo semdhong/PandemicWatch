@@ -42,7 +42,16 @@ namespace Pegasus.Services.Profile
                 QrCode = GetQrCode(model),
                 Contact = model.Contact,
                 Address = model.Address,
-                SwabTestDate = model.SwabTestDate
+                SwabTestDate = model.SwabTestDate,
+                 SwabArea = model.SwabArea,
+                  CaseNo = model.CaseNo,
+                   Gender =model.Gender,
+                    DateLabConfirm = model.DateLabConfirm,
+                     BrgyRemarks = model.BrgyRemarks,
+                      CHDOHRemarks = model.CHDOHRemarks,
+                       IsolationCenter = model.IsolationCenterId,
+                        Age = model.Age,
+                          Agent = model.UserAgent
 
 
             };
@@ -78,7 +87,21 @@ namespace Pegasus.Services.Profile
                     LguId = x.LguId,
                     BarangayAddress = x.Brgy.BarangayAddress,
                     BarangayName = x.Brgy.BarangayName,
-                }
+                },
+                History = x.PersonHistory.Select(d => new PersonHistoryModel {
+                    Id = d.Id,
+                    CreatedBy = d.CreatedBy,
+                    DateCreate = d.DateCreated,
+                    Remarks = d.Remarks
+                }).ToList(),
+                SwabArea = x.SwabArea,
+                CaseNo = x.CaseNo,
+                Gender = x.Gender,
+                DateLabConfirm = x.DateLabConfirm,
+                IsolationCenterId = x.IsolationCenter,
+                Age = x.Age,
+                UserAgent = x.Agent
+
             }).Where(x => x.PrincipalPersonId == id).ToList();
         }
 
@@ -201,7 +224,14 @@ namespace Pegasus.Services.Profile
                 CHDOHVerified = model.CHDOHVerified,
                 BrgyRemarks = model.BrgyRemarks,
                 CHDOHRemarks = model.CHDOHRemarks,
-                SwabTestDate = model.SwabTestDate
+                SwabTestDate = model.SwabTestDate,
+                SwabArea = model.SwabArea,
+                CaseNo = model.CaseNo,
+                Gender = model.Gender,
+                DateLabConfirm = model.DateLabConfirm,
+                IsolationCenter = model.IsolationCenterId,
+                Age = model.Age,
+                Agent = model.UserAgent
 
             });
         }

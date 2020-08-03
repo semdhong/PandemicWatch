@@ -17,14 +17,20 @@ namespace Pegasus.Data
         }
 
         public virtual DbSet<Barangay> Barangay { get; set; }
+        public virtual DbSet<IsolationCenters> IsolationCenters { get; set; }
         public virtual DbSet<LguProfile> LguProfile { get; set; }
+        public virtual DbSet<PersonHistory> PersonHistory { get; set; }
         public virtual DbSet<PersonProfile> PersonProfile { get; set; }
         public virtual DbSet<UserAgents> UserAgents { get; set; }
+        public virtual DbSet<UserRole> UserRole { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new BarangayConfiguration());
+            modelBuilder.ApplyConfiguration(new PersonHistoryConfiguration());
             modelBuilder.ApplyConfiguration(new PersonProfileConfiguration());
+            modelBuilder.ApplyConfiguration(new UsersConfiguration());
 
 
             OnModelCreatingPartial(modelBuilder);

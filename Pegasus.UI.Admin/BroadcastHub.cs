@@ -16,6 +16,12 @@ namespace Pegasus.UI.Admin
             await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
 
-        
+        public async Task SendContact(int id)
+        {
+          
+            await Clients.All.SendAsync("ReceiveContact", id);
+        }
+
+
     }
 }
