@@ -18,7 +18,15 @@
       },
       {
          "HasPrimaryKey": true,
+         "Name": "[dbo].[IsolationCenters]"
+      },
+      {
+         "HasPrimaryKey": true,
          "Name": "[dbo].[LguProfile]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[PersonHistory]"
       },
       {
          "HasPrimaryKey": true,
@@ -27,6 +35,14 @@
       {
          "HasPrimaryKey": true,
          "Name": "[dbo].[UserAgents]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[UserRole]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Users]"
       }
    ],
    "UseDatabaseNames": true,

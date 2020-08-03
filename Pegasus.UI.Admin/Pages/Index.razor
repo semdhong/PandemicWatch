@@ -1,22 +1,14 @@
 ﻿@page "/"
 @inject NavigationManager navmgr
 
-<div class="center">
-      
-
-
-    <div class="col-md-4 center">
-       
-        <RadzenCard>
-
-            <RadzenImage Path="css/images/PandemicWatch.png" Style="width:200px" class="center" />
-            <RadzenLogin AllowRegister="false" AllowResetPassword="false" Username="@userName" Password="@password"
-                         Login="@((args) => Login(args, "Login with default values"))"
-                         Style="margin-bottom: 20px;" />
-            <RadzenImage Path="css/images/pegasus logo.png" Style="width:100px" class="float-right"/>
-        </RadzenCard>
-    </div>
-</div>
+<AuthorizeView>
+    <Authorized>
+        <p>Welcome, @context.User.Identity.Name</p>
+    </Authorized>
+    <NotAuthorized>
+        <p>Not Logged In</p>
+    </NotAuthorized>
+</AuthorizeView>
 @code {
     string userName = "admin";
     string password = "admin";

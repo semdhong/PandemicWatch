@@ -8,6 +8,11 @@ namespace Pegasus.Data
 {
     public partial class PersonProfile
     {
+        public PersonProfile()
+        {
+            PersonHistory = new HashSet<PersonHistory>();
+        }
+
         [Key]
         public int Id { get; set; }
         [Column(TypeName = "text")]
@@ -41,6 +46,16 @@ namespace Pegasus.Data
         public string BrgyRemarks { get; set; }
         [Column(TypeName = "text")]
         public string CHDOHRemarks { get; set; }
+        [Column(TypeName = "text")]
+        public string CaseNo { get; set; }
+        [StringLength(50)]
+        public string Gender { get; set; }
+        public int? Age { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime? DateLabConfirm { get; set; }
+        [Column(TypeName = "text")]
+        public string SwabArea { get; set; }
+        public int? IsolationCenter { get; set; }
 
         [ForeignKey(nameof(Agent))]
         [InverseProperty(nameof(UserAgents.PersonProfile))]
@@ -48,5 +63,10 @@ namespace Pegasus.Data
         [ForeignKey(nameof(BrgyId))]
         [InverseProperty(nameof(Barangay.PersonProfile))]
         public virtual Barangay Brgy { get; set; }
+        [ForeignKey(nameof(IsolationCenter))]
+        [InverseProperty(nameof(IsolationCenters.PersonProfile))]
+        public virtual IsolationCenters IsolationCenterNavigation { get; set; }
+        [InverseProperty("PersonProfile")]
+        public virtual ICollection<PersonHistory> PersonHistory { get; set; }
     }
 }

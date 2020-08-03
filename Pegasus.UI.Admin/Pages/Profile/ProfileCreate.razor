@@ -2,6 +2,7 @@
 
 @inject HttpClient http
 @inject NavigationManager navmgr
+@inject BroadcastHub _hub
 
 <h3>Add new Case</h3>
 <ProfileForm Person="@Persons" ButtonText="Create" OnValidSubmit="@CreateCase" />
@@ -14,6 +15,7 @@
     {
         Persons.PersonStatus = "P";
         await http.PutJsonAsync("https://pegasusapiagent.azurewebsites.net/api/Person", Persons);
+        await _hub.SendContact(Persons.Id);
         navmgr.NavigateTo("/cases");
     }
 }

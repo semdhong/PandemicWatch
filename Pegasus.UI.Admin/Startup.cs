@@ -13,7 +13,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Pegasus.UI.Admin.Areas.Identity;
 using Pegasus.UI.Admin.Data;
 using System.Net.Http;
 using Radzen;
@@ -23,6 +22,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Pegasus.UI.Admin.Areas.Identity;
 
 namespace Pegasus.UI.Admin
 {
@@ -39,16 +39,20 @@ namespace Pegasus.UI.Admin
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.AddDbContext<ApplicationDbContext>(options =>
+                  options.UseSqlServer(
+                      Configuration.GetConnectionString("LocalDb")));
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddRazorPages();
             services.AddServerSideBlazor();
-    
-            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<HttpClient>();
             services.AddBlazoredModal();
             services.AddScoped<DialogService>();
             services.AddScoped<NotificationService>();
+            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddCors();
             services.AddSignalRCore();
             services.AddResponseCompression(opts =>

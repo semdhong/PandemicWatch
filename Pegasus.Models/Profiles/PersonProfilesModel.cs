@@ -33,6 +33,14 @@ namespace Pegasus.Models.Profiles
         public string BrgyRemarks { get; set; }
         public string CHDOHRemarks { get; set; }
         public DateTime? SwabTestDate { get; set; }
+        public string SwabArea { get; set; }
+        public string Gender { get; set; }
+        public int? Age { get; set; }
+        public DateTime? DateLabConfirm { get; set; }
+        public int? IsolationCenterId { get; set; }
+        public List<PersonHistoryModel> History { get; set; }
+        public IsolationCenterModel IsolationCenter { get; set; }
+        public string CaseNo { get; set; }
 
     }
 }
