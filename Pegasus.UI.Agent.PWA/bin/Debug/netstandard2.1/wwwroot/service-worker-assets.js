@@ -189,7 +189,7 @@
       "url": "image\/peronicon.png"
     },
     {
-      "hash": "sha256-qm3y+kYV0+0O0PFt83uNOx1Qp7i53O0EoZcFapNQVVM=",
+      "hash": "sha256-QtyL3zwCEge2H4NdnA3VPZi22o27iH\/QjviMcfQYEZE=",
       "url": "index.html"
     },
     {
@@ -201,7 +201,7 @@
       "url": "pincode.js"
     },
     {
-      "hash": "sha256-tBZ7JtrplMHsz5qloyokZ74qINCTAGJhE3\/W+ZHH5+c=",
+      "hash": "sha256-QlKuNLQZGB3vyS5WyYm5v84JjpwSdHYGQBtxfcrbGzY=",
       "url": "qrcode.js"
     },
     {
@@ -209,7 +209,7 @@
       "url": "sample-data\/weather.json"
     },
     {
-      "hash": "sha256-XRrqWde8+dfIkMvH19XVzWlA3GHY1IeRKURdPIROaQg=",
+      "hash": "sha256-rhysFhks\/Bw1cgcgUDiNU5ea9\/d6EzTdqovzCs\/nE1w=",
       "url": "_framework\/_bin\/Pegasus.UI.Agent.PWA.dll"
     },
     {
@@ -337,7 +337,7 @@
       "url": "_framework\/_bin\/Microsoft.Extensions.DependencyInjection.Abstractions.dll"
     },
     {
-      "hash": "sha256-uvs0OfcU3fCP1rHW+3WvqVNZshgkp8x2atmXdLkToMU=",
+      "hash": "sha256-h0qz\/40afKXJa\/rIubHf2q5BWRIPQxnCvq5\/tfKzqEk=",
       "url": "_framework\/_bin\/Syncfusion.Licensing.dll"
     },
     {
@@ -377,7 +377,7 @@
       "url": "_framework\/_bin\/System.Runtime.dll"
     },
     {
-      "hash": "sha256-+\/CnKuEOQKjcOX3B8U025j\/8D4TuEgsgET3RvtxOPjI=",
+      "hash": "sha256-zenlGyFpJ1kPmu2MWyP0A\/Vr3Bd+0T+us\/Mkjouu998=",
       "url": "_framework\/_bin\/Syncfusion.EJ2.Blazor.dll"
     },
     {
@@ -525,7 +525,7 @@
       "url": "_framework\/_bin\/Microsoft.JSInterop.WebAssembly.dll"
     },
     {
-      "hash": "sha256-Z+uNkwO0u9k5JF8PHeLDYdhRnuAZUSUA5JxP+z\/f9vI=",
+      "hash": "sha256-SFsyZBtSxxBvt78MZotmHbTJT4HzhI2qnBX1BoFvwP0=",
       "url": "_framework\/_bin\/Pegasus.UI.Agent.PWA.pdb"
     },
     {
@@ -549,9 +549,9 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-NMjY9EfM2+uHW5qHcygNLG\/8Ol1vhRs9\/xT0bzo+BAI=",
+      "hash": "sha256-ijef6CGihnv\/b+850pbqherh6J0nSkUcMtH7WyLshKI=",
       "url": "_framework\/blazor.boot.json"
     }
   ],
-  "version": "mjJVm4qV"
+  "version": "XWwWWHIv"
 };

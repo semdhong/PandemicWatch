@@ -1,5 +1,5 @@
 ﻿<StaticWebAssets Version="1.0">
-  <ContentRoot BasePath="/" Path="C:\Users\semdhong\Documents\GitHub\PEGASUS\Pandemic Watch\PandemicWatch\Pegasus.UI.Agent.PWA\bin\Debug\netstandard2.1\wwwroot\" />
-  <ContentRoot BasePath="_content/Blazored.Typeahead" Path="C:\Users\semdhong\.nuget\packages\blazored.typeahead\4.3.0\build\..\staticwebassets\" />
-  <ContentRoot BasePath="_content/Radzen.Blazor" Path="C:\Users\semdhong\.nuget\packages\radzen.blazor\2.10.20\build\..\staticwebassets\" />
+  <ContentRoot BasePath="/" Path="C:\Users\Hagutin\Documents\GitHub\PandemicWatch\Pegasus.UI.Agent.PWA\bin\Debug\netstandard2.1\wwwroot\" />
+  <ContentRoot BasePath="_content/Blazored.Typeahead" Path="C:\Users\Hagutin\.nuget\packages\blazored.typeahead\4.3.0\build\..\staticwebassets\" />
+  <ContentRoot BasePath="_content/Radzen.Blazor" Path="C:\Users\Hagutin\.nuget\packages\radzen.blazor\2.10.20\build\..\staticwebassets\" />
 </StaticWebAssets>

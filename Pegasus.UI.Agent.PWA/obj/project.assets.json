@@ -2056,7 +2056,7 @@
       ]
     },
     "Syncfusion.EJ2.Blazor/17.4.0.46": {
-      "sha512": "czv7r+cMJDM5Cn5UrYt+K/7NTwzXmca9z+al66U0Wj8nyV0Jy3XbGTWR58mF8Lxx9J3EqvnEMggEdIEbNgS28A==",
+      "sha512": "q8iD2yw5IwmqCRg92WpquZyTaueZABq//sGbP/5SyDW41vBGxZuhGIPm2QUd93HOUPW54mT9gPFqIM/APEarzQ==",
       "type": "package",
       "path": "syncfusion.ej2.blazor/17.4.0.46",
       "files": [
@@ -2069,7 +2069,7 @@
       ]
     },
     "Syncfusion.Licensing/17.4.0.46": {
-      "sha512": "YLfrJuI3bxhP/LqyDjXM1H+e53YPUAi59+QO2TQWKLe77D1jOd0BJZafqAF1YL5f0F6Dp+Nh3Q9wrKzc8GtBvg==",
+      "sha512": "yD7S3JRFlcpUT+k/KrJ0/fPhyrELuRXzwkbFE7MpbL5SsuuwtnqLkp8rAR6vJDMcOijc1QP4Ocks/0A1ugVNUw==",
       "type": "package",
       "path": "syncfusion.licensing/17.4.0.46",
       "files": [
@@ -2570,25 +2570,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\semdhong\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\Hagutin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.UI.Agent.PWA\\Pegasus.UI.Agent.PWA.csproj",
+      "projectUniqueName": "C:\\Users\\Hagutin\\Documents\\GitHub\\PandemicWatch\\Pegasus.UI.Agent.PWA\\Pegasus.UI.Agent.PWA.csproj",
       "projectName": "Pegasus.UI.Agent.PWA",
-      "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.UI.Agent.PWA\\Pegasus.UI.Agent.PWA.csproj",
-      "packagesPath": "C:\\Users\\semdhong\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.UI.Agent.PWA\\obj\\",
+      "projectPath": "C:\\Users\\Hagutin\\Documents\\GitHub\\PandemicWatch\\Pegasus.UI.Agent.PWA\\Pegasus.UI.Agent.PWA.csproj",
+      "packagesPath": "C:\\Users\\Hagutin\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Hagutin\\Documents\\GitHub\\PandemicWatch\\Pegasus.UI.Agent.PWA\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\"
-      ],
       "configFilePaths": [
-        "C:\\Users\\semdhong\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\Hagutin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.1"

@@ -6,7 +6,7 @@
   "linkerEnabled": false,
   "resources": {
     "assembly": {
-      "Pegasus.UI.Agent.PWA.dll": "sha256-XRrqWde8+dfIkMvH19XVzWlA3GHY1IeRKURdPIROaQg=",
+      "Pegasus.UI.Agent.PWA.dll": "sha256-rhysFhks\/Bw1cgcgUDiNU5ea9\/d6EzTdqovzCs\/nE1w=",
       "System.Text.Json.dll": "sha256-HQeN+ZfHAERO+uW0fP0J9J3WV1hQ3vUIOWbqGSYBPp8=",
       "System.Runtime.CompilerServices.Unsafe.dll": "sha256-kL\/omZDwqByAi+lPdMeDmr3XjHcn4RVb+LmZ4mut1Yc=",
       "mscorlib.dll": "sha256-BaZPMj95+YNe3G4ckTGD6szZFwZeA2MOHn91zTGKDeU=",
@@ -38,7 +38,7 @@
       "System.Text.Encodings.Web.dll": "sha256-Tqh1Da+iTRQJEZUGAsMNFuZ4hf1PMf13WApRZod+uw4=",
       "System.Net.Http.Json.dll": "sha256-99dseBOagY3mzu5Y8Eqm8gRI+o8QbbCp7R2Ew9bQ+5E=",
       "Microsoft.Extensions.DependencyInjection.Abstractions.dll": "sha256-Bs1Wrmh4ex9dTEIT0yCRF52N\/wOmsBDt457BHr0\/ssM=",
-      "Syncfusion.Licensing.dll": "sha256-uvs0OfcU3fCP1rHW+3WvqVNZshgkp8x2atmXdLkToMU=",
+      "Syncfusion.Licensing.dll": "sha256-h0qz\/40afKXJa\/rIubHf2q5BWRIPQxnCvq5\/tfKzqEk=",
       "System.Text.Encoding.dll": "sha256-wDPt\/zh9xGop+Vp7dKTGGcT9bZIAatqQ\/eQLhtASLgw=",
       "System.Reflection.Extensions.dll": "sha256-fFIyhWRt3TsR3191q2WtKgMNr3s\/jNNnO4P5rrUojjA=",
       "System.Linq.dll": "sha256-egPOud7Mcxx\/20iAZiekEmazNYxAwi8HO1Z5+a4Ikww=",
@@ -48,7 +48,7 @@
       "System.Reflection.dll": "sha256-8Q+uKcqkDjFjcXfcYU073dQlKb5IRta\/UHFtV3Tjz9s=",
       "System.Resources.ResourceManager.dll": "sha256-U4q43ZeuBEBaCygKJwr18fjDYwnFv22MHuvMVqnpNzI=",
       "System.Runtime.dll": "sha256-6CpyRQAYrVPJfNYBKH0K9lWX+rNPO15lwNhGHPmvxtk=",
-      "Syncfusion.EJ2.Blazor.dll": "sha256-+\/CnKuEOQKjcOX3B8U025j\/8D4TuEgsgET3RvtxOPjI=",
+      "Syncfusion.EJ2.Blazor.dll": "sha256-zenlGyFpJ1kPmu2MWyP0A\/Vr3Bd+0T+us\/Mkjouu998=",
       "Microsoft.AspNetCore.Http.Features.dll": "sha256-Zn5BJ87SrRiKwaRm\/SWI0LeLWLPdeC0kTvOgKB5YTj0=",
       "System.IO.Pipelines.dll": "sha256-PhH7DeDP+SCSyTu4B1Yw+tHQAG4oqYgFaMsHOUoNXEU=",
       "Microsoft.Extensions.Primitives.dll": "sha256-y\/FyJQOcW2TOcTp7Iuv8brGBzL5ZP0oJdG7ysK+gtKc=",
@@ -87,7 +87,7 @@
       "Microsoft.JSInterop.WebAssembly.dll": "sha256-czNf3btAeBW\/vvID5LAfgcsNZ+GM3ssVuPaMflcg0rs="
     },
     "pdb": {
-      "Pegasus.UI.Agent.PWA.pdb": "sha256-Z+uNkwO0u9k5JF8PHeLDYdhRnuAZUSUA5JxP+z\/f9vI=",
+      "Pegasus.UI.Agent.PWA.pdb": "sha256-SFsyZBtSxxBvt78MZotmHbTJT4HzhI2qnBX1BoFvwP0=",
       "System.Linq.Dynamic.Core.pdb": "sha256-TUdNbGDz+ogqJea4nbn9e5NAJa8g20Wv3as0sLQ8J+o="
     },
     "runtime": {
