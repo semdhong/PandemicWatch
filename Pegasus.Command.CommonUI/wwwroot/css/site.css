@@ -53,7 +53,7 @@ app {
 }
 
 .triangles {
-    background-image: url("../images/triangles.svg");
+    background-image: url("../images/pandemic_bg.jpg");
     background-size: cover;
     height: 100%;
     bottom: 0;
@@ -358,7 +358,7 @@ app {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #5D2E8F;
+    background-color: #343a40;
     height: 64px;
     color: #fff;
 }

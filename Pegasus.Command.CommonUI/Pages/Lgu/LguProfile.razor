@@ -1,0 +1,165 @@
+﻿@page "/maintenance/lguprofile"
+@attribute [Authorize]
+@inject HttpClient http
+@inject IJSRuntime js
+@inject NavigationManager navmgr
+@inject IMatToaster matToaster
+@inject Helpers _helper
+@using Newtonsoft.Json;
+@using System.Net
+<h3>Local Government Unit</h3>
+
+
+@if (lguprofile == null)
+{
+    <LoadingBackground ShowLogoBox="true">
+        <label>Loading Cases</label>
+    </LoadingBackground>
+}
+else
+{
+    <MatButton Icon="add" Label="New LGU" OnClick="@(() => OpenUpsertRoleDialog(0))"></MatButton>
+    <div class="col-12">
+        <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="20"
+                    AllowSorting="true" Data="@lguprofile" TItem="LguProfileModel" ColumnWidth="300px">
+            <Columns>
+                <RadzenGridColumn TItem="LguProfileModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px" Title="View Lgu">
+                    <Template Context="lguprofile">
+                        <RadzenButton Icon="edit" Size="ButtonSize.Medium" Click="@(args => OpenUpsertRoleDialog(lguprofile.Id))">
+                        </RadzenButton>
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="LguProfileModel" Property="LguName" Title="LGU" />
+                <RadzenGridColumn TItem="LguProfileModel" Property="LguAddress" Title="Address" />
+
+
+            </Columns>
+        </RadzenGrid>
+    </div>
+
+
+    <MatDialog @bind-IsOpen="@isUpsertRoleDialogOpen">
+        <MatDialogTitle>
+            @labelUpsertDialogTitle
+        </MatDialogTitle>
+        <MatDialogContent>
+            <fieldset>
+                <div class="form-group">
+                    <MatTextField @bind-Value="@lgu.LguName" Label="LGU Name" Icon="building" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                </div>
+                <div class="form-group">
+                    <MatTextField @bind-Value="@lgu.LguAddress" Label="Address" Icon="home" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                </div>
+
+            </fieldset>
+
+
+        </MatDialogContent>
+        <MatDialogActions>
+            <MatButton OnClick="@(e => { isUpsertRoleDialogOpen = false; })">Cancel</MatButton>
+            <MatButton OnClick="@UpsertRole">@labelUpsertDialogOkButton</MatButton>
+        </MatDialogActions>
+    </MatDialog>
+}
+
+@code {
+    List<LguProfileModel> lguprofile { get; set; }
+    LguProfileModel lgu = new LguProfileModel();
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadLguProfile();
+    }
+
+    async Task LoadLguProfile()
+    {
+        string apis = _helper.ApiUrl(ApiType.Admin);
+        string uris = apis + "/LguProfile";
+        lguprofile = await http.GetJsonAsync<List<LguProfileModel>>(uris);
+    }
+
+    #region OpenUpsertRoleDialog
+
+    bool isUpsertRoleDialogOpen = false;
+    bool isInsertOperation;
+    string labelUpsertDialogTitle;
+    string labelUpsertDialogOkButton;
+
+    public async Task OpenUpsertRoleDialog(int id)
+    {
+        string apis = _helper.ApiUrl(ApiType.Admin);
+        string uris = apis + "/LguProfile";
+        try
+        {
+
+            if (id == 0)
+            {
+                isInsertOperation = true;
+                labelUpsertDialogTitle = "New LGU";
+                labelUpsertDialogOkButton = "Create LGU";
+                lgu = new LguProfileModel();
+            }
+            else
+            {
+                isInsertOperation = false;
+                lgu = await http.GetFromJsonAsync<LguProfileModel>(uris + "/" + id);
+                labelUpsertDialogTitle = "Edit LGU";
+                labelUpsertDialogOkButton = "Update LGU";
+            }
+
+            isUpsertRoleDialogOpen = true;
+        }
+        catch (Exception ex)
+        {
+            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, $"{labelUpsertDialogTitle} Error");
+        }
+    }
+
+    public async Task UpsertRole()
+    {
+        try
+        {
+            string apis = _helper.ApiUrl(ApiType.Admin);
+            string uris = apis + "/LguProfile";
+
+            if (string.IsNullOrEmpty(lgu.LguName) || string.IsNullOrEmpty(lgu.LguAddress))
+            {
+                matToaster.Add("Fields are empty", MatToastType.Danger);
+                return;
+            }
+
+
+            if (isInsertOperation)
+            {
+
+                await http.PutAsJsonAsync(uris, lgu);
+
+
+            }
+            else
+            {
+                await http.PutAsJsonAsync(uris, lgu);
+
+            }
+
+
+            matToaster.Add(isInsertOperation ? "LGU Created" : "LGU Updated", MatToastType.Success);
+
+            //await PopulateRoleList();
+            StateHasChanged();
+
+            //  matToaster.Add(apiResponse.Message, MatToastType.Danger);
+
+
+            // this.StateHasChanged();
+            await OnInitializedAsync();
+
+            isUpsertRoleDialogOpen = false;
+        }
+        catch (Exception ex)
+        {
+            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, ex.ToString());
+        }
+    }
+
+    #endregion
+}

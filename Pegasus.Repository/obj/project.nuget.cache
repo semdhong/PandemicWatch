@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "HEfLkSnlI88Y7KI9zwEVe3csaA569L+DpiD/OFgQTwrgRTgUw4DPjF3l+jUBcDcuaAEIuhEXu0sx01J01nAO7A==",
+  "dgSpecHash": "C8dEIzhTWsLwt3cLc+e8EAnNKsbdqZM6zR/tR8srfMS/A29gy4lx6UolMRC7dnsaOSwrSIfTk3fmonGtzOd9Hw==",
   "success": true,
   "projectFilePath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Repository\\Pegasus.Repository.csproj",
   "expectedPackageFiles": [
@@ -101,7 +101,9 @@
     "C:\\Users\\semdhong\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\semdhong\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\semdhong\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\semdhong\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
+    "C:\\Users\\semdhong\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
+    "C:\\Users\\semdhong\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.2\\microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512",
+    "C:\\Users\\semdhong\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.2\\microsoft.netcore.app.host.win-x64.3.1.2.nupkg.sha512"
   ],
   "logs": []
 }

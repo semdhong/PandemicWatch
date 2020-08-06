@@ -31,7 +31,8 @@ namespace Pegasus.Api.Agent.Controllers
         [HttpGet("{id}")]
         public ActionResult<PersonProfilesModel> Get(int id)
         {
-            return _personService.GetPersonProfile(id);
+          var data = _personService.GetPersonProfile(id);
+            return data;
         }
 
 
@@ -43,7 +44,7 @@ namespace Pegasus.Api.Agent.Controllers
         }
 
         // PUT api/<BarangayController>/5
-        
+        [HttpPut]
         public void Put(PersonProfilesModel model)
         {
             if(model.Id==0)

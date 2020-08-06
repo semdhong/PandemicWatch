@@ -1,0 +1,183 @@
+﻿@page "/maintenance/barangay"
+@attribute [Authorize]
+@inject HttpClient http
+@inject IJSRuntime js
+@inject NavigationManager navmgr
+@inject IMatToaster matToaster
+@inject Helpers _helper
+@using Newtonsoft.Json;
+@using System.Net
+<h3>Barangay List</h3>
+
+
+@if (lguprofile == null)
+{
+    <LoadingBackground ShowLogoBox="true">
+        <label>Loading Barangay</label>
+    </LoadingBackground>
+}
+else
+{
+    <MatButton Icon="add" Label="New Barangay" OnClick="@(() => OpenUpsertRoleDialog(0))"></MatButton>
+    <div class="col-12">
+        <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="20"
+                    AllowSorting="true" Data="@brgys" TItem="BarangayModel" ColumnWidth="300px">
+            <Columns>
+                <RadzenGridColumn TItem="BarangayModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px" Title="View Lgu">
+                    <Template Context="brgy">
+                        <RadzenButton Icon="edit" Size="ButtonSize.Medium" Click="@(args => OpenUpsertRoleDialog(brgy.Id))">
+                        </RadzenButton>
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="BarangayModel" Property="BarangayName" Title="Barangay" />
+                <RadzenGridColumn TItem="BarangayModel" Property="BarangayLgu" Title="LGU" />
+                <RadzenGridColumn TItem="BarangayModel" Property="BarangayAddress" Title="Address" />
+
+
+            </Columns>
+        </RadzenGrid>
+    </div>
+
+
+    <MatDialog @bind-IsOpen="@isUpsertRoleDialogOpen">
+        <MatDialogTitle>
+            @labelUpsertDialogTitle
+        </MatDialogTitle>
+        <MatDialogContent>
+            <fieldset>
+                <div class="form-group">
+
+                    <RadzenDropDown AllowClear="false" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" @bind-Value="@brgy.LguId" Placeholder="Select LGU" Data="@lguprofile" TextProperty="LguName" ValueProperty="Id"
+                                    Style="margin-bottom: 20px; width:300px;">
+
+                    </RadzenDropDown>
+                </div>
+                <div class="form-group">
+                    <MatTextField @bind-Value="@brgy.BarangayName" Label="Barangay Name" Icon="location_city" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                </div>
+                <div class="form-group">
+                    <MatTextField @bind-Value="@brgy.BarangayAddress" Label="Barangay Address" Icon="my_location" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                </div>
+
+
+            </fieldset>
+
+
+        </MatDialogContent>
+        <MatDialogActions>
+            <MatButton OnClick="@(e => { isUpsertRoleDialogOpen = false; })">Cancel</MatButton>
+            <MatButton OnClick="@UpsertRole">@labelUpsertDialogOkButton</MatButton>
+        </MatDialogActions>
+    </MatDialog>
+}
+
+@code {
+    List<LguProfileModel> lguprofile { get; set; }
+    List<BarangayModel> brgys { get; set; }
+    BarangayModel brgy = new BarangayModel();
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadLguProfile();
+        await LoadBarangays();
+    }
+
+    async Task LoadLguProfile()
+    {
+        string apis = _helper.ApiUrl(ApiType.Admin);
+        string uris = apis + "/LguProfile";
+        lguprofile = await http.GetJsonAsync<List<LguProfileModel>>(uris);
+    }
+
+    async Task LoadBarangays()
+    {
+        string apis = _helper.ApiUrl(ApiType.Admin);
+        string uris = apis + "/Barangay";
+        brgys = await http.GetJsonAsync<List<BarangayModel>>(uris);
+    }
+
+    #region OpenUpsertRoleDialog
+
+    bool isUpsertRoleDialogOpen = false;
+    bool isInsertOperation;
+    string labelUpsertDialogTitle;
+    string labelUpsertDialogOkButton;
+
+    public async Task OpenUpsertRoleDialog(int id)
+    {
+        string apis = _helper.ApiUrl(ApiType.Admin);
+        string uris = apis + "/Barangay";
+        try
+        {
+
+            if (id == 0)
+            {
+                isInsertOperation = true;
+                labelUpsertDialogTitle = "New Barangay";
+                labelUpsertDialogOkButton = "Create Barangay";
+                brgy = new BarangayModel();
+            }
+            else
+            {
+                isInsertOperation = false;
+                brgy = await http.GetFromJsonAsync<BarangayModel>(uris + "/" + id);
+                labelUpsertDialogTitle = "Edit Barangay";
+                labelUpsertDialogOkButton = "Update Barangay";
+            }
+
+            isUpsertRoleDialogOpen = true;
+        }
+        catch (Exception ex)
+        {
+            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, $"{labelUpsertDialogTitle} Error");
+        }
+    }
+
+    public async Task UpsertRole()
+    {
+        try
+        {
+            string apis = _helper.ApiUrl(ApiType.Admin);
+            string uris = apis + "/Barangay";
+
+            if (string.IsNullOrEmpty(brgy.BarangayName) || string.IsNullOrEmpty(brgy.BarangayAddress) || brgy.LguId <= 0)
+            {
+                matToaster.Add("Fields are empty", MatToastType.Danger);
+                return;
+            }
+
+
+            if (isInsertOperation)
+            {
+
+                await http.PutAsJsonAsync(uris, brgy);
+
+
+            }
+            else
+            {
+                await http.PutAsJsonAsync(uris, brgy);
+
+            }
+
+
+            matToaster.Add(isInsertOperation ? "Barangay Created" : "Barangay Updated", MatToastType.Success);
+
+            //await PopulateRoleList();
+            StateHasChanged();
+
+            //  matToaster.Add(apiResponse.Message, MatToastType.Danger);
+
+
+            // this.StateHasChanged();
+            await OnInitializedAsync();
+
+            isUpsertRoleDialogOpen = false;
+        }
+        catch (Exception ex)
+        {
+            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, ex.ToString());
+        }
+    }
+
+    #endregion
+}

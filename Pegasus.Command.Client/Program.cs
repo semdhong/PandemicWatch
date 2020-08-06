@@ -35,6 +35,7 @@ namespace Pegasus.Command.Client
             builder.Services.AddScoped<IAuthorizeApi, AuthorizeApi>();
             builder.Services.Add(new ServiceDescriptor(typeof(IUserProfileApi), typeof(UserProfileApi), ServiceLifetime.Scoped));
             builder.Services.AddScoped<AppState>();
+            builder.Services.AddScoped<Helpers>();
             builder.Services.AddLoadingBar();
             builder.Services.AddMatToaster(config =>
             {

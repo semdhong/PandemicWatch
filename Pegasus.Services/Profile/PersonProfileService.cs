@@ -121,8 +121,8 @@ namespace Pegasus.Services.Profile
                 PicPath = x.PicPath,
                 DateCreated = x.DateCreated,
                 QrCode = x.QrCode,
-                Address = x.Address,
                 Contact = x.Contact,
+                Address = x.Address,
                 BrgyVerified = x.BrgyVerified,
                 CHDOHVerified = x.CHDOHVerified,
                 BrgyRemarks = x.BrgyRemarks,
@@ -134,7 +134,21 @@ namespace Pegasus.Services.Profile
                     LguId = x.LguId,
                     BarangayAddress = x.Brgy.BarangayAddress,
                     BarangayName = x.Brgy.BarangayName,
-                }
+                },
+                History = x.PersonHistory.Select(d => new PersonHistoryModel
+                {
+                    Id = d.Id,
+                    CreatedBy = d.CreatedBy,
+                    DateCreate = d.DateCreated,
+                    Remarks = d.Remarks
+                }).ToList(),
+                SwabArea = x.SwabArea,
+                CaseNo = x.CaseNo,
+                Gender = x.Gender,
+                DateLabConfirm = x.DateLabConfirm,
+                IsolationCenterId = x.IsolationCenter,
+                Age = x.Age,
+                UserAgent = x.Agent
             }).FirstOrDefault(x => x.Id == id);
         }
 
@@ -180,8 +194,8 @@ namespace Pegasus.Services.Profile
                 PicPath = x.PicPath,
                 DateCreated = x.DateCreated,
                 QrCode = x.QrCode,
-                Address = x.Address,
                 Contact = x.Contact,
+                Address = x.Address,
                 BrgyVerified = x.BrgyVerified,
                 CHDOHVerified = x.CHDOHVerified,
                 BrgyRemarks = x.BrgyRemarks,
@@ -193,7 +207,21 @@ namespace Pegasus.Services.Profile
                     LguId = x.LguId,
                     BarangayAddress = x.Brgy.BarangayAddress,
                     BarangayName = x.Brgy.BarangayName,
-                }
+                },
+                History = x.PersonHistory.Select(d => new PersonHistoryModel
+                {
+                    Id = d.Id,
+                    CreatedBy = d.CreatedBy,
+                    DateCreate = d.DateCreated,
+                    Remarks = d.Remarks
+                }).ToList(),
+                SwabArea = x.SwabArea,
+                CaseNo = x.CaseNo,
+                Gender = x.Gender,
+                DateLabConfirm = x.DateLabConfirm,
+                IsolationCenterId = x.IsolationCenter,
+                Age = x.Age,
+                UserAgent = x.Agent
             });
         }
 

@@ -5,7 +5,6 @@ using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Radzen;
-using Syncfusion.EJ2.Blazor;
 using AutoMapper;
 #if ServerSideBlazor
 

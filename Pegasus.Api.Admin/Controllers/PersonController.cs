@@ -53,10 +53,13 @@ namespace Pegasus.Api.Admin.Controllers
         }
 
         // PUT api/<BarangayController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, PersonProfilesModel model)
+        [HttpPut]
+        public void Put(PersonProfilesModel model)
         {
-            _personService.UpdatePersonProfile(model);
+            if (model.Id == 0)
+                _personService.CreatePersonProfile(model);
+            else
+                _personService.UpdatePersonProfile(model);
         }
 
         // DELETE api/<BarangayController>/5

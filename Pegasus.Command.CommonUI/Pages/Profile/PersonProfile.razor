@@ -1,18 +1,26 @@
-﻿@page "/persons"
-@using Pegasus.Command.Shared.Dto.Account
+﻿@page "/cases"
 @attribute [Authorize]
-@inject HttpClient Http
-@inject IAuthorizationService AuthorizationService
-@inject AuthenticationStateProvider authStateProvider
+@inject HttpClient http
+@inject IJSRuntime js
+@inject NavigationManager navmgr
 @inject IMatToaster matToaster
+@inject Helpers _helper
 @inject AppState appState
-@using System.Net
+@inject AuthenticationStateProvider authStateProvider
 @using Newtonsoft.Json;
+@using System.Net
+@using Pegasus.Command.Shared.Dto.Account
+@using Microsoft.AspNetCore.Components
+<center><h3>Cases</h3></center>
+<br />
 
-<h1>Cases</h1>
-<p>Case Management</p>
 
-@if (users == null)
+<br />
+<br />
+<a class="btn btn-success" href="/cases/create">Create New</a>
+<br />
+
+@if (person == null)
 {
     <LoadingBackground ShowLogoBox="true">
         <label>Loading Cases</label>
@@ -20,367 +28,754 @@
 }
 else
 {
-    <MatTable Class="mat-elevation-z5" Items="@users" LoadInitialData="true" Striped="true" RequestApiOnlyOnce="true" ApiUrl="api/users"
-              DebounceMilliseconds="150">
-        <MatTableHeader>
-            <th><MatButton Icon="person_add" Label="New Case" OnClick="@(e => { createUserDialogOpen = true; })"></MatButton></th>
-            <th>Case No</th>
-            <th>Fullname</th>
-            <th>Barangay</th>
-            <th>Status</th>
-            <th>Verification</th>
-            <th>Confirmation</th>
-            <th>Quarantine Days</th>
-        </MatTableHeader>
-        <MatTableRow Context="UserRow">
-            <td>
-                <div style="width:155px;">
-                    <AuthorizeView Policy="@Policies.IsAdmin" Context="AuthorizeContext">
-                        <Authorized>
-                            <MatIconButton Icon="edit" OnClick="@(() => OpenEditDialog(UserRow.UserId))"></MatIconButton>
-                        </Authorized>
-                        <NotAuthorized>
-                            <MatIconButton Icon="edit" Disabled="true"></MatIconButton>
-                        </NotAuthorized>
-                    </AuthorizeView>
-                    <MatIconButton Icon="rotate_right" OnClick="@(() => OpenResetPasswordDialog(UserRow.UserName, UserRow.UserId))" Disabled="@(UserRow.UserId != userProfile.UserId)"></MatIconButton>
-                    <AuthorizeView Policy="@Policies.IsAdmin" Context="AuthorizeContext">
-                        <Authorized>
-                            <MatIconButton Icon="delete" OnClick="@(() => OpenDeleteDialog(UserRow.UserId))"></MatIconButton>
-                        </Authorized>
-                        <NotAuthorized>
-                            <MatIconButton Icon="delete" Disabled="true"></MatIconButton>
-                        </NotAuthorized>
-                    </AuthorizeView>
-                </div>
-            </td>
-
-            <td><div style="width:130px;">@UserRow.UserName</div></td>
-            <td>@UserRow.Email</td>
-            <td>
-                <MatChipSet>
-                    @foreach (var role in @UserRow.Roles)
+    <div class="col-12">
+        <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="20"
+                    AllowSorting="true" Data="@persons" TItem="PersonProfilesModel" ColumnWidth="300px">
+            <Columns>
+                <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px" Title="View Profile">
+                    <Template Context="person">
+                        <RadzenButton Icon="edit" Size="ButtonSize.Medium" Click="@(args => OpenUpsertRoleDialog(person))">
+                        </RadzenButton>
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="PersonProfilesModel" Property="CaseNo" Title="Case No" />
+                <RadzenGridColumn TItem="PersonProfilesModel" Property="Fullname" Title="Fullname" />
+                <RadzenGridColumn TItem="PersonProfilesModel" Property="Barangay.BarangayName" Title="Barangay" />
+                <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px" Title="Status">
+                    <Template Context="person">
+                        <RadzenButton Icon="edit" Size="ButtonSize.Small" Click="@(args => OpenChangeStatDialog(person.Id))">
+                        </RadzenButton>
+                        @switch (person.PersonStatus)
                         {
-                        <MatChip Label="@role"></MatChip>
+                            case "P":
+                                <h4 class="badge badge-danger">Positive</h4>
+                                break;
+                            case "N":
+                                <h4 class="badge badge-success">Negative</h4>
+                                break;
+                            case "D":
+                                <h4 class="badge badge-warning">PUI</h4>
+                                break;
+                            case "S":
+                                <h4 class="badge badge-secondary">PUM</h4>
+                                break;
+                            default:
+                                <h4 class="badge badge-dark">Unknown</h4>
+                                break;
+
                         }
-                </MatChipSet>
-            </td>
-        </MatTableRow>
-    </MatTable>
+
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px" Title="Verification">
+                    <Template Context="person">
+                        @if (person.CHDOHVerified.HasValue && person.BrgyVerified.HasValue)
+                        {
+                            @if (person.CHDOHVerified.Value && person.BrgyVerified.Value)
+                            {
+                                <Radzen.Blazor.RadzenIcon Icon="verified_user" />
+
+                            }
+                        }
+
+                        @if (person.BrgyVerified.HasValue && !person.CHDOHVerified.HasValue)
+                        {
+                            <Radzen.Blazor.RadzenIcon Icon="verified_user" />
+                        }
+                        @if (!person.BrgyVerified.HasValue)
+                        {
+                            <RadzenButton Icon="how_to_reg" Size="ButtonSize.Medium" Click="@(args => OpenVerifyDialog(person))" Text="Verify" />
+
+
+                        }
+
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="150px" Title="Confirmation">
+                    <Template Context="person">
+
+                        @if (!person.CHDOHVerified.HasValue && !person.BrgyVerified.HasValue)
+                        {
+                            <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Disabled="true" Text="Confirm">
+                            </RadzenButton>
+                        }
+                        @if (person.CHDOHVerified.HasValue && person.BrgyVerified.HasValue)
+                        {
+                            @if (person.CHDOHVerified.Value && person.BrgyVerified.Value)
+                            {
+                                <Radzen.Blazor.RadzenIcon Icon="verified_user" />
+
+                            }
+
+                        }
+
+
+                        @if (person.BrgyVerified.HasValue && !person.CHDOHVerified.HasValue)
+                        {
+
+                            <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Click="@(args => OpenConfirmDialog(person))" Text="Confirm">
+                            </RadzenButton>
+                        }
+
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="PersonProfilesModel" Bubble="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px" Title="Quarantine Days">
+                    <Template Context="person">
+                        @if (person.QDays.HasValue)
+                        {
+                            var days = DateTime.Now.Date.Subtract(person.QDateStarted.Value.Date).Days;
+                            if (days >= person.QDays.Value)
+                            {
+                                <h4 class="badge badge-success">@days.ToString() of @person.QDays.Value</h4>
+                                <p> Completed</p>
+                                <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Click="@(args => OpenQdaysDialog(person))" Text="Extend">
+                                </RadzenButton>
+                            }
+                            else
+                            {
+                                <h4 class="badge badge-danger">@days.ToString() of @person.QDays.Value</h4>
+
+                            }
+
+                        }
+                        @if (person.CHDOHVerified.HasValue && person.BrgyVerified.HasValue && !person.QDays.HasValue)
+                        {
+                            @if (person.CHDOHVerified.Value && person.BrgyVerified.Value)
+                            {
+                                <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Click="@(args => OpenQdaysDialog(person))" Text="Days">
+                                </RadzenButton>
+
+                            }
+                            else
+                            {
+                                <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Text="Q Days" Disabled="true">
+                                </RadzenButton>
+                            }
+                        }
+
+                    </Template>
+                </RadzenGridColumn>
+
+
+            </Columns>
+        </RadzenGrid>
+    </div>
+
+    <MatDialog @bind-IsOpen="@isUpsertRoleDialogOpen">
+        <MatDialogTitle>
+            @labelUpsertDialogTitle
+        </MatDialogTitle>
+        <MatDialogContent>
+
+            <fieldset>
+                @if (!string.IsNullOrEmpty(person.Gender))
+                {
+                    switch (person.Gender)
+                    {
+                        case "M":
+                            <div class="logo">
+                                <img src="_content/Pegasus.Command.CommonUI/images/maleperson.svg" style="width:100px;" /><br />
+
+                            </div>
+                            ; break;
+                        case "F": <div class="logo">
+                                <img src="_content/Pegasus.Command.CommonUI/images/femaleperson.svg" style="width:100px;" /><br />
+
+                            </div>; break;
+                    }
+
+                }
+                <div class="form-group">
+
+
+                    <RadzenDropDown AllowClear="false" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" @bind-Value="@person.BgryId" Placeholder="Select Barangay" Data="@brgys" TextProperty="BarangayName" ValueProperty="Id"
+                                    Style="margin-bottom: 20px; width:300px;">
+
+                    </RadzenDropDown>
+                    <RadzenDropDown AllowClear="false" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" @bind-Value="@person.IsolationCenterId" Placeholder="Select Isolation Center" Data="@isocenters" TextProperty="Centername" ValueProperty="Id"
+                                    Style="margin-bottom: 20px; width:300px;">
+
+                    </RadzenDropDown>
+                </div>
+                <div class="form-group">
+                    <MatTextField @bind-Value="@person.CaseNo" Label="Case No" Icon="location_city" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                </div>
+                @if (person.BrgyVerified.HasValue)
+                {
+                    <h4 class="badge badge-success">Verified</h4>
+                    <p>@person.BrgyRemarks</p>
+                }
+                @if (person.CHDOHVerified.HasValue)
+                {
+                    <h4 class="badge badge-success">Confirmed</h4>
+                    <p>@person.CHDOHRemarks</p>
+                }
+
+                @if (person.PersonStatus != null)
+                {
+                    @switch (person.PersonStatus)
+                    {
+                        case "P":
+                            <h4 class="badge badge-danger">Positive</h4>
+                            break;
+                        case "N":
+                            <h4 class="badge badge-success">Negative</h4>
+                            break;
+                        case "D":
+                            <h4 class="badge badge-warning">PUI</h4>
+                            break;
+                        case "S":
+                            <h4 class="badge badge-secondary">PUM</h4>
+                            break;
+                        default:
+                            <h4 class="badge badge-dark">Unknown</h4>
+                            break;
+
+                    }
+                }
+                <div class="form-group">
+                    <MatTextField @bind-Value="@person.Fullname" Label="Fullname" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                </div>
+                <div class="form-group">
+                    <MatH5>Gender</MatH5>
+                    <MatRadioGroup @bind-Value="@person.Gender" TValue="string">
+
+                        <MatRadioButton Value="@("M")" Label="Male" TValue="string"></MatRadioButton>
+                        <MatRadioButton Value="@("F")" TValue="string">Fermale</MatRadioButton>
+
+                    </MatRadioGroup>
+                </div>
+                <div class="form-group">
+                    <MatNumericUpDownField @bind-Value="@person.Age" Label="Age" IconTrailing="true" FullWidth="true" Required="true" Minimum="1" Maximum="99"></MatNumericUpDownField>
+                </div>
+                <div class="form-group">
+                    <MatTextField @bind-Value="@person.Address" Label="Address" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                </div>
+                <div class="form-group">
+                    <MatTextField @bind-Value="@person.Contact" Label="Contact No" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                </div>
+                <br />
+                <h3>Swab Testing Detail</h3>
+                <hr />
+                <div class="form-group">
+                    <MatTextField @bind-Value="@person.SwabArea" Label="Swab Area" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                </div>
+                <div class="form-group">
+                    <MatDatePicker @bind-Value="@person.SwabTestDate" Label="Swab Testing Date" IconTrailing="true" FullWidth="true" Required="true"></MatDatePicker>
+                </div>
+                
+                @if (person.QDays.HasValue)
+                {
+                    <br />
+                    <h3>Quarantine Status</h3>
+                    <hr />
+
+                    var days = DateTime.Now.Date.Subtract(person.QDateStarted.Value.Date).Days;
+                    if (days >= person.QDays.Value)
+                    {
+                        <h4 class="badge badge-success">@days.ToString() of @person.QDays.Value</h4>
+                        <p> Completed</p>
+                    }
+                    else
+                    {
+                        <h4 class="badge badge-danger">@days.ToString() of @person.QDays.Value</h4>
+
+                    }
+
+                }
+
+
+            </fieldset>
+
+
+        </MatDialogContent>
+        <MatDialogActions>
+            <MatButton OnClick="@(e => { isUpsertRoleDialogOpen = false; })">Cancel</MatButton>
+            <MatButton OnClick="@UpsertRole">@labelUpsertDialogOkButton</MatButton>
+        </MatDialogActions>
+    </MatDialog>
+
+    <MatDialog @bind-IsOpen="@isChangeStatus">
+        <MatDialogTitle>Case Status Change</MatDialogTitle>
+        <MatDialogContent>
+
+
+            <RadzenSelectBar @bind-Value="@person.PersonStatus" TValue="string" Style="margin-bottom: 20px;">
+                <Items>
+                    <RadzenSelectBarItem Text="Positive" Value="@("P")" />
+                    <RadzenSelectBarItem Text="PUI" Value="@("D")" />
+                    <RadzenSelectBarItem Text="PUM" Value="@("S")" />
+                    <RadzenSelectBarItem Text="Negative" Value="@("N")" />
+                </Items>
+            </RadzenSelectBar>
+            <div class="form-group">
+                <MatDatePicker @bind-Value="@person.DateLabConfirm" Label="Laboratory Confirmation Date" IconTrailing="true" FullWidth="true" Required="true"></MatDatePicker>
+            </div>
+
+        </MatDialogContent>
+        <MatDialogActions>
+            <MatButton OnClick="@CancelChanges">Cancel</MatButton>
+            <MatButton OnClick="@ChangePersonStatus">Change Status</MatButton>
+        </MatDialogActions>
+    </MatDialog>
+    <MatDialog @bind-IsOpen="@isVerify">
+        <MatDialogTitle>Verification</MatDialogTitle>
+        <MatDialogContent>
+
+            @if (person.Barangay != null)
+            {
+                <p Style="margin-bottom: 10px;">We verify that Mr/Ms/Mrs. @person.Fullname is a resident of @barangayname .</p>}
+            <label>Remarks</label>
+            <MatTextField @bind-Value="@person.BrgyRemarks"></MatTextField>
+        </MatDialogContent>
+        <MatDialogActions>
+            <MatButton OnClick="@CancelVerify">Cancel</MatButton>
+            <MatButton OnClick="@Verify">Verify</MatButton>
+        </MatDialogActions>
+    </MatDialog>
+
+    <MatDialog @bind-IsOpen="@isConfirm">
+        <MatDialogTitle>Confirmation</MatDialogTitle>
+        <MatDialogContent>
+
+
+            @if (person.Barangay != null)
+            {
+                <p Style="margin-bottom: 10px;">We confirm that Mr/Ms/Mrs. @person.Fullname is a resident from @barangayname  endorsed to us.</p>}
+            <label>Remarks</label>
+            <MatTextField @bind-Value="@person.CHDOHRemarks"></MatTextField>
+
+        </MatDialogContent>
+        <MatDialogActions>
+            <MatButton OnClick="@CancelConfirm">Cancel</MatButton>
+            <MatButton OnClick="@Confirm">Confirm</MatButton>
+        </MatDialogActions>
+    </MatDialog>
+
+    <MatDialog @bind-IsOpen="@isQdays">
+        <MatDialogTitle>Quarantine Period</MatDialogTitle>
+        <MatDialogContent>
+
+            @if (person != null)
+            {
+                <p Style="margin-bottom: 10px;">We confirm that Mr/Ms/Mrs. @person.Fullname is a resident from @barangayname to undergo on Quarantine Period.</p>}
+            <RadzenSelectBar @bind-Value="@quadays" TValue="int" Style="margin-bottom: 20px;">
+                <Items>
+                    <RadzenSelectBarItem Text="1-8" Value="8" />
+                    <RadzenSelectBarItem Text="1-15" Value="15" />
+                    <RadzenSelectBarItem Text="1-22" Value="22" />
+
+                </Items>
+            </RadzenSelectBar>
+
+
+        </MatDialogContent>
+        <MatDialogActions>
+            <MatButton OnClick="@CancelQdays">Cancel</MatButton>
+            <MatButton OnClick="@Qdays">Proceed</MatButton>
+        </MatDialogActions>
+    </MatDialog>
 }
 
-<MatDialog @bind-IsOpen="@createUserDialogOpen">
-    <MatDialogTitle>Create User</MatDialogTitle>
-    <MatDialogContent>
-        <EditForm Model="@registerParameters" OnValidSubmit="@CreateUserAsync">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            <fieldset>
-                <div class="form-group">
-                    <MatTextField @bind-Value="@registerParameters.UserName" Label="User Name" Icon="person" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
-                </div>
-                <div class="form-group">
-                    <MatTextField @bind-Value="@registerParameters.Email" Label="Email" Icon="mail_outline" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
-                </div>
-                <div class="form-group">
-                    <MatTextField @bind-Value="@registerParameters.Password" Label="Password" Icon="lock_outline" IconTrailing="true" FullWidth="true" Required="true" Type="password"></MatTextField>
-                </div>
-                <div class="form-group">
-                    <MatTextField @bind-Value="@registerParameters.PasswordConfirm" Label="Password Confirmation" Icon="lock_outline" IconTrailing="true" FullWidth="true" Required="true" Type="password"></MatTextField>
-                </div>
-            </fieldset>
-        </EditForm>
-    </MatDialogContent>
-    <MatDialogActions>
-        <MatButton OnClick="@(e => { createUserDialogOpen = false; })">Cancel</MatButton>
-        <MatButton OnClick="@CreateUserAsync">Create User</MatButton>
-    </MatDialogActions>
-</MatDialog>
-
-<MatDialog @bind-IsOpen="@editDialogOpen">
-    <MatDialogTitle>Edit User</MatDialogTitle>
-    <MatDialogContent>
-        <EditForm Model="@user" OnValidSubmit="@UpdateUserAsync">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            <fieldset>
-                <div class="form-group">
-                    <MatTextField @bind-Value="@user.UserName" Label="User Name" Icon="person" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
-                </div>
-                <div class="form-group">
-                    <MatTextField @bind-Value="@user.Email" Label="Email" Icon="mail_outline" IconTrailing="true" FullWidth="true" Required="true" Type="mail"></MatTextField>
-                </div>
-                <MatChipSet>
-                    @foreach (var role in roleSelections.OrderBy(x => x.Name))
-                    {
-                        <MatChip Label="@role.Name" LeadingIcon="@( (role.IsSelected) ? "done" : "")" @onclick="@(()=>UpdateUserRole(role))" />
-                    }
-                </MatChipSet>
-            </fieldset>
-        </EditForm>
-    </MatDialogContent>
-    <MatDialogActions>
-        <MatButton OnClick="@CancelChanges">Cancel</MatButton>
-        <MatButton OnClick="@UpdateUserAsync">Update User</MatButton>
-    </MatDialogActions>
-</MatDialog>
-
-<MatDialog @bind-IsOpen="@deleteUserDialogOpen" Style="z-index:100">
-    <MatDialogTitle><MatIcon Icon="warning"></MatIcon> Confirm Delete</MatDialogTitle>
-    <MatDialogContent>
-        Are you sure you want to delete user "@user.UserName" ?
-    </MatDialogContent>
-    <MatDialogActions>
-        <MatButton OnClick="@(e => { deleteUserDialogOpen = false; })">Cancel</MatButton>
-        <MatButton OnClick="@DeleteUserAsync">Delete</MatButton>
-    </MatDialogActions>
-</MatDialog>
-
-<MatDialog @bind-IsOpen="@resetPasswordDialogOpen">
-    <MatDialogTitle>Manual Password Reset for @registerParameters.UserName</MatDialogTitle>
-    <MatDialogContent>
-        <EditForm Model="@registerParameters" OnValidSubmit="@ResetUserPasswordAsync">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            <fieldset>
-                <div class="form-group">
-                    <MatTextField @bind-Value="@registerParameters.Password" Label="Password" Icon="lock_outline" IconTrailing="true" FullWidth="true" Required="true" Type="password"></MatTextField>
-                </div>
-                <div class="form-group">
-                    <MatTextField @bind-Value="@registerParameters.PasswordConfirm" Label="Password Confirmation" Icon="lock_outline" IconTrailing="true" FullWidth="true" Required="true" Type="password"></MatTextField>
-                </div>
-            </fieldset>
-        </EditForm>
-    </MatDialogContent>
-    <MatDialogActions>
-        <MatButton OnClick="@(e => { resetPasswordDialogOpen = false; })">Cancel</MatButton>
-        <MatButton OnClick="@ResetUserPasswordAsync">Reset User Password</MatButton>
-    </MatDialogActions>
-</MatDialog>
-
 @code {
-    //Auth documentation
-    //https://docs.microsoft.com/en-us/aspnet/core/security/blazor
+    UserInfoDto userInfo = null;
+    [CascadingParameter]
+    Task<AuthenticationState> authenticationStateTask { get; set; }
 
-    int pageSize { get; set; } = 15;
-    int currentPage { get; set; } = 0;
-
-    bool createUserDialogOpen = false;
-    bool editDialogOpen = false;
-    bool deleteUserDialogOpen = false;
-    bool resetPasswordDialogOpen = false;
-
-    List<UserInfoDto> users;
-    List<RoleSelection> roleSelections { get; set; } = new List<RoleSelection>();
-
-    public UserInfoDto user { get; set; } = new UserInfoDto(); // Holds user being actively modified or created
-    RegisterDto registerParameters { get; set; } = new RegisterDto();
-
-    UserProfileDto userProfile = new UserProfileDto();
-
-    public class RoleSelection
-    {
-        public bool IsSelected { get; set; }
-        public string Name { get; set; }
-    };
-
+    List<PersonProfilesModel> persons { get; set; }
+    List<BarangayModel> brgys { get; set; }
+    List<IsolationCenterModel> isocenters { get; set; }
+    PersonProfilesModel person = new PersonProfilesModel();
+    int quadays = 0;
+    string barangayname = "";
     protected override async Task OnInitializedAsync()
     {
-        await RetrieveUserListAsync();
-        await PopulateRoleList();
-        userProfile = await appState.GetUserProfile();
+        await LoadProfile();
+        await LoadBarangay();
+        await LoadIsolationCenters();
+
+        userInfo = null;
+        var user = (await authenticationStateTask).User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            userInfo = await ((IdentityAuthenticationStateProvider)authStateProvider).GetUserInfo();
+        }
     }
 
-    public async Task RetrieveUserListAsync()
+    async Task LoadProfile()
     {
+        string apis = _helper.ApiUrl(ApiType.Agent);
+        string uris = apis + "/Person";
+        persons = await http.GetJsonAsync<List<PersonProfilesModel>>(uris);
+    }
+
+    async Task LoadBarangay()
+    {
+        string apis = _helper.ApiUrl(ApiType.Admin);
+        string uris = apis + "/Barangay";
+        brgys = await http.GetJsonAsync<List<BarangayModel>>(uris);
+    }
+
+    async Task LoadIsolationCenters()
+    {
+        string apis = _helper.ApiUrl(ApiType.Admin);
+        string uris = apis + "/Isolation";
+        isocenters = await http.GetJsonAsync<List<IsolationCenterModel>>(uris);
+    }
+
+
+
+
+    #region OpenUpsertRoleDialog
+
+    bool isUpsertRoleDialogOpen = false;
+    bool isInsertOperation;
+    string labelUpsertDialogTitle;
+    string labelUpsertDialogOkButton;
+
+    public async Task OpenUpsertRoleDialog(PersonProfilesModel mperson)
+    {
+        string apis = _helper.ApiUrl(ApiType.Agent);
+        string uris = apis + "/Person";
         try
         {
-            var apiResponse = await Http.GetFromJsonAsync<ApiResponseDto<List<UserInfoDto>>>($"api/Admin/Users?pageSize={pageSize}&pageNumber={currentPage}");
 
-            if (apiResponse.IsSuccessStatusCode)
+            if (mperson.Id == 0)
             {
-                matToaster.Add(apiResponse.Message, MatToastType.Success, "Users Retrieved");
-                users = apiResponse.Result;
+                isInsertOperation = true;
+                labelUpsertDialogTitle = "New Case";
+                labelUpsertDialogOkButton = "Create Case";
+                person = new PersonProfilesModel();
             }
             else
-                matToaster.Add(apiResponse.Message + " : " + apiResponse.StatusCode, MatToastType.Danger, "User Retrieval Failed");
-        }
-        catch (Exception ex)
-        {
-            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, "User Retrieval Error");
-        }
-    }
-
-    public void OpenEditDialog(Guid userId)
-    {
-        user = new UserInfoDto(); // reset user object
-        user = users.Where(x => x.UserId == userId).SingleOrDefault();  // load the user information into the temp user object for worry free editing
-        foreach (var role in roleSelections)
-            role.IsSelected = user.Roles.Contains(role.Name);
-
-        user.SaveState();
-        editDialogOpen = true;
-    }
-
-    public void OpenResetPasswordDialog(string userName, Guid userId)
-    {
-        // reusing the registerParameters and User objects
-        registerParameters = new RegisterDto();  // reset object
-        registerParameters.UserName = userName;
-        user.UserId = userId;
-        resetPasswordDialogOpen = true;
-    }
-
-    public void OpenDeleteDialog(Guid userId)
-    {
-        user = users.Where(x => x.UserId == userId).SingleOrDefault();
-        deleteUserDialogOpen = true;
-    }
-
-    protected void UpdateUserRole(RoleSelection roleSelectionItem)
-    {
-        roleSelectionItem.IsSelected = !roleSelectionItem.IsSelected;
-    }
-
-    public async Task PopulateRoleList()
-    {
-        try
-        {
-            var roleNames = new List<string>();
-            var response = await Http.GetFromJsonAsync<ApiResponseDto<List<string>>>("api/Account/ListRoles");
-
-            roleNames = response.Result;
-
-            roleSelections = new List<RoleSelection>();// clear out list
-
-            // initialize selection list with all un-selected
-            foreach (string role in roleNames)
             {
-                roleSelections.Add(new RoleSelection
-                {
-                    Name = role,
-                    IsSelected = false
-                });
-            }
-        }
-        catch (Exception ex)
-        {
-            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, "Role Retrieval Error");
-        }
-    }
-
-    public void CancelChanges()
-    {
-        user.RestoreState();
-        editDialogOpen = false;
-    }
-
-    public async Task UpdateUserAsync()
-    {
-        try
-        {
-            //update the user object's role list with the new selection set
-            user.Roles = roleSelections.Where(x => x.IsSelected == true).Select(x => x.Name).ToList();
-
-            HttpResponseMessage response = await Http.PostAsJsonAsync("api/Account", user);
-            var apiResponse = JsonConvert.DeserializeObject<ApiResponseDto>(await response.Content.ReadAsStringAsync());
-
-            if (apiResponse.IsSuccessStatusCode)
-                matToaster.Add("User Updated", MatToastType.Success);
-            else
-            {
-                matToaster.Add("Error", MatToastType.Danger, apiResponse.StatusCode.ToString());
-                user.RestoreState();
+                isInsertOperation = false;
+                person = await http.GetFromJsonAsync<PersonProfilesModel>(uris + "/" + mperson.Id);
+                person = mperson;
+                barangayname = person.Barangay.BarangayName;
+                labelUpsertDialogTitle = "Edit Case";
+                labelUpsertDialogOkButton = "Update Case";
             }
 
-            editDialogOpen = false;
+            isUpsertRoleDialogOpen = true;
         }
         catch (Exception ex)
         {
-            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, "User Update Error");
-        }
-        finally
-        {
-            user.ClearState();
+            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, $"{labelUpsertDialogTitle} Error");
         }
     }
 
-    public async Task CreateUserAsync()
+    public async Task UpsertRole()
     {
         try
         {
-            if (registerParameters.Password != registerParameters.PasswordConfirm)
+            string apis = _helper.ApiUrl(ApiType.Admin);
+            string uris = apis + "/Person";
+
+            if (string.IsNullOrEmpty(person.CaseNo) || string.IsNullOrEmpty(person.Fullname)
+                || string.IsNullOrEmpty(person.Address) || string.IsNullOrEmpty(person.Contact))
             {
-                matToaster.Add("Password Confirmation Failed", MatToastType.Danger, "");
+                matToaster.Add("Fields are empty", MatToastType.Danger);
                 return;
             }
 
-            var apiResponse = await ((IdentityAuthenticationStateProvider)authStateProvider).Create(registerParameters);
-            if (apiResponse.IsSuccessStatusCode)
-            {
-                matToaster.Add(apiResponse.Message, MatToastType.Success);
-                user = Newtonsoft.Json.JsonConvert.DeserializeObject<UserInfoDto>(apiResponse.Result.ToString());
-                users.Add(user);
-                registerParameters = new RegisterDto(); //reset create user object after insert
-                createUserDialogOpen = false;
-            }
-            else
-            {
-                matToaster.Add(apiResponse.Message + " : " + apiResponse.StatusCode, MatToastType.Danger, "User Creation Failed");
-            }
+
+
+            person.SwabArea = userInfo.UserName;
+            await http.PutAsJsonAsync(uris, person);
+
+
+
+
+            matToaster.Add(isInsertOperation ? "Case Created" : "Case Updated", MatToastType.Success);
+
+            //await PopulateRoleList();
+            StateHasChanged();
+
+            //  matToaster.Add(apiResponse.Message, MatToastType.Danger);
+
+
+            // this.StateHasChanged();
+            //await OnInitializedAsync();
+
+            isUpsertRoleDialogOpen = false;
         }
         catch (Exception ex)
         {
-            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, "User Creation Error");
+            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, ex.ToString());
         }
     }
 
-    public async Task ResetUserPasswordAsync()
+    #endregion
+
+    #region ChangeStatus
+    bool isChangeStatus = false;
+    public async Task OpenChangeStatDialog(int id)
+    {
+        string apis = _helper.ApiUrl(ApiType.Admin);
+        string uris = apis + "/Person";
+        try
+        {
+
+            if (id == 0)
+            {
+
+                person = new PersonProfilesModel();
+            }
+            else
+            {
+
+                person = await http.GetFromJsonAsync<PersonProfilesModel>(uris + "/" + id);
+
+            }
+
+            isChangeStatus = true;
+        }
+        catch (Exception ex)
+        {
+            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, $"{labelUpsertDialogTitle} Error");
+        }
+    }
+    public async Task ChangePersonStatus()
     {
         try
         {
-            if (registerParameters.Password != registerParameters.PasswordConfirm)
-            {
-                matToaster.Add("Passwords Must Match", MatToastType.Warning);
-            }
-            else
-            {
-                HttpResponseMessage response = await Http.PostAsJsonAsync($"api/Account/AdminUserPasswordReset/{user.UserId}", registerParameters.Password);
-                var apiResponse = JsonConvert.DeserializeObject<ApiResponseDto>(await response.Content.ReadAsStringAsync());
+            string apis = _helper.ApiUrl(ApiType.Agent);
+            string uris = apis + "/Person";
 
-                if (apiResponse.IsSuccessStatusCode)
-                    matToaster.Add("Password Reset", MatToastType.Success, apiResponse.Message);
-                else
-                    matToaster.Add(apiResponse.Message, MatToastType.Danger);
 
-                resetPasswordDialogOpen = false;
-            }
+
+            await http.PutAsJsonAsync(uris, person);
+
+
+
+
+            matToaster.Add("Case Updated", MatToastType.Success);
+
+            //await PopulateRoleList();
+            StateHasChanged();
+
+            //  matToaster.Add(apiResponse.Message, MatToastType.Danger);
+
+
+            // this.StateHasChanged();
+            await OnInitializedAsync();
+
+            isChangeStatus = false;
         }
         catch (Exception ex)
         {
-            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, "Password Reset Error");
+            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, ex.ToString());
         }
     }
+    public void CancelChanges()
+    {
 
-    public async Task DeleteUserAsync()
+        isChangeStatus = false;
+    }
+    #endregion
+
+    #region Verification
+    bool isVerify = false;
+    public async Task OpenVerifyDialog(PersonProfilesModel mperson)
+    {
+        string apis = _helper.ApiUrl(ApiType.Agent);
+        string uris = apis + "/Person";
+        try
+        {
+
+            if (mperson.Id == 0)
+            {
+
+                person = new PersonProfilesModel();
+            }
+            else
+            {
+
+                person = await http.GetFromJsonAsync<PersonProfilesModel>(uris + "/" + mperson.Id);
+
+            }
+
+            isVerify = true;
+        }
+        catch (Exception ex)
+        {
+            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, $"{labelUpsertDialogTitle} Error");
+        }
+    }
+    public async Task Verify()
     {
         try
         {
-            var response = await Http.DeleteAsync($"api/Account/{user.UserId}");
+            string apis = _helper.ApiUrl(ApiType.Agent);
+            string uris = apis + "/Person";
 
-            if (response.StatusCode == (HttpStatusCode)Status200OK)
-            {
-                matToaster.Add("User Deleted", MatToastType.Success);
-                users.Remove(user);
-                deleteUserDialogOpen = false;
-                StateHasChanged();
-            }
-            else
-                matToaster.Add("User Delete Failed", MatToastType.Danger);
+
+            person.BrgyVerified = true;
+            await http.PutAsJsonAsync(uris, person);
+
+
+
+
+            matToaster.Add("Case Updated", MatToastType.Success);
+
+            //await PopulateRoleList();
+            StateHasChanged();
+
+            //  matToaster.Add(apiResponse.Message, MatToastType.Danger);
+
+
+            // this.StateHasChanged();
+            await OnInitializedAsync();
+
+            isVerify = false;
         }
         catch (Exception ex)
         {
-            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, "User Delete Error");
+            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, ex.ToString());
         }
     }
+    public void CancelVerify()
+    {
+
+        isVerify = false;
+    }
+    #endregion
+    #region Confirmation
+    bool isConfirm = false;
+    public async Task OpenConfirmDialog(PersonProfilesModel mperson)
+    {
+        string apis = _helper.ApiUrl(ApiType.Agent);
+        string uris = apis + "/Person";
+        try
+        {
+
+            if (mperson.Id == 0)
+            {
+
+                person = new PersonProfilesModel();
+            }
+            else
+            {
+
+                person = await http.GetFromJsonAsync<PersonProfilesModel>(uris + "/" + mperson.Id);
+
+            }
+
+            isConfirm = true;
+        }
+        catch (Exception ex)
+        {
+            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, $"{labelUpsertDialogTitle} Error");
+        }
+    }
+    public async Task Confirm()
+    {
+        try
+        {
+            string apis = _helper.ApiUrl(ApiType.Agent);
+            string uris = apis + "/Person";
+
+
+            person.CHDOHVerified = true;
+            await http.PutAsJsonAsync(uris, person);
+
+
+
+
+            matToaster.Add("Case Updated", MatToastType.Success);
+
+            //await PopulateRoleList();
+            StateHasChanged();
+
+            //  matToaster.Add(apiResponse.Message, MatToastType.Danger);
+
+
+            // this.StateHasChanged();
+            await OnInitializedAsync();
+
+            isConfirm = false;
+        }
+        catch (Exception ex)
+        {
+            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, ex.ToString());
+        }
+    }
+    public void CancelConfirm()
+    {
+
+        isConfirm = false;
+    }
+    #endregion
+
+    #region Qdays
+    bool isQdays = false;
+    public async Task OpenQdaysDialog(PersonProfilesModel mperson)
+    {
+        string apis = _helper.ApiUrl(ApiType.Agent);
+        string uris = apis + "/Person";
+        try
+        {
+
+            if (mperson.Id == 0)
+            {
+
+                person = new PersonProfilesModel();
+            }
+            else
+            {
+
+                person = await http.GetFromJsonAsync<PersonProfilesModel>(uris + "/" + mperson.Id);
+
+
+            }
+
+            isQdays = true;
+        }
+        catch (Exception ex)
+        {
+            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, $"{labelUpsertDialogTitle} Error");
+        }
+    }
+    public async Task Qdays()
+    {
+        person.QDays = quadays;
+        try
+        {
+            string apis = _helper.ApiUrl(ApiType.Admin);
+            string uris = apis + "/Person";
+
+            person.QDateStarted = DateTime.Now;
+            person.QDateEnded = DateTime.Now.Date.AddDays(person.QDays.Value);
+
+            await http.PutAsJsonAsync(uris, person);
+
+
+
+
+            matToaster.Add("Case Updated", MatToastType.Success);
+
+            //await PopulateRoleList();
+            StateHasChanged();
+
+            //  matToaster.Add(apiResponse.Message, MatToastType.Danger);
+
+
+            // this.StateHasChanged();
+            await OnInitializedAsync();
+
+            isQdays = false;
+        }
+        catch (Exception ex)
+        {
+            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, ex.ToString());
+        }
+    }
+    public void CancelQdays()
+    {
+
+        isQdays = false;
+    }
+    #endregion
 }

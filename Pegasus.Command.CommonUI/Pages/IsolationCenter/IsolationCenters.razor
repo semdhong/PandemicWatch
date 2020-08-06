@@ -1,0 +1,168 @@
+﻿@page "/maintenance/isocenter"
+@attribute [Authorize]
+@inject HttpClient http
+@inject IJSRuntime js
+@inject NavigationManager navmgr
+@inject IMatToaster matToaster
+@inject Helpers _helper
+@using Newtonsoft.Json;
+@using System.Net
+<h3>Isolation Centers</h3>
+
+
+@if (isocenters == null)
+{
+    <LoadingBackground ShowLogoBox="true">
+        <label>Loading Centers</label>
+    </LoadingBackground>
+}
+else
+{
+    <MatButton Icon="add" Label="New Isolation Center" OnClick="@(() => OpenUpsertRoleDialog(0))"></MatButton>
+    <div class="col-12">
+        <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="20"
+                    AllowSorting="true" Data="@isocenters" TItem="IsolationCenterModel" ColumnWidth="300px">
+            <Columns>
+                <RadzenGridColumn TItem="IsolationCenterModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px" Title="View Lgu">
+                    <Template Context="isocenter">
+                        <RadzenButton Icon="edit" Size="ButtonSize.Medium" Click="@(args => OpenUpsertRoleDialog(isocenter.Id))">
+                        </RadzenButton>
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="IsolationCenterModel" Property="Centername" Title="Center Name" />
+                <RadzenGridColumn TItem="IsolationCenterModel" Property="Address" Title="Address" />
+                <RadzenGridColumn TItem="IsolationCenterModel" Property="ContactNo" Title="Contact No" />
+
+
+            </Columns>
+        </RadzenGrid>
+    </div>
+
+
+    <MatDialog @bind-IsOpen="@isUpsertRoleDialogOpen">
+        <MatDialogTitle>
+            @labelUpsertDialogTitle
+        </MatDialogTitle>
+        <MatDialogContent>
+            <fieldset>
+                <div class="form-group">
+                    <MatTextField @bind-Value="@isocenter.Centername" Label="Isolation Center" Icon="building" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                </div>
+                <div class="form-group">
+                    <MatTextField @bind-Value="@isocenter.Address" Label="Address" Icon="home" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                </div>
+                <div class="form-group">
+                    <MatTextField @bind-Value="@isocenter.ContactNo" Label="Contact No" Icon="phone" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                </div>
+            </fieldset>
+
+
+        </MatDialogContent>
+        <MatDialogActions>
+            <MatButton OnClick="@(e => { isUpsertRoleDialogOpen = false; })">Cancel</MatButton>
+            <MatButton OnClick="@UpsertRole">@labelUpsertDialogOkButton</MatButton>
+        </MatDialogActions>
+    </MatDialog>
+}
+
+@code {
+    List<IsolationCenterModel> isocenters { get; set; }
+    IsolationCenterModel isocenter = new IsolationCenterModel();
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadCenterProfile();
+    }
+
+    async Task LoadCenterProfile()
+    {
+        string apis = _helper.ApiUrl(ApiType.Admin);
+        string uris = apis + "/Isolation";
+        isocenters = await http.GetJsonAsync<List<IsolationCenterModel>>(uris);
+    }
+
+    #region OpenUpsertRoleDialog
+
+    bool isUpsertRoleDialogOpen = false;
+    bool isInsertOperation;
+    string labelUpsertDialogTitle;
+    string labelUpsertDialogOkButton;
+
+    public async Task OpenUpsertRoleDialog(int id)
+    {
+        string apis = _helper.ApiUrl(ApiType.Admin);
+        string uris = apis + "/Isolation";
+        try
+        {
+
+            if (id == 0)
+            {
+                isInsertOperation = true;
+                labelUpsertDialogTitle = "New Center";
+                labelUpsertDialogOkButton = "Create Center";
+                isocenter = new IsolationCenterModel();
+            }
+            else
+            {
+                isInsertOperation = false;
+                isocenter = await http.GetFromJsonAsync<IsolationCenterModel>(uris + "/" + id);
+                labelUpsertDialogTitle = "Edit Center";
+                labelUpsertDialogOkButton = "Update Center";
+            }
+
+            isUpsertRoleDialogOpen = true;
+        }
+        catch (Exception ex)
+        {
+            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, $"{labelUpsertDialogTitle} Error");
+        }
+    }
+
+    public async Task UpsertRole()
+    {
+        try
+        {
+            string apis = _helper.ApiUrl(ApiType.Admin);
+            string uris = apis + "/Isolation";
+
+            if (string.IsNullOrEmpty(isocenter.Centername) || string.IsNullOrEmpty(isocenter.Address))
+            {
+                matToaster.Add("Fields are empty", MatToastType.Danger);
+                return;
+            }
+
+
+            if (isInsertOperation)
+            {
+
+                await http.PutAsJsonAsync(uris, isocenter);
+
+
+            }
+            else
+            {
+                await http.PutAsJsonAsync(uris, isocenter);
+
+            }
+
+
+            matToaster.Add(isInsertOperation ? "Isolation Center Created" : "Isolation Center Updated", MatToastType.Success);
+
+            //await PopulateRoleList();
+            StateHasChanged();
+
+            //  matToaster.Add(apiResponse.Message, MatToastType.Danger);
+
+
+            // this.StateHasChanged();
+            await OnInitializedAsync();
+
+            isUpsertRoleDialogOpen = false;
+        }
+        catch (Exception ex)
+        {
+            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, ex.ToString());
+        }
+    }
+
+    #endregion
+}
