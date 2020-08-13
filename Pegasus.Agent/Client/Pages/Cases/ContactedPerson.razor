@@ -1,0 +1,74 @@
+﻿@page "/cases/contactedperson/{contactId:int}"
+@attribute [Authorize]
+@inject HttpClient http
+@inject NavigationManager navmgr
+
+
+<RadzenCard Style="width:400px;">
+    <div class="row">
+        <div class="col-md-6">
+            <RadzenImage Path="images/person.png" Style="width:100px;" />
+        </div>
+
+        <div style="margin-top:20px">
+            Case No : &nbsp;
+            <b>@brgymodel.CaseNo</b>
+        </div>
+
+    </div>
+
+</RadzenCard>
+<div class="col-12">
+    <RadzenButton ButtonType="Radzen.ButtonType.Submit" Text="Add New Contact" ButtonStyle="Radzen.ButtonStyle.Primary" class="btn-block mr-2" Click="AddContact"/>
+    <a class="btn btn-success" href="cases/createcontact/@brgymodel.Id">Add New Contact</a>
+    </div>
+    <br />
+    @if (person == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <div class="col-12">
+
+            <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="20"
+                        AllowSorting="true" Data="@person" TItem="PersonProfilesModel" ColumnWidth="200px">
+                <Columns>
+
+                    <RadzenGridColumn TItem="PersonProfilesModel" Property="CaseNo" Title="CaseNo" />
+                    <RadzenGridColumn TItem="PersonProfilesModel" Filterable="false" Property="Barangay.BarangayName" Title="Barangay" />
+                </Columns>
+            </RadzenGrid>
+        </div>
+
+    }
+
+    @code {
+
+        List<PersonProfilesModel> person = new List<PersonProfilesModel>();
+
+        [Parameter] public int contactId { get; set; }
+
+        PersonProfilesModel brgymodel = new PersonProfilesModel();
+
+        protected async override Task OnParametersSetAsync()
+        {
+            brgymodel = await http.GetFromJsonAsync<PersonProfilesModel>($"https://localhost:44326/api/Person/" + contactId);
+        }
+        protected override async Task OnInitializedAsync()
+        {
+            await LoadContactedPerson();
+        }
+
+        async Task LoadContactedPerson()
+        {
+            person = await http.GetFromJsonAsync<List<PersonProfilesModel>>("https://localhost:44326/api/Contacts/" + contactId);
+        }
+
+        void AddContact()
+        {
+            navmgr.NavigateTo("cases/createcontact/" +@brgymodel.Id);
+        }
+
+    }
+

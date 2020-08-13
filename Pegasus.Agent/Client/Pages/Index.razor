@@ -1,15 +1,102 @@
 ﻿@page "/"
 @attribute [Authorize]
+@inject HttpClient http
+@inject NavigationManager navmgr
 
-<AuthorizeView>
-    <Authorized>
-        <h1>Hello @context.User.Identity.Name !!</h1>
 
-        <p>Welcome to your new app.</p>
 
-        <SurveyPrompt Title="How is Blazor working for you?" />
-    </Authorized>
-    <Authorizing>
-        <h1>Loading ...</h1>
-    </Authorizing>
-</AuthorizeView>
+<h3>Select Barangay from the TAB List</h3>
+<hr />
+@code {
+    List<BarangayModel> brgy = new List<BarangayModel>();
+    List<PersonProfilesModel> persons = new List<PersonProfilesModel>();
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadBarangays();
+
+    }
+
+    async Task LoadBarangays()
+    {
+        brgy = await http.GetFromJsonAsync<List<BarangayModel>>("https://pegasusapiadmin.azurewebsites.net/api/Barangay");
+
+    }
+
+
+}
+<RadzenTabs>
+    <Tabs>
+        @foreach (var br in brgy)
+        {
+        <RadzenTabsItem Text="@br.BarangayName">
+
+            
+            <RadzenCard Style="width:400px;">
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <br />
+                        @switch (br.BarangayName)
+                        {
+                            case "Poblacion":
+                                <RadzenImage Path="images/poblacion.png" Style="width:100px;" />
+                                break;
+                            case "Maslog":
+                                <RadzenImage Path="images/maslog.png" Style="width:100px;" />
+                                break;
+                            default:
+                                <RadzenImage Path="/images/danao.png" Style="width:100px;" />
+                                break;
+                        }
+
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div style="margin-top:20px">
+                        New Case : &nbsp;
+                        <b>@br.persons.Where(x => x.PrincipalPersonId == null).Count()</b>
+                    </div>
+                    <div style="margin-top:20px">
+                        Total : &nbsp;
+                        <b>@br.persons.Where(x => x.PersonStatus == "P").Count()</b>
+                    </div>
+                    <div style="margin-top:20px">Contacted Traced</div>
+                </div>
+
+            </RadzenCard>
+
+        </RadzenTabsItem>
+
+                }
+        </Tabs>
+    </RadzenTabs>
+
+
+                @*<RadzenDataList WrapItems="true" AllowPaging="true" Data="@br.persons.Where(x=>x.PersonStatus=="P")" TItem="PersonProfilesModel">
+                    <Template Context="person">
+
+                        <RadzenCard Style="width:300px;">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div>Barangay:</div>
+                                    <b>@person.Barangay.BarangayName</b>
+
+                                    <br />
+                                    <RadzenImage Path="images/poblacion.png" Style="width:100px;" />
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                        <div style="margin-top:20px">New Case</div>
+                                        <b>@persons.Where(x => x.PrincipalPersonId == null).Count()</b>
+                                        <div style="margin-top:20px">Total :</div>
+                                        <b>@persons.Where(x => x.PersonStatus == "P").Count()</b>
+                                        <div style="margin-top:20px">Contacted Person</div>
+                            </div>
+
+                        </RadzenCard>
+                    </Template>
+                </RadzenDataList>*@
+
+

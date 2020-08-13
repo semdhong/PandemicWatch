@@ -1,0 +1,27 @@
+﻿@page "/cases/create"
+@attribute [Authorize]
+@inject HttpClient http
+@inject NavigationManager navmgr
+<AuthorizeView>
+    <Authorized>
+
+        @*@Persons.UserAgent = @context.User.Identity.Name;*@
+    </Authorized>
+        </AuthorizeView>
+<center><h2>Add new Case</h2></center>
+<br />
+<CaseForm Person="@Persons" ButtonText="Create" OnValidSubmit="@CreateCase" />
+
+@code {
+
+    PersonProfilesModel Persons = new PersonProfilesModel();
+
+    async Task CreateCase()
+    {
+        
+        Persons.PersonStatus = "D";
+        await http.PutAsJsonAsync("https://pegasusapiagent.azurewebsites.net/api/Person", Persons);
+        navmgr.NavigateTo("/cases");
+    }
+    }
+
