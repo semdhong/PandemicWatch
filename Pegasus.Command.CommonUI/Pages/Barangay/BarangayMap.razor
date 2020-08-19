@@ -1,0 +1,93 @@
+﻿@page "/brgymap"
+@inject HttpClient http
+@inject NavigationManager navmgr
+@inject Helpers _helper
+
+
+<h3>Select Barangay from the TAB List</h3>
+<hr />
+@code {
+    List<BarangayModel> brgy = new List<BarangayModel>();
+    List<PersonProfilesModel> persons = new List<PersonProfilesModel>();
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadBarangays();
+
+    }
+
+    async Task LoadBarangays()
+    {
+        string apis = _helper.ApiUrl(ApiType.Admin);
+        string uris = apis + "/Barangay";
+        brgy = await http.GetJsonAsync<List<BarangayModel>>(uris);
+    }
+
+
+}
+
+<RadzenTabs>
+    <Tabs>
+        @foreach (var br in brgy)
+        {
+
+
+            <RadzenTabsItem Text="@br.BarangayName">
+
+                <RadzenDataList PageSize="6" WrapItems="true" AllowPaging="true" Data="@br.persons.Where(x=>x.PersonStatus=="P")" TItem="PersonProfilesModel">
+                    <Template Context="person">
+                        <RadzenCard Style="width:400px;">
+                            <div class="row">
+                                <div class="col-md-6">
+
+
+                                    <a href="/personmap/@person.Id">
+                                        @if (!string.IsNullOrEmpty(person.Gender))
+                                        {
+                                            switch (person.Gender)
+                                            {
+                                                case "M":
+                                                    <div class="logo">
+                                                        <img src="_content/Pegasus.Command.CommonUI/images/maleperson.svg" style="width:100px;" /><br />
+
+                                                    </div>
+                                                    ; break;
+                                                case "F": <div class="logo">
+                                                        <img src="_content/Pegasus.Command.CommonUI/images/femaleperson.svg" style="width:100px;" /><br />
+
+                                                    </div>; break;
+                                            }
+
+                                        }
+                                        <b>@person.CaseNo</b><br />
+                                        <b>@person.Age</b>
+                                        @switch (person.PersonStatus)
+                                        {
+                                            case "P":
+                                                <h4 class="badge badge-danger">Positive</h4>
+                                                break;
+                                            case "N":
+                                                <h4 class="badge badge-success">Negative</h4>
+                                                break;
+                                            case "D":
+                                                <h4 class="badge badge-warning">PUI</h4>
+                                                break;
+                                            case "S":
+                                                <h4 class="badge badge-secondary">PUM</h4>
+                                                break;
+                                            default:
+                                                <h4 class="badge badge-dark">Unknown</h4>
+                                                break;
+
+                                        }
+                                    </a>
+                                </div>
+
+                            </div>
+
+                        </RadzenCard>
+                    </Template>
+                </RadzenDataList>
+            </RadzenTabsItem>
+        }
+    </Tabs>
+</RadzenTabs>

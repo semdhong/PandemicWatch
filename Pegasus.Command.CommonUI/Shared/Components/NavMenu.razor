@@ -6,12 +6,15 @@
             <MatIcon>home</MatIcon> <span class="miniHover">Dashboard</span>
         </MatNavItem>
 
-        <MatNavItem Href="@navigationManager.ToAbsoluteUri("todo_list").AbsoluteUri">
+        <MatNavItem Href="@navigationManager.ToAbsoluteUri("brgymap").AbsoluteUri">
             <MatIcon>list_alt</MatIcon> <span class="miniHover">Barangay Map</span>
         </MatNavItem>
 
         <MatNavSubMenu>
-            <MatNavSubMenuHeader >
+            <MatNavItem Href="@navigationManager.ToAbsoluteUri("cases").AbsoluteUri" Disabled="@(!IsLoggedIn)">
+                <MatIcon>list_alt</MatIcon> <span class="miniHover">Cases</span>
+            </MatNavItem>
+            <MatNavSubMenuHeader>
                 <MatNavItem AllowSelection="false" Disabled="@(!IsLoggedIn)">
                     <MatIcon>building</MatIcon>
                     <span class="miniHover"> Maintenance</span>

@@ -11,6 +11,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
+using Syncfusion.EJ2.Blazor;
 
 namespace Pegasus.Command.Client
 {
@@ -30,7 +31,7 @@ namespace Pegasus.Command.Client
                 config.AddPolicy(Policies.IsReadOnly, Policies.IsUserPolicy());
                 // config.AddPolicy(Policies.IsMyDomain, Policies.IsMyDomainPolicy());  Only works on the server end
             });
-
+            builder.Services.AddSyncfusionBlazor();
             builder.Services.AddScoped<AuthenticationStateProvider, IdentityAuthenticationStateProvider>();
             builder.Services.AddScoped<IAuthorizeApi, AuthorizeApi>();
             builder.Services.Add(new ServiceDescriptor(typeof(IUserProfileApi), typeof(UserProfileApi), ServiceLifetime.Scoped));

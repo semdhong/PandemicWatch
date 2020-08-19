@@ -57,7 +57,12 @@ namespace Pegasus.Api.Admin.Controllers
         public void Put(PersonProfilesModel model)
         {
             if (model.Id == 0)
+            {
+                if (model.PrincipalPersonId == null || model.PrincipalPersonId == 0)
+                    model.PersonStatus = "P";
+
                 _personService.CreatePersonProfile(model);
+            }
             else
                 _personService.UpdatePersonProfile(model);
         }

@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "N51FK6IZvGhjy+wYA+E+vOtJwl6nRMopiV/8FBH6zhzsJfS3FK7eAfUCPLh1fLgxiajWCwQHXvpgK63Z1BXJcw==",
+  "dgSpecHash": "QSshbxyVeJMRu9BSsv2Zpoj+KcADlCxaitsjwuR7U/nUfuW/8nZfMVpq0shNuSxZQmgq8F4FJQtWUm9JIdFrpA==",
   "success": true,
   "projectFilePath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Api.Agent\\Pegasus.Api.Agent.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\semdhong\\.nuget\\packages\\microsoft.aspnetcore.blazor.httpclient\\3.2.0-preview3.20168.3\\microsoft.aspnetcore.blazor.httpclient.3.2.0-preview3.20168.3.nupkg.sha512",
+    "C:\\Users\\semdhong\\.nuget\\packages\\microsoft.aspnetcore.components.analyzers\\3.1.6\\microsoft.aspnetcore.components.analyzers.3.1.6.nupkg.sha512",
     "C:\\Users\\semdhong\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\semdhong\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.0\\microsoft.bcl.hashcode.1.1.0.nupkg.sha512",
     "C:\\Users\\semdhong\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",

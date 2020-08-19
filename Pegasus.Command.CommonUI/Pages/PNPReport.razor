@@ -1,0 +1,61 @@
+﻿@page "/pnp"
+@attribute [Authorize]
+@inject HttpClient http
+@inject IJSRuntime js
+@inject NavigationManager navmgr
+@inject IMatToaster matToaster
+@inject Helpers _helper
+@using Newtonsoft.Json;
+@using System.Net
+<h3>PNP Report</h3>
+
+
+@if (persons == null)
+{
+    <LoadingBackground ShowLogoBox="true">
+        <label>Loading Report</label>
+    </LoadingBackground>
+}
+else
+{
+    
+    <div class="col-12">
+        <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="20"
+                    AllowSorting="true" Data="@brgys" TItem="BarangayModel" ColumnWidth="300px">
+            <Columns>
+                
+                <RadzenGridColumn TItem="BarangayModel" Property="BarangayName" Title="Barangay" />
+                <RadzenGridColumn TItem="BarangayModel" Property="BarangayLgu" Title="LGU" />
+                <RadzenGridColumn TItem="BarangayModel" Property="BarangayAddress" Title="Address" />
+
+
+            </Columns>
+        </RadzenGrid>
+    </div>
+
+
+   
+}
+
+@code {
+    List<PersonProfilesModel> persons { get; set; }
+    List<BarangayModel> brgys { get; set; }
+    List<PNPDataModel> cases { get; set; }
+    BarangayModel brgy = new BarangayModel();
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadLguProfile();
+
+    }
+
+    async Task LoadLguProfile()
+    {
+        string apis = _helper.ApiUrl(ApiType.Admin);
+        string uris = apis + "/Person";
+        persons = await http.GetJsonAsync<List<PersonProfilesModel>>(uris);
+        persons = persons.OrderBy(x => x.DateCreated).ToList();
+        
+    }
+
+
+}

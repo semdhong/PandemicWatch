@@ -56,6 +56,13 @@ namespace Pegasus.Data
         [Column(TypeName = "text")]
         public string SwabArea { get; set; }
         public int? IsolationCenter { get; set; }
+        public Guid? UserAgent { get; set; }
+        public Guid? VerifiedBy { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime? VerifiedDate { get; set; }
+        public Guid? ConfirmedBy { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime? ConfirmedDate { get; set; }
 
         [ForeignKey(nameof(Agent))]
         [InverseProperty(nameof(UserAgents.PersonProfile))]

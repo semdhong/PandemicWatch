@@ -47,8 +47,13 @@ namespace Pegasus.Api.Agent.Controllers
         [HttpPut]
         public void Put(PersonProfilesModel model)
         {
-            if(model.Id==0)
-            _personService.CreatePersonProfile(model);
+            if (model.Id == 0)
+            {
+                if(model.PrincipalPersonId==null || model.PrincipalPersonId==0)
+                         model.PersonStatus = "P";
+
+                _personService.CreatePersonProfile(model);
+            }
             else
                 _personService.UpdatePersonProfile(model);
         }

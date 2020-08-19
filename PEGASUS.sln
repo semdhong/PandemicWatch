@@ -39,11 +39,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pegasus.UI.Admin", "Pegasus
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WASM AGENT", "WASM AGENT", "{7DBB079F-3B3C-4BF2-9078-E38C2ADC91BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pegasus.Agent.Server", "Pegasus.Agent\Server\Pegasus.Agent.Server.csproj", "{0920048F-0EE4-41F5-9C1B-417C55EBE0B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pegasus.Agent.Server", "Pegasus.Agent\Server\Pegasus.Agent.Server.csproj", "{0920048F-0EE4-41F5-9C1B-417C55EBE0B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pegasus.Agent.Client", "Pegasus.Agent\Client\Pegasus.Agent.Client.csproj", "{DF816FD7-F162-456D-B935-62742CA9EC66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pegasus.Agent.Client", "Pegasus.Agent\Client\Pegasus.Agent.Client.csproj", "{DF816FD7-F162-456D-B935-62742CA9EC66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pegasus.Agent.Shared", "Pegasus.Agent\Shared\Pegasus.Agent.Shared.csproj", "{6E5B3C46-CD4D-4CD2-9A91-658B70B5949F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pegasus.Agent.Shared", "Pegasus.Agent\Shared\Pegasus.Agent.Shared.csproj", "{6E5B3C46-CD4D-4CD2-9A91-658B70B5949F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

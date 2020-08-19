@@ -14,6 +14,12 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Blazor.HttpClient.dll": {}
         }
       },
+      "Microsoft.AspNetCore.Components.Analyzers/3.1.6": {
+        "type": "package",
+        "build": {
+          "buildTransitive/netstandard2.0/Microsoft.AspNetCore.Components.Analyzers.targets": {}
+        }
+      },
       "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
         "type": "package",
         "compile": {
@@ -2159,6 +2165,7 @@
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
           "Microsoft.AspNetCore.Blazor.HttpClient": "3.2.0-preview3.20168.3",
+          "Microsoft.AspNetCore.Components.Analyzers": "3.1.6",
           "Microsoft.EntityFrameworkCore": "3.1.6",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.6",
           "Microsoft.EntityFrameworkCore.Sqlite": "3.1.6"
@@ -2184,6 +2191,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
+          "Microsoft.AspNetCore.Components.Analyzers": "3.1.6",
           "Pegasus.Data": "1.0.0"
         },
         "compile": {
@@ -2208,6 +2216,22 @@
         "lib/netstandard2.0/Microsoft.AspNetCore.Blazor.HttpClient.dll",
         "microsoft.aspnetcore.blazor.httpclient.3.2.0-preview3.20168.3.nupkg.sha512",
         "microsoft.aspnetcore.blazor.httpclient.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.Components.Analyzers/3.1.6": {
+      "sha512": "uX+Dl3uPqlGmKBmQRn9QKfx0cgXXyfr9JF8aaBKgi+mexwyGEYFTMXleb9AHK9aofwwMivwfUHi/OmxgcB4YYw==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.components.analyzers/3.1.6",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.txt",
+        "analyzers/dotnet/cs/Microsoft.AspNetCore.Components.Analyzers.dll",
+        "build/netstandard2.0/Microsoft.AspNetCore.Components.Analyzers.targets",
+        "buildTransitive/netstandard2.0/Microsoft.AspNetCore.Components.Analyzers.targets",
+        "microsoft.aspnetcore.components.analyzers.3.1.6.nupkg.sha512",
+        "microsoft.aspnetcore.components.analyzers.nuspec"
       ]
     },
     "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
@@ -7199,20 +7223,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Hagutin\\.nuget\\packages\\": {}
+    "C:\\Users\\semdhong\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Hagutin\\Documents\\GitHub\\PandemicWatch\\Pegasus.Services\\Pegasus.Services.csproj",
+      "projectUniqueName": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Services\\Pegasus.Services.csproj",
       "projectName": "Pegasus.Services",
-      "projectPath": "C:\\Users\\Hagutin\\Documents\\GitHub\\PandemicWatch\\Pegasus.Services\\Pegasus.Services.csproj",
-      "packagesPath": "C:\\Users\\Hagutin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Hagutin\\Documents\\GitHub\\PandemicWatch\\Pegasus.Services\\obj\\",
+      "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Services\\Pegasus.Services.csproj",
+      "packagesPath": "C:\\Users\\semdhong\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Services\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Hagutin\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\semdhong\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -7225,11 +7254,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\Hagutin\\Documents\\GitHub\\PandemicWatch\\Pegasus.Models\\Pegasus.Models.csproj": {
-              "projectPath": "C:\\Users\\Hagutin\\Documents\\GitHub\\PandemicWatch\\Pegasus.Models\\Pegasus.Models.csproj"
+            "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Models\\Pegasus.Models.csproj": {
+              "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Models\\Pegasus.Models.csproj"
             },
-            "C:\\Users\\Hagutin\\Documents\\GitHub\\PandemicWatch\\Pegasus.Repository\\Pegasus.Repository.csproj": {
-              "projectPath": "C:\\Users\\Hagutin\\Documents\\GitHub\\PandemicWatch\\Pegasus.Repository\\Pegasus.Repository.csproj"
+            "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Repository\\Pegasus.Repository.csproj": {
+              "projectPath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Repository\\Pegasus.Repository.csproj"
             }
           }
         }

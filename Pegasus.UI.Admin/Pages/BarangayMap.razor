@@ -40,7 +40,24 @@
 
 
                                     <a href="/personmap/@person.Id">
-                                        <RadzenImage Path="css/images/person.png" Style="width:100px;" />
+
+                                        @if (!string.IsNullOrEmpty(person.Gender))
+                                        {
+                                            switch (person.Gender)
+                                            {
+                                                case "M":
+                                                    <div class="logo">
+                                                        <img src="_content/Pegasus.Command.CommonUI/images/maleperson.svg" style="width:100px;" /><br />
+
+                                                    </div>
+                                                    ; break;
+                                                case "F": <div class="logo">
+                                                        <img src="_content/Pegasus.Command.CommonUI/images/femaleperson.svg" style="width:100px;" /><br />
+
+                                                    </div>; break;
+                                            }
+
+                                        }
                                         <b>@person.Fullname</b>
                                         @switch (person.PersonStatus)
                                         {
