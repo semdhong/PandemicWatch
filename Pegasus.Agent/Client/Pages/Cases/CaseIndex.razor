@@ -1,4 +1,4 @@
-﻿@page "/cases"
+﻿@page "/cases/{brgyId:int}"
 @attribute [Authorize]
 @inject HttpClient http
 @inject IJSRuntime js
@@ -19,16 +19,15 @@ else
                     AllowSorting="true" Data="@person" TItem="PersonProfilesModel" ColumnWidth="200px">
             <Columns>
 
-                <RadzenGridColumn TItem="PersonProfilesModel" Property="CaseNo" Title="CaseNo" />
-                <RadzenGridColumn TItem="PersonProfilesModel" Property="Age" Title="Age" />
-                <RadzenGridColumn TItem="PersonProfilesModel" Property="Gender" Title="Sex" />
+                <RadzenGridColumn TItem="PersonProfilesModel" Width="150px" Property="CaseNo" Title="CaseNo" />
+                <RadzenGridColumn TItem="PersonProfilesModel" Width="150px" Property="Age" Title="Age" />
+                <RadzenGridColumn TItem="PersonProfilesModel" Width="150px" Property="Gender" Title="Sex" />
                 <RadzenGridColumn TItem="PersonProfilesModel" Filterable="false" Property="Barangay.BarangayName" Title="Barangay" />
-                <RadzenGridColumn TItem="PersonProfilesModel" Filterable="false" Property="DateLabConfirm" Title="Laboratory Confirmation" />
-                <RadzenGridColumn TItem="PersonProfilesModel" Filterable="false" Property="History.Remarks" Title="History/Status" />
+                <RadzenGridColumn TItem="PersonProfilesModel" Width="150px" Filterable="false" Property="DateLabConfirm" Title="Laboratory Confirmation" />
+                <RadzenGridColumn TItem="PersonProfilesModel" Width="150px" Filterable="false" Property="History.Remarks" Title="History/Status" />
                 <RadzenGridColumn TItem="PersonProfilesModel" Bubble="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px">
                     <Template Context="person">
-                        <RadzenButton Icon="edit" Size="ButtonSize.Medium" Click="@(args =>  EditRow(person))">
-                        </RadzenButton>
+                
                         <RadzenButton Icon="person_search" Size="ButtonSize.Medium" Click="@(args =>  ViewContact(person))">
                         </RadzenButton>
                     </Template>
@@ -43,22 +42,20 @@ else
 @code {
 
     List<PersonProfilesModel> person = new List<PersonProfilesModel>();
-
+    [Parameter] public int brgyId { get; set; }
 
     protected override async Task OnInitializedAsync()
+
     {
-        await LoadBarangays();
+        //person = await http.GetFromJsonAsync<List<PersonProfilesModel>>($"https://pegasusapiagent.azurewebsites.net/api/Person");
+        person = await http.GetFromJsonAsync<List<PersonProfilesModel>>($"https://localhost:44326/api/Person");
+        person = person.Where(x => x.BgryId == brgyId).ToList();
     }
 
-    async Task LoadBarangays()
-    {
-        person = await http.GetFromJsonAsync<List<PersonProfilesModel>>("https://pegasusapiagent.azurewebsites.net/api/Person");
-
-    }
-    void EditRow(PersonProfilesModel person)
-    {
-        navmgr.NavigateTo("/cases/edit/" + person.Id);
-    }
+    //void EditRow(PersonProfilesModel persn)
+    //{
+    //    navmgr.NavigateTo("/cases/edit/" + person.Id);
+    //}
     void ViewContact(PersonProfilesModel person)
     {
         navmgr.NavigateTo("/cases/contactedperson/" + person.Id);

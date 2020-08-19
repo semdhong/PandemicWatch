@@ -1,4 +1,4 @@
-﻿@page "/cases/edit/{brgyId:int}"
+﻿@page "/cases/edit/{personId:int}"
 @attribute [Authorize]
 @inject HttpClient http
 @inject NavigationManager navmgr
@@ -12,21 +12,24 @@
     }*@
 
 
-<CaseForm Person="@brgymodel" ButtonText="Save" OnValidSubmit="@EditBrgy" />
+<CaseForm Person="@personModel" ButtonText="Save" OnValidSubmit="@EditPerson" />
 
 @code {
-    [Parameter] public int brgyId { get; set; }
-    PersonProfilesModel brgymodel = new PersonProfilesModel();
+    [Parameter] public int personId { get; set; }
+    PersonProfilesModel personModel = new PersonProfilesModel();
+
+
 
     protected async override Task OnInitializedAsync()
     {
-        brgymodel = await http.GetFromJsonAsync<PersonProfilesModel>($"https://pegasusapiagent.azurewebsites.net/api/Person/" + brgyId);
+        personModel = await http.GetFromJsonAsync<PersonProfilesModel>($"https://pegasusapiagent.azurewebsites.net/api/Person/" + personId);
     }
 
-    async Task EditBrgy()
+    async Task EditPerson()
     {
-        await http.PutAsJsonAsync("https://pegasusapiagent.azurewebsites.net/api/Person", brgymodel);
-        navmgr.NavigateTo("/cases");
+        await http.PutAsJsonAsync("https://pegasusapiagent.azurewebsites.net/api/Person", personModel);
+
+        navmgr.NavigateTo("/cases/"+ personModel.BgryId);
     }
 
 }
