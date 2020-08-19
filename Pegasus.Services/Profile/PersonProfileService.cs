@@ -15,13 +15,15 @@ namespace Pegasus.Services.Profile
     public class PersonProfileService : IPersonProfileService
     {
         private readonly IRepository<PersonProfile> _repoPersonProfile;
+        private readonly IRepository<PersonHistory> _repoPersonHistory;
         private readonly IRepository<Barangay> _repoBarangay;
         private readonly IRepository<LguProfile> _repoLgu;
-        public PersonProfileService(IRepository<PersonProfile> repoPersonProfile, IRepository<Barangay> repoBarangay, IRepository<LguProfile> repoLgu)
+        public PersonProfileService(IRepository<PersonProfile> repoPersonProfile, IRepository<Barangay> repoBarangay, IRepository<LguProfile> repoLgu, IRepository<PersonHistory> repoPersonHistory)
         {
             _repoPersonProfile = repoPersonProfile;
             _repoBarangay = repoBarangay;
             _repoLgu = repoLgu;
+            _repoPersonHistory = repoPersonHistory;
         }
 
         public void CreatePersonProfile(PersonProfilesModel model)
@@ -39,25 +41,25 @@ namespace Pegasus.Services.Profile
                 QDateEnded = model.QDateEnded,
                 PicPath = model.PicPath,
                 DateCreated = model.DateCreated,
-                QrCode = GetQrCode(model),
+                QrCode = model.CaseNo,
                 Contact = model.Contact,
                 Address = model.Address,
                 SwabTestDate = model.SwabTestDate,
-                 SwabArea = model.SwabArea,
-                  CaseNo = model.CaseNo,
-                   Gender =model.Gender,
-                    DateLabConfirm = model.DateLabConfirm,
-                     BrgyRemarks = model.BrgyRemarks,
-                      CHDOHRemarks = model.CHDOHRemarks,
-                       IsolationCenter = model.IsolationCenterId,
-                        Age = model.Age,
-                          Agent = model.UserAgent
+                SwabArea = model.SwabArea,
+                CaseNo = model.CaseNo,
+                Gender = model.Gender,
+                DateLabConfirm = model.DateLabConfirm,
+                BrgyRemarks = model.BrgyRemarks,
+                CHDOHRemarks = model.CHDOHRemarks,
+                IsolationCenter = model.IsolationCenterId,
+                Age = model.Age,
+                UserAgent = model.UserAgent
 
 
             };
             _repoPersonProfile.AddAsync(data);
         }
-
+      
         public List<PersonProfilesModel> GetContacts(int id)
         {
             return _repoPersonProfile.GetAll().Select(x => new PersonProfilesModel
@@ -81,6 +83,10 @@ namespace Pegasus.Services.Profile
                 BrgyRemarks = x.BrgyRemarks,
                 CHDOHRemarks = x.CHDOHRemarks,
                 SwabTestDate = x.SwabTestDate,
+                VerifiedBy = (Guid)x.VerifiedBy,
+                ConfirmedBy = (Guid)x.ConfirmedBy,
+                VerifiedDate = x.VerifiedDate,
+                ConfirmedDate =x.ConfirmedDate,
                 Barangay = new Models.Maintenance.BarangayModel
                 {
                     Id = x.Brgy.Id,
@@ -88,9 +94,10 @@ namespace Pegasus.Services.Profile
                     BarangayAddress = x.Brgy.BarangayAddress,
                     BarangayName = x.Brgy.BarangayName,
                 },
-                History = x.PersonHistory.Select(d => new PersonHistoryModel {
+                History = x.PersonHistory.Select(d => new PersonHistoryModel
+                {
                     Id = d.Id,
-                    CreatedBy = d.CreatedBy,
+                    CreatedBy = (Guid)d.CreatedBy,
                     DateCreate = d.DateCreated,
                     Remarks = d.Remarks
                 }).ToList(),
@@ -100,7 +107,7 @@ namespace Pegasus.Services.Profile
                 DateLabConfirm = x.DateLabConfirm,
                 IsolationCenterId = x.IsolationCenter,
                 Age = x.Age,
-                UserAgent = x.Agent
+                UserAgent = (Guid)x.UserAgent
 
             }).Where(x => x.PrincipalPersonId == id).ToList();
         }
@@ -128,6 +135,10 @@ namespace Pegasus.Services.Profile
                 BrgyRemarks = x.BrgyRemarks,
                 CHDOHRemarks = x.CHDOHRemarks,
                 SwabTestDate = x.SwabTestDate,
+                VerifiedBy = (Guid)x.VerifiedBy,
+                ConfirmedBy = (Guid)x.ConfirmedBy,
+                VerifiedDate = x.VerifiedDate,
+                ConfirmedDate = x.ConfirmedDate,
                 Barangay = new Models.Maintenance.BarangayModel
                 {
                     Id = x.Brgy.Id,
@@ -138,7 +149,7 @@ namespace Pegasus.Services.Profile
                 History = x.PersonHistory.Select(d => new PersonHistoryModel
                 {
                     Id = d.Id,
-                    CreatedBy = d.CreatedBy,
+                    CreatedBy = (Guid)d.CreatedBy,
                     DateCreate = d.DateCreated,
                     Remarks = d.Remarks
                 }).ToList(),
@@ -148,7 +159,7 @@ namespace Pegasus.Services.Profile
                 DateLabConfirm = x.DateLabConfirm,
                 IsolationCenterId = x.IsolationCenter,
                 Age = x.Age,
-                UserAgent = x.Agent
+                UserAgent = (Guid)x.UserAgent
             }).FirstOrDefault(x => x.Id == id);
         }
 
@@ -201,6 +212,10 @@ namespace Pegasus.Services.Profile
                 BrgyRemarks = x.BrgyRemarks,
                 CHDOHRemarks = x.CHDOHRemarks,
                 SwabTestDate = x.SwabTestDate,
+                VerifiedBy = (Guid)x.VerifiedBy,
+                ConfirmedBy = (Guid)x.ConfirmedBy,
+                VerifiedDate = x.VerifiedDate,
+                ConfirmedDate = x.ConfirmedDate,
                 Barangay = new Models.Maintenance.BarangayModel
                 {
                     Id = x.Brgy.Id,
@@ -211,7 +226,7 @@ namespace Pegasus.Services.Profile
                 History = x.PersonHistory.Select(d => new PersonHistoryModel
                 {
                     Id = d.Id,
-                    CreatedBy = d.CreatedBy,
+                    CreatedBy = (Guid)d.CreatedBy,
                     DateCreate = d.DateCreated,
                     Remarks = d.Remarks
                 }).ToList(),
@@ -221,7 +236,7 @@ namespace Pegasus.Services.Profile
                 DateLabConfirm = x.DateLabConfirm,
                 IsolationCenterId = x.IsolationCenter,
                 Age = x.Age,
-                UserAgent = x.Agent
+                UserAgent = (Guid)x.UserAgent
             });
         }
 
@@ -259,7 +274,11 @@ namespace Pegasus.Services.Profile
                 DateLabConfirm = model.DateLabConfirm,
                 IsolationCenter = model.IsolationCenterId,
                 Age = model.Age,
-                Agent = model.UserAgent
+                UserAgent = model.UserAgent,
+                VerifiedBy = model.VerifiedBy,
+                ConfirmedBy = model.ConfirmedBy,
+                VerifiedDate = model.VerifiedDate,
+                ConfirmedDate = model.ConfirmedDate,
 
             });
         }
@@ -268,14 +287,48 @@ namespace Pegasus.Services.Profile
         {
 
             var brgy = _repoBarangay.GetAll().FirstOrDefault(x => x.Id == model.BgryId.Value);
-           var lgu = _repoLgu.GetAll().FirstOrDefault(x => x.Id == brgy.LguId).LguName;
-           
+            var lgu = _repoLgu.GetAll().FirstOrDefault(x => x.Id == brgy.LguId).LguName;
+
 
             return lgu + " " + brgy.BarangayName + " " + model.Fullname;
 
         }
 
+        #region Person History
+        public void CreatePersonHistory(PersonHistoryModel model)
+        {
+            _repoPersonHistory.AddAsync(new PersonHistory
+            {
+                PersonProfileid = model.PersonProfileId,
+                CreatedBy = model.CreatedBy,
+                DateCreated = DateTime.Now,
+                Remarks = model.Remarks
+            });
+        }
 
+        public void UpdatePersonHistory(PersonHistoryModel model)
+        {
+            _repoPersonHistory.UpdateAsync(new PersonHistory
+            {
+                Id = model.Id,
+                PersonProfileid = model.PersonProfileId,
+                CreatedBy = model.CreatedBy,
+                DateCreated = DateTime.Now,
+                Remarks = model.Remarks
+            });
+        }
+
+        public IEnumerable<PersonHistoryModel> GetPersonHistoryList(int id)
+        {
+            return _repoPersonHistory.GetAll().Where(x => x.PersonProfileid == id).Select(x => new PersonHistoryModel
+            {
+                Id = x.Id,
+                CreatedBy = (Guid)x.CreatedBy,
+                DateCreate = x.DateCreated,
+                Remarks = x.Remarks
+            });
+        }
+        #endregion
 
     }
 }

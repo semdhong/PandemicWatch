@@ -1,0 +1,227 @@
+﻿
+@page "/personmap/{personId:int}"
+@inject HttpClient http
+@inject NavigationManager navmgr
+@using System.Threading;
+@inject Helpers _helper
+<h3>Contact Tracing</h3>
+
+<div class="pg-orgchart">
+    <div class="org-chart">
+        <ul>
+            <li>
+                <!--Positive Person-->
+                <div class="user">
+                    @if (!string.IsNullOrEmpty(principalpersonsmodel.Gender))
+                    {
+                        switch (principalpersonsmodel.Gender)
+                        {
+                            case "M":
+                                <div class="logo">
+                                    <img src="_content/Pegasus.Command.CommonUI/images/maleperson.svg" style="width:100px;" /><br />
+
+                                </div>
+                                ; break;
+                            case "F": <div class="logo">
+                                    <img src="_content/Pegasus.Command.CommonUI/images/femaleperson.svg" style="width:100px;" /><br />
+
+                                </div>; break;
+                        }
+
+                    }
+                    <div class="name">Case No: @principalpersonsmodel.CaseNo</div><br />
+                    <div class="name">@principalpersonsmodel.Age</div>
+                    @switch (principalpersonsmodel.PersonStatus)
+                    {
+                        case "P":
+                            <h4 class="badge badge-danger">Positive</h4>
+                            break;
+                        case "N":
+                            <h4 class="badge badge-success">Negative</h4>
+                            break;
+                        case "D":
+                            <h4 class="badge badge-warning">PUI</h4>
+                            break;
+                        case "S":
+                            <h4 class="badge badge-secondary">PUM</h4>
+                            break;
+                        default:
+                            <h4 class="badge badge-dark">Unknown</h4>
+                            break;
+
+                    }
+                    <Radzen.Blazor.RadzenLabel>Confirmed COVID-19 Positive</Radzen.Blazor.RadzenLabel>
+
+                </div>
+                @if (contactpersonsmodel != null)
+                {
+
+                    <ul>
+                        @foreach (var direct in contactpersonsmodel)
+                        {
+
+                            GetSecondLevel(direct.Id);
+                            <li>
+                                <div class="user">
+
+                                    @if (!string.IsNullOrEmpty(direct.Gender))
+                                    {
+                                        switch (direct.Gender)
+                                        {
+                                            case "M":
+                                                <div class="logo">
+                                                    <img src="_content/Pegasus.Command.CommonUI/images/maleperson.svg" style="width:100px;" /><br />
+
+                                                </div>
+                                                ; break;
+                                            case "F": <div class="logo">
+                                                    <img src="_content/Pegasus.Command.CommonUI/images/femaleperson.svg" style="width:100px;" /><br />
+
+                                                </div>; break;
+                                        }
+
+                                    }
+                                    <div class="name">@direct.Fullname</div>
+                                    @switch (direct.PersonStatus)
+                                    {
+                                        case "P":
+                                            <h4 class="badge badge-danger">Positive</h4>
+                                            break;
+                                        case "N":
+                                            <h4 class="badge badge-success">Negative</h4>
+                                            break;
+                                        case "D":
+                                            <h4 class="badge badge-warning">PUI</h4>
+                                            break;
+                                        case "S":
+                                            <h4 class="badge badge-secondary">PUM</h4>
+                                            break;
+                                        default:
+                                            <h4 class="badge badge-dark">Unknown</h4>
+                                            break;
+
+                                    }
+
+
+                                </div>
+
+                                <ul>
+                                    @if (secondperson != null)
+                                    {
+                                        <li>
+                                            <div class="user">
+                                                <a href="/personmap/@secondperson.Id">
+                                                    @if (!string.IsNullOrEmpty(secondperson.Gender))
+                                                    {
+                                                        switch (secondperson.Gender)
+                                                        {
+                                                            case "M":
+                                                                <div class="logo">
+                                                                    <img src="_content/Pegasus.Command.CommonUI/images/maleperson.svg" style="width:100px;" /><br />
+
+                                                                </div>
+                                                                ; break;
+                                                            case "F": <div class="logo">
+                                                                    <img src="_content/Pegasus.Command.CommonUI/images/femaleperson.svg" style="width:100px;" /><br />
+
+                                                                </div>; break;
+                                                        }
+
+                                                    }
+                                                    <b>@secondperson.Fullname</b>
+                                                    @switch (secondperson.PersonStatus)
+                                                    {
+                                                        case "P":
+                                                            <h4 class="badge badge-danger">Positive</h4>
+                                                            break;
+                                                        case "N":
+                                                            <h4 class="badge badge-success">Negative</h4>
+                                                            break;
+                                                        case "D":
+                                                            <h4 class="badge badge-warning">PUI</h4>
+                                                            break;
+                                                        case "S":
+                                                            <h4 class="badge badge-secondary">PUM</h4>
+                                                            break;
+                                                        default:
+                                                            <h4 class="badge badge-dark">Unknown</h4>
+                                                            break;
+
+                                                    }
+                                                </a>
+
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+
+                        }
+                    </ul>
+                }
+            </li>
+        </ul>
+    </div>
+</div>
+@code{
+    [Parameter] public int personId { get; set; }
+    List<PersonProfilesModel> contactpersonsmodel { get; set; }
+    PersonProfilesModel principalpersonsmodel = new PersonProfilesModel();
+    PersonProfilesModel secondperson = new PersonProfilesModel();
+    List<PersonProfilesModel> allpersonsmodel { get; set; }
+    public int Count { get; set; }
+    //BroadcastHub hub = new BroadcastHub();
+
+    protected async override Task OnInitializedAsync()
+    {
+        string apis = _helper.ApiUrl(ApiType.Agent);
+        string uris = apis + "/Person";
+        string curis = apis + "/Contacts";
+        contactpersonsmodel = await http.GetFromJsonAsync<List<PersonProfilesModel>>(curis + "/" + personId);
+        principalpersonsmodel = await http.GetFromJsonAsync<PersonProfilesModel>(uris + "/" + personId);
+        allpersonsmodel = await http.GetFromJsonAsync<List<PersonProfilesModel>>(uris);
+        StartCountdown();
+    }
+
+    //protected async override Task OnParametersSetAsync()
+    //{
+
+    //    contactpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://pegasusapiadmin.azurewebsites.net/api/Contacts/" + personId);
+    //    principalpersonsmodel = await http.GetJsonAsync<PersonProfilesModel>($"https://pegasusapiadmin.azurewebsites.net/api/Person/" + personId);
+    //    allpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://pegasusapiadmin.azurewebsites.net/api/Person/");
+    //    StartCountdown();
+    //}
+    //async Task ReloadData()
+    //{
+    //    contactpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://pegasusapiadmin.azurewebsites.net/api/Contacts/" + personId);
+    //    principalpersonsmodel = await http.GetJsonAsync<PersonProfilesModel>($"https://pegasusapiadmin.azurewebsites.net/api/Person/" + personId);
+    //    allpersonsmodel = await http.GetJsonAsync<List<PersonProfilesModel>>($"https://pegasusapiadmin.azurewebsites.net/api/Person/");
+    //}
+
+    void GetSecondLevel(int id)
+    {
+        secondperson = allpersonsmodel.FirstOrDefault(x => x.PrincipalPersonId == id);
+    }
+
+    void StartCountdown()
+    {
+        var dc = new List<PersonProfilesModel>();
+
+        var timer = new Timer(new TimerCallback(_ =>
+        {
+
+            Count++;
+            var task = Task.Run(async () => await OnInitializedAsync());
+            // Note that the following line is necessary because otherwise
+            // Blazor would not recognize the state change and not refresh the UI
+            InvokeAsync(() =>
+            {
+
+                StateHasChanged();
+            });
+
+        }), null, 1000, 1000);
+
+
+    }
+}

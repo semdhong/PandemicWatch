@@ -1,28 +1,127 @@
 ﻿@page "/"
 
+@inject HttpClient http
+@inject IJSRuntime js
+@inject NavigationManager navmgr
+@inject IMatToaster matToaster
+@inject Helpers _helper
+@inject AppState appState
+@inject AuthenticationStateProvider authStateProvider
+@using Newtonsoft.Json;
+@using System.Net
+@using Pegasus.Command.Shared.Dto.Account
+@using Microsoft.AspNetCore.Components
+<center><h3>COVID19 CASE MONITORING</h3></center>
 
-<h1>Welcome to Pegasus Pandemic Watch.</h1>
 
+@if (person == null)
+{
+    <LoadingBackground ShowLogoBox="true">
+        <label>Loading Cases</label>
+    </LoadingBackground>
+}
+else
+{
+    <div class="col-12">
+     
+                    <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="20"
+                                AllowSorting="true" Data="@ppersons" TItem="PersonProfilesModel" ColumnWidth="300px">
+                        <Columns>
 
-<MatSnackbar @bind-IsOpen="@lazySnackbarIsOpen">
-    <MatSnackbarContent>Welcome to Pegasus Pandemic Watch.</MatSnackbarContent>
-   
-</MatSnackbar>
+                            <RadzenGridColumn TItem="PersonProfilesModel" Property="CaseNo" Title="Case No" Width="50px" />
 
-@code{
-    bool lazySnackbarIsOpen = false;
+                            <RadzenGridColumn TItem="PersonProfilesModel" Property="Age" Title="Age" Width="50px" />
+                            <RadzenGridColumn TItem="PersonProfilesModel" Property="Gender" Title="Gender" Width="50px" />
+                            <RadzenGridColumn TItem="PersonProfilesModel" Property="Address" Title="Address" Width="50px" />
+                            <RadzenGridColumn TItem="PersonProfilesModel" Property="Barangay.BarangayName" Title="Barangay" Width="50px" />
+                            <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="50px" Title="History">
+                                <Template Context="person">
 
+                                    <ul>
+                                        @foreach (var h in person.History)
+                                        {
+                                            <li>
+                                                <p>@h.Remarks</p>
+                                                </li>
+
+                                        }
+                                    </ul>
+                                    </Template>
+                            </RadzenGridColumn>
+                            <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="50px" Title="Status">
+                                <Template Context="person">
+
+                                    @switch (person.PersonStatus)
+                                    {
+                                        case "P":
+                                            <h3 class="badge badge-danger">Positive</h3>
+                                            break;
+                                        case "N":
+                                            <h3 class="badge badge-success">Negative</h3>
+                                            break;
+                                        case "D":
+                                            <h3 class="badge badge-warning">PUI</h3>
+                                            break;
+                                        case "S":
+                                            <h3 class="badge badge-secondary">PUM</h3>
+                                            break;
+                                        default:
+                                            <h3 class="badge badge-dark">Unknown</h3>
+                                            break;
+
+                                    }
+
+                                </Template>
+                            </RadzenGridColumn>
+
+                        </Columns>
+                    </RadzenGrid>
+            
+    </div>
+
+  
+
+ 
+}
+
+@code {
+    UserInfoDto userInfo = null;
+    [CascadingParameter]
+    Task<AuthenticationState> authenticationStateTask { get; set; }
+    List<UserInfoDto> users;
+    List<PersonProfilesModel> persons { get; set; }
+    List<PersonProfilesModel> ppersons { get; set; }
+    List<PersonProfilesModel> npersons { get; set; }
+    List<PersonProfilesModel> puipersons { get; set; }
+    List<PersonProfilesModel> pumpersons { get; set; }
+    List<BarangayModel> brgys { get; set; }
+    List<IsolationCenterModel> isocenters { get; set; }
+    PersonProfilesModel person = new PersonProfilesModel();
+    List<PersonHistoryModel> personHistList { get; set; }
+    PersonHistoryModel personHist = new PersonHistoryModel();
+    int quadays = 0;
+    string barangayname = "";
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
-
-        await Task.Delay(TimeSpan.FromSeconds(3)).ContinueWith((_) =>
-        {
-            this.lazySnackbarIsOpen = true;
-        });
+        await LoadProfile();
+       
+       
     }
-
-    public void Dispose()
+    
+    async Task LoadProfile()
     {
+        string apis = _helper.ApiUrl(ApiType.Agent);
+        string uris = apis + "/Person";
+        persons = await http.GetJsonAsync<List<PersonProfilesModel>>(uris);
+        ppersons = persons.Where(x => x.PersonStatus == "P").ToList();
+        npersons = persons.Where(x => x.PersonStatus == "N").ToList();
+        puipersons = persons.Where(x => x.PersonStatus == "D").ToList();
+        pumpersons = persons.Where(x => x.PersonStatus == "S").ToList();
+
     }
+
+    
+    
+
+   
 }

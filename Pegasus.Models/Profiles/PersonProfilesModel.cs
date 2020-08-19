@@ -14,7 +14,7 @@ namespace Pegasus.Models.Profiles
         public string Fullname { get; set; }
         public int? LguId { get; set; }
         public int? BgryId { get; set; }
-        public int? UserAgent { get; set; }
+        public Guid UserAgent { get; set; }
         public string QrCode { get; set; }
         public string PicPath { get; set; }
         public DateTime? DateCreated { get; set; }
@@ -41,6 +41,10 @@ namespace Pegasus.Models.Profiles
         public List<PersonHistoryModel> History { get; set; }
         public IsolationCenterModel IsolationCenter { get; set; }
         public string CaseNo { get; set; }
+        public Guid VerifiedBy { get; set; }
+        public Guid ConfirmedBy { get; set; }
+        public DateTime? VerifiedDate { get; set; }
+        public DateTime? ConfirmedDate { get; set; }
 
     }
 }

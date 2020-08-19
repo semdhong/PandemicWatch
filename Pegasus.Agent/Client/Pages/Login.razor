@@ -36,7 +36,16 @@
 @code{
     LoginParameters loginParameters { get; set; } = new LoginParameters();
     string error { get; set; }
+    [CascadingParameter] Task<AuthenticationState> authenticationStateTask { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        var user = (await authenticationStateTask).User;
 
+        if (user.Identity.IsAuthenticated)
+        {
+            navigationManager.NavigateTo("/");
+        }
+    }
     async Task OnSubmit()
     {
         error = null;

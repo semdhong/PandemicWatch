@@ -1,23 +1,822 @@
 ﻿@page "/dashboard"
-@attribute [Authorize]
 @inject AppState appState
-
+@inject Helpers _helper
+@inject HttpClient http
+@inject NavigationManager navmgr
+@using Syncfusion.EJ2.Blazor.CircularGauge
+@using Syncfusion.EJ2.Blazor.Maps
 <h1>Dashboard</h1>
+<div class="control-section">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-2">
+                    <EjsCircularGauge Height="250px" @ref="@lguTotalPosRef">
+                        <CircularGaugeAxes>
+                            <CircularGaugeAxis StartAngle="230" EndAngle="130">
+                                <CircularGaugeAxisLineStyle Width="0" Color="transparent">
+                                </CircularGaugeAxisLineStyle>
+                                <CircularGaugeAxisLabelStyle Position="Syncfusion.EJ2.Blazor.CircularGauge.Position.Outside">
+                                    <CircularGaugeAxisLabelFont Size="10px" Color="#000"></CircularGaugeAxisLabelFont>
+                                </CircularGaugeAxisLabelStyle>
+                                <CircularGaugeAxisMajorTicks Width="0" Height="0.01">
+                                </CircularGaugeAxisMajorTicks>
+                                <CircularGaugeAxisMinorTicks Width="0" Height="0.01">
+                                </CircularGaugeAxisMinorTicks>
+                                <CircularGaugeRanges>
+                                    <CircularGaugeRange Start="0" End="500" StartWidth="15" EndWidth="15" Color="#EC121C"></CircularGaugeRange>
 
+                                </CircularGaugeRanges>
+                                <CircularGaugePointers>
+                                    <CircularGaugePointer Value="@lguTotalPosRefValue" Radius="60%" Color="#777777" PointerWidth="5">
+                                        <CircularGaugePointerAnimation Enable="false" Duration="900"></CircularGaugePointerAnimation>
+                                        <CircularGaugeCap Radius="6" Color="#777777">
+                                            <CircularGaugeCapBorder Width="0">
+                                            </CircularGaugeCapBorder>
+                                        </CircularGaugeCap>
+                                        <CircularGaugeNeedleTail Length="25%" Color="#777777">
+                                        </CircularGaugeNeedleTail>
+                                    </CircularGaugePointer>
+                                </CircularGaugePointers>
+                                <CircularGaugeAnnotations>
+                                    <CircularGaugeAnnotation Angle="180" ZIndex="1" Radius="30%">
+                                        <ContentTemplate>
+                                            <div id='templateWrap'>
+
+                                                <div class='des'>
+                                                    <div style="color:#424242;font-size:20px;font-family:Roboto">@lguTotalPosRefValueAnnot</div>
+                                                </div>
+                                            </div>
+                                        </ContentTemplate>
+                                    </CircularGaugeAnnotation>
+                                    <CircularGaugeAnnotation Angle="180" ZIndex="1" Radius="65%" Content="Germany">
+                                        <ContentTemplate>
+                                            <div style="color:#9E9E9E;font-size:20px;font-style:Roboto;">POSITIVE</div>
+                                        </ContentTemplate>
+                                    </CircularGaugeAnnotation>
+                                </CircularGaugeAnnotations>
+                            </CircularGaugeAxis>
+                        </CircularGaugeAxes>
+                    </EjsCircularGauge>
+                </div>
+                <div class="col-sm-2">
+                    <EjsCircularGauge Height="250px" @ref="@lguTotalPUIRef">
+                        <CircularGaugeAxes>
+                            <CircularGaugeAxis StartAngle="230" EndAngle="130">
+                                <CircularGaugeAxisLineStyle Width="0" Color="transparent">
+                                </CircularGaugeAxisLineStyle>
+                                <CircularGaugeAxisLabelStyle Position="Syncfusion.EJ2.Blazor.CircularGauge.Position.Outside">
+                                    <CircularGaugeAxisLabelFont Size="10px" Color="#000"></CircularGaugeAxisLabelFont>
+                                </CircularGaugeAxisLabelStyle>
+                                <CircularGaugeAxisMajorTicks Width="0" Height="0.01">
+                                </CircularGaugeAxisMajorTicks>
+                                <CircularGaugeAxisMinorTicks Width="0" Height="0.01">
+                                </CircularGaugeAxisMinorTicks>
+                                <CircularGaugeRanges>
+                                    <CircularGaugeRange Start="0" End="500" StartWidth="15" EndWidth="15" Color="#FF9633"></CircularGaugeRange>
+                                </CircularGaugeRanges>
+                                <CircularGaugePointers>
+                                    <CircularGaugePointer Value="@lguTotalPUIRefValue" Radius="60%" Color="#777777" PointerWidth="5">
+                                        <CircularGaugePointerAnimation Enable="false" Duration="900"></CircularGaugePointerAnimation>
+                                        <CircularGaugeCap Radius="6" Color="#777777">
+                                            <CircularGaugeCapBorder Width="0">
+                                            </CircularGaugeCapBorder>
+                                        </CircularGaugeCap>
+                                        <CircularGaugeNeedleTail Length="25%" Color="#777777">
+                                        </CircularGaugeNeedleTail>
+                                    </CircularGaugePointer>
+                                </CircularGaugePointers>
+                                <CircularGaugeAnnotations>
+                                    <CircularGaugeAnnotation Angle="180" ZIndex="1" Radius="30%">
+                                        <ContentTemplate>
+                                            <div id='templateWrap'>
+
+                                                <div class='des'>
+                                                    <div style="color:#424242;font-size:20px;font-family:Roboto">@lguTotalPUIRefValueAnnot</div>
+                                                </div>
+                                            </div>
+                                        </ContentTemplate>
+                                    </CircularGaugeAnnotation>
+                                    <CircularGaugeAnnotation Angle="180" ZIndex="1" Radius="65%" Content="USA">
+                                        <ContentTemplate>
+                                            <div style="color:#9E9E9E;font-size:20px;font-style:Roboto;">PUI</div>
+                                        </ContentTemplate>
+                                    </CircularGaugeAnnotation>
+                                </CircularGaugeAnnotations>
+                            </CircularGaugeAxis>
+                        </CircularGaugeAxes>
+                    </EjsCircularGauge>
+                </div>
+                <div class="col-sm-2">
+                    <EjsCircularGauge Height="250px" @ref="@lguTotalPUMRef">
+                        <CircularGaugeAxes>
+                            <CircularGaugeAxis StartAngle="230" EndAngle="130">
+                                <CircularGaugeAxisLineStyle Width="0" Color="transparent">
+                                </CircularGaugeAxisLineStyle>
+                                <CircularGaugeAxisLabelStyle Position="Syncfusion.EJ2.Blazor.CircularGauge.Position.Outside">
+                                    <CircularGaugeAxisLabelFont Size="10px" Color="#000"></CircularGaugeAxisLabelFont>
+                                </CircularGaugeAxisLabelStyle>
+                                <CircularGaugeAxisMajorTicks Width="0" Height="0.01">
+                                </CircularGaugeAxisMajorTicks>
+                                <CircularGaugeAxisMinorTicks Width="0" Height="0.01">
+                                </CircularGaugeAxisMinorTicks>
+                                <CircularGaugeRanges>
+                                    <CircularGaugeRange Start="0" End="500" StartWidth="15" EndWidth="15" Color="#F6FF33"></CircularGaugeRange>
+                                </CircularGaugeRanges>
+                                <CircularGaugePointers>
+                                    <CircularGaugePointer Value="@lguTotalPUMRefValue" Radius="60%" Color="#777777" PointerWidth="5">
+                                        <CircularGaugePointerAnimation Enable="false" Duration="900"></CircularGaugePointerAnimation>
+                                        <CircularGaugeCap Radius="6" Color="#777777">
+                                            <CircularGaugeCapBorder Width="0">
+                                            </CircularGaugeCapBorder>
+                                        </CircularGaugeCap>
+                                        <CircularGaugeNeedleTail Length="25%" Color="#777777">
+                                        </CircularGaugeNeedleTail>
+                                    </CircularGaugePointer>
+                                </CircularGaugePointers>
+                                <CircularGaugeAnnotations>
+                                    <CircularGaugeAnnotation Angle="180" ZIndex="1" Radius="30%">
+                                        <ContentTemplate>
+                                            <div id='templateWrap'>
+
+                                                <div class='des'>
+                                                    <div style="color:#424242;font-size:20px;font-family:Roboto">@lguTotalPUMRefValueAnnot</div>
+                                                </div>
+                                            </div>
+                                        </ContentTemplate>
+                                    </CircularGaugeAnnotation>
+                                    <CircularGaugeAnnotation Angle="180" ZIndex="1" Radius="65%" Content="UK">
+                                        <ContentTemplate>
+                                            <div style="color:#9E9E9E;font-size:20px;font-style:Roboto;">PUM</div>
+                                        </ContentTemplate>
+                                    </CircularGaugeAnnotation>
+                                </CircularGaugeAnnotations>
+                            </CircularGaugeAxis>
+                        </CircularGaugeAxes>
+                    </EjsCircularGauge>
+                </div>
+                <div class="col-sm-2">
+                    <EjsCircularGauge Height="250px" @ref="@lguTotalRecRef">
+                        <CircularGaugeAxes>
+                            <CircularGaugeAxis StartAngle="230" EndAngle="130">
+                                <CircularGaugeAxisLineStyle Width="0" Color="transparent">
+                                </CircularGaugeAxisLineStyle>
+                                <CircularGaugeAxisLabelStyle Position="Syncfusion.EJ2.Blazor.CircularGauge.Position.Outside">
+                                    <CircularGaugeAxisLabelFont Size="10px" Color="#000"></CircularGaugeAxisLabelFont>
+                                </CircularGaugeAxisLabelStyle>
+                                <CircularGaugeAxisMajorTicks Width="0" Height="0.01">
+                                </CircularGaugeAxisMajorTicks>
+                                <CircularGaugeAxisMinorTicks Width="0" Height="0.01">
+                                </CircularGaugeAxisMinorTicks>
+                                <CircularGaugeRanges>
+                                    <CircularGaugeRange Start="0" End="500" StartWidth="15" EndWidth="15" Color="#75FF33"></CircularGaugeRange>
+                                </CircularGaugeRanges>
+                                <CircularGaugePointers>
+                                    <CircularGaugePointer Value="@lguTotalRecRefValue" Radius="60%" Color="#777777" PointerWidth="5">
+                                        <CircularGaugePointerAnimation Enable="false" Duration="900"></CircularGaugePointerAnimation>
+                                        <CircularGaugeCap Radius="6" Color="#777777">
+                                            <CircularGaugeCapBorder Width="0">
+                                            </CircularGaugeCapBorder>
+                                        </CircularGaugeCap>
+                                        <CircularGaugeNeedleTail Length="25%" Color="#777777">
+                                        </CircularGaugeNeedleTail>
+                                    </CircularGaugePointer>
+                                </CircularGaugePointers>
+                                <CircularGaugeAnnotations>
+                                    <CircularGaugeAnnotation Angle="180" ZIndex="1" Radius="30%">
+                                        <ContentTemplate>
+                                            <div id='templateWrap'>
+
+                                                <div class='des'>
+                                                    <div style="color:#424242;font-size:20px;font-family:Roboto">@lguTotalRecRefValueAnnot</div>
+                                                </div>
+                                            </div>
+                                        </ContentTemplate>
+                                    </CircularGaugeAnnotation>
+                                    <CircularGaugeAnnotation Angle="180" ZIndex="1" Radius="65%" Content="UK">
+                                        <ContentTemplate>
+                                            <div style="color:#9E9E9E;font-size:20px;font-style:Roboto;">RECOVERED</div>
+                                        </ContentTemplate>
+                                    </CircularGaugeAnnotation>
+                                </CircularGaugeAnnotations>
+                            </CircularGaugeAxis>
+                        </CircularGaugeAxes>
+                    </EjsCircularGauge>
+                </div>
+                <div class="col-sm-2">
+                    <EjsCircularGauge Height="250px" @ref="@lguTotalDeathRef">
+                        <CircularGaugeAxes>
+                            <CircularGaugeAxis StartAngle="230" EndAngle="130">
+                                <CircularGaugeAxisLineStyle Width="0" Color="transparent">
+                                </CircularGaugeAxisLineStyle>
+                                <CircularGaugeAxisLabelStyle Position="Syncfusion.EJ2.Blazor.CircularGauge.Position.Outside">
+                                    <CircularGaugeAxisLabelFont Size="10px" Color="#000"></CircularGaugeAxisLabelFont>
+                                </CircularGaugeAxisLabelStyle>
+                                <CircularGaugeAxisMajorTicks Width="0" Height="0.01">
+                                </CircularGaugeAxisMajorTicks>
+                                <CircularGaugeAxisMinorTicks Width="0" Height="0.01">
+                                </CircularGaugeAxisMinorTicks>
+                                <CircularGaugeRanges>
+                                    <CircularGaugeRange Start="0" End="500" StartWidth="15" EndWidth="15" Color="#000"></CircularGaugeRange>
+                                </CircularGaugeRanges>
+                                <CircularGaugePointers>
+                                    <CircularGaugePointer Value="@lguTotalDeathRefValue" Radius="60%" Color="#777777" PointerWidth="5">
+                                        <CircularGaugePointerAnimation Enable="false" Duration="900"></CircularGaugePointerAnimation>
+                                        <CircularGaugeCap Radius="6" Color="#777777">
+                                            <CircularGaugeCapBorder Width="0">
+                                            </CircularGaugeCapBorder>
+                                        </CircularGaugeCap>
+                                        <CircularGaugeNeedleTail Length="25%" Color="#777777">
+                                        </CircularGaugeNeedleTail>
+                                    </CircularGaugePointer>
+                                </CircularGaugePointers>
+                                <CircularGaugeAnnotations>
+                                    <CircularGaugeAnnotation Angle="180" ZIndex="1" Radius="30%">
+                                        <ContentTemplate>
+                                            <div id='templateWrap'>
+
+                                                <div class='des'>
+                                                    <div style="color:#424242;font-size:20px;font-family:Roboto">@lguTotalDeathRefValueAnnot</div>
+                                                </div>
+                                            </div>
+                                        </ContentTemplate>
+                                    </CircularGaugeAnnotation>
+                                    <CircularGaugeAnnotation Angle="180" ZIndex="1" Radius="65%" Content="UK">
+                                        <ContentTemplate>
+                                            <div style="color:#9E9E9E;font-size:20px;font-style:Roboto;">DEATH</div>
+                                        </ContentTemplate>
+                                    </CircularGaugeAnnotation>
+                                </CircularGaugeAnnotations>
+                            </CircularGaugeAxis>
+                        </CircularGaugeAxes>
+                    </EjsCircularGauge>
+                </div>
+                <div class="col-sm-2">
+                    <time datetime="2014-09-24" class="date-as-calendar inline-flex size3x">
+
+                        <span class="weekday">@DateTime.Now.Date.DayOfWeek</span>
+                        <span class="day">@DateTime.Now.Date.Day</span>
+                        <span class="month">@Months[DateTime.Now.Date.Month - 1]</span>
+                        <span class="year">@DateTime.Now.Date.Year</span>
+                    </time>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <h2>Barangays</h2>
+
+    <hr />
+    <div class="row">
+        @foreach (var br in brgys)
+        {
+            <h3 class="month">@br.BarangayName</h3>
+
+            <hr />
+
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <EjsCircularGauge Height="250px" @ref="@lguTotalPosRef">
+                            <CircularGaugeAxes>
+                                <CircularGaugeAxis StartAngle="230" EndAngle="130">
+                                    <CircularGaugeAxisLineStyle Width="0" Color="transparent">
+                                    </CircularGaugeAxisLineStyle>
+                                    <CircularGaugeAxisLabelStyle Position="Syncfusion.EJ2.Blazor.CircularGauge.Position.Outside">
+                                        <CircularGaugeAxisLabelFont Size="10px" Color="#000"></CircularGaugeAxisLabelFont>
+                                    </CircularGaugeAxisLabelStyle>
+                                    <CircularGaugeAxisMajorTicks Width="0" Height="0.01">
+                                    </CircularGaugeAxisMajorTicks>
+                                    <CircularGaugeAxisMinorTicks Width="0" Height="0.01">
+                                    </CircularGaugeAxisMinorTicks>
+                                    <CircularGaugeRanges>
+                                        <CircularGaugeRange Start="0" End="500" StartWidth="15" EndWidth="15" Color="#EC121C"></CircularGaugeRange>
+
+                                    </CircularGaugeRanges>
+                                    <CircularGaugePointers>
+                                        <CircularGaugePointer Value="@br.persons.Count(x=>x.PersonStatus=="P")" Radius="60%" Color="#777777" PointerWidth="5">
+                                            <CircularGaugePointerAnimation Enable="false" Duration="900"></CircularGaugePointerAnimation>
+                                            <CircularGaugeCap Radius="6" Color="#777777">
+                                                <CircularGaugeCapBorder Width="0">
+                                                </CircularGaugeCapBorder>
+                                            </CircularGaugeCap>
+                                            <CircularGaugeNeedleTail Length="25%" Color="#777777">
+                                            </CircularGaugeNeedleTail>
+                                        </CircularGaugePointer>
+                                    </CircularGaugePointers>
+                                    <CircularGaugeAnnotations>
+                                        <CircularGaugeAnnotation Angle="180" ZIndex="1" Radius="30%">
+                                            <ContentTemplate>
+                                                <div id='templateWrap'>
+
+                                                    <div class='des'>
+                                                        <div style="color:#424242;font-size:20px;font-family:Roboto">@br.persons.Count(x => x.PersonStatus == "P").ToString()</div>
+                                                    </div>
+                                                </div>
+                                            </ContentTemplate>
+                                        </CircularGaugeAnnotation>
+                                        <CircularGaugeAnnotation Angle="180" ZIndex="1" Radius="65%" Content="Germany">
+                                            <ContentTemplate>
+                                                <div style="color:#9E9E9E;font-size:20px;font-style:Roboto;">POSITIVE</div>
+                                            </ContentTemplate>
+                                        </CircularGaugeAnnotation>
+                                    </CircularGaugeAnnotations>
+                                </CircularGaugeAxis>
+                            </CircularGaugeAxes>
+                        </EjsCircularGauge>
+                    </div>
+                    <div class="col-sm-2">
+                        <EjsCircularGauge Height="250px" @ref="@lguTotalPUIRef">
+                            <CircularGaugeAxes>
+                                <CircularGaugeAxis StartAngle="230" EndAngle="130">
+                                    <CircularGaugeAxisLineStyle Width="0" Color="transparent">
+                                    </CircularGaugeAxisLineStyle>
+                                    <CircularGaugeAxisLabelStyle Position="Syncfusion.EJ2.Blazor.CircularGauge.Position.Outside">
+                                        <CircularGaugeAxisLabelFont Size="10px" Color="#000"></CircularGaugeAxisLabelFont>
+                                    </CircularGaugeAxisLabelStyle>
+                                    <CircularGaugeAxisMajorTicks Width="0" Height="0.01">
+                                    </CircularGaugeAxisMajorTicks>
+                                    <CircularGaugeAxisMinorTicks Width="0" Height="0.01">
+                                    </CircularGaugeAxisMinorTicks>
+                                    <CircularGaugeRanges>
+                                        <CircularGaugeRange Start="0" End="500" StartWidth="15" EndWidth="15" Color="#FF9633"></CircularGaugeRange>
+                                    </CircularGaugeRanges>
+                                    <CircularGaugePointers>
+                                        <CircularGaugePointer Value="@br.persons.Count(x=>x.PersonStatus=="D")" Radius="60%" Color="#777777" PointerWidth="5">
+                                            <CircularGaugePointerAnimation Enable="false" Duration="900"></CircularGaugePointerAnimation>
+                                            <CircularGaugeCap Radius="6" Color="#777777">
+                                                <CircularGaugeCapBorder Width="0">
+                                                </CircularGaugeCapBorder>
+                                            </CircularGaugeCap>
+                                            <CircularGaugeNeedleTail Length="25%" Color="#777777">
+                                            </CircularGaugeNeedleTail>
+                                        </CircularGaugePointer>
+                                    </CircularGaugePointers>
+                                    <CircularGaugeAnnotations>
+                                        <CircularGaugeAnnotation Angle="180" ZIndex="1" Radius="30%">
+                                            <ContentTemplate>
+                                                <div id='templateWrap'>
+
+                                                    <div class='des'>
+                                                        <div style="color:#424242;font-size:20px;font-family:Roboto">@br.persons.Count(x => x.PersonStatus == "D").ToString()</div>
+                                                    </div>
+                                                </div>
+                                            </ContentTemplate>
+                                        </CircularGaugeAnnotation>
+                                        <CircularGaugeAnnotation Angle="180" ZIndex="1" Radius="65%" Content="USA">
+                                            <ContentTemplate>
+                                                <div style="color:#9E9E9E;font-size:20px;font-style:Roboto;">PUI</div>
+                                            </ContentTemplate>
+                                        </CircularGaugeAnnotation>
+                                    </CircularGaugeAnnotations>
+                                </CircularGaugeAxis>
+                            </CircularGaugeAxes>
+                        </EjsCircularGauge>
+                    </div>
+                    <div class="col-sm-2">
+                        <EjsCircularGauge Height="250px" @ref="@lguTotalPUMRef">
+                            <CircularGaugeAxes>
+                                <CircularGaugeAxis StartAngle="230" EndAngle="130">
+                                    <CircularGaugeAxisLineStyle Width="0" Color="transparent">
+                                    </CircularGaugeAxisLineStyle>
+                                    <CircularGaugeAxisLabelStyle Position="Syncfusion.EJ2.Blazor.CircularGauge.Position.Outside">
+                                        <CircularGaugeAxisLabelFont Size="10px" Color="#000"></CircularGaugeAxisLabelFont>
+                                    </CircularGaugeAxisLabelStyle>
+                                    <CircularGaugeAxisMajorTicks Width="0" Height="0.01">
+                                    </CircularGaugeAxisMajorTicks>
+                                    <CircularGaugeAxisMinorTicks Width="0" Height="0.01">
+                                    </CircularGaugeAxisMinorTicks>
+                                    <CircularGaugeRanges>
+                                        <CircularGaugeRange Start="0" End="500" StartWidth="15" EndWidth="15" Color="#F6FF33"></CircularGaugeRange>
+                                    </CircularGaugeRanges>
+                                    <CircularGaugePointers>
+                                        <CircularGaugePointer Value="@br.persons.Count(x=>x.PersonStatus=="S")" Radius="60%" Color="#777777" PointerWidth="5">
+                                            <CircularGaugePointerAnimation Enable="false" Duration="900"></CircularGaugePointerAnimation>
+                                            <CircularGaugeCap Radius="6" Color="#777777">
+                                                <CircularGaugeCapBorder Width="0">
+                                                </CircularGaugeCapBorder>
+                                            </CircularGaugeCap>
+                                            <CircularGaugeNeedleTail Length="25%" Color="#777777">
+                                            </CircularGaugeNeedleTail>
+                                        </CircularGaugePointer>
+                                    </CircularGaugePointers>
+                                    <CircularGaugeAnnotations>
+                                        <CircularGaugeAnnotation Angle="180" ZIndex="1" Radius="30%">
+                                            <ContentTemplate>
+                                                <div id='templateWrap'>
+
+                                                    <div class='des'>
+                                                        <div style="color:#424242;font-size:20px;font-family:Roboto">@br.persons.Count(x => x.PersonStatus == "S").ToString()</div>
+                                                    </div>
+                                                </div>
+                                            </ContentTemplate>
+                                        </CircularGaugeAnnotation>
+                                        <CircularGaugeAnnotation Angle="180" ZIndex="1" Radius="65%" Content="UK">
+                                            <ContentTemplate>
+                                                <div style="color:#9E9E9E;font-size:20px;font-style:Roboto;">PUM</div>
+                                            </ContentTemplate>
+                                        </CircularGaugeAnnotation>
+                                    </CircularGaugeAnnotations>
+                                </CircularGaugeAxis>
+                            </CircularGaugeAxes>
+                        </EjsCircularGauge>
+                    </div>
+                    <div class="col-sm-2">
+                        <EjsCircularGauge Height="250px" @ref="@lguTotalRecRef">
+                            <CircularGaugeAxes>
+                                <CircularGaugeAxis StartAngle="230" EndAngle="130">
+                                    <CircularGaugeAxisLineStyle Width="0" Color="transparent">
+                                    </CircularGaugeAxisLineStyle>
+                                    <CircularGaugeAxisLabelStyle Position="Syncfusion.EJ2.Blazor.CircularGauge.Position.Outside">
+                                        <CircularGaugeAxisLabelFont Size="10px" Color="#000"></CircularGaugeAxisLabelFont>
+                                    </CircularGaugeAxisLabelStyle>
+                                    <CircularGaugeAxisMajorTicks Width="0" Height="0.01">
+                                    </CircularGaugeAxisMajorTicks>
+                                    <CircularGaugeAxisMinorTicks Width="0" Height="0.01">
+                                    </CircularGaugeAxisMinorTicks>
+                                    <CircularGaugeRanges>
+                                        <CircularGaugeRange Start="0" End="500" StartWidth="15" EndWidth="15" Color="#75FF33"></CircularGaugeRange>
+                                    </CircularGaugeRanges>
+                                    <CircularGaugePointers>
+                                        <CircularGaugePointer Value="@br.persons.Count(x => x.PersonStatus == "N")" Radius="60%" Color="#777777" PointerWidth="5">
+                                            <CircularGaugePointerAnimation Enable="false" Duration="900"></CircularGaugePointerAnimation>
+                                            <CircularGaugeCap Radius="6" Color="#777777">
+                                                <CircularGaugeCapBorder Width="0">
+                                                </CircularGaugeCapBorder>
+                                            </CircularGaugeCap>
+                                            <CircularGaugeNeedleTail Length="25%" Color="#777777">
+                                            </CircularGaugeNeedleTail>
+                                        </CircularGaugePointer>
+                                    </CircularGaugePointers>
+                                    <CircularGaugeAnnotations>
+                                        <CircularGaugeAnnotation Angle="180" ZIndex="1" Radius="30%">
+                                            <ContentTemplate>
+                                                <div id='templateWrap'>
+
+                                                    <div class='des'>
+                                                        <div style="color:#424242;font-size:20px;font-family:Roboto">@br.persons.Count(x => x.PersonStatus == "N").ToString()</div>
+                                                    </div>
+                                                </div>
+                                            </ContentTemplate>
+                                        </CircularGaugeAnnotation>
+                                        <CircularGaugeAnnotation Angle="180" ZIndex="1" Radius="65%" Content="UK">
+                                            <ContentTemplate>
+                                                <div style="color:#9E9E9E;font-size:20px;font-style:Roboto;">RECOVERED</div>
+                                            </ContentTemplate>
+                                        </CircularGaugeAnnotation>
+                                    </CircularGaugeAnnotations>
+                                </CircularGaugeAxis>
+                            </CircularGaugeAxes>
+                        </EjsCircularGauge>
+                    </div>
+                    <div class="col-sm-2">
+                        <EjsCircularGauge Height="250px" @ref="@lguTotalDeathRef">
+                            <CircularGaugeAxes>
+                                <CircularGaugeAxis StartAngle="230" EndAngle="130">
+                                    <CircularGaugeAxisLineStyle Width="0" Color="transparent">
+                                    </CircularGaugeAxisLineStyle>
+                                    <CircularGaugeAxisLabelStyle Position="Syncfusion.EJ2.Blazor.CircularGauge.Position.Outside">
+                                        <CircularGaugeAxisLabelFont Size="10px" Color="#000"></CircularGaugeAxisLabelFont>
+                                    </CircularGaugeAxisLabelStyle>
+                                    <CircularGaugeAxisMajorTicks Width="0" Height="0.01">
+                                    </CircularGaugeAxisMajorTicks>
+                                    <CircularGaugeAxisMinorTicks Width="0" Height="0.01">
+                                    </CircularGaugeAxisMinorTicks>
+                                    <CircularGaugeRanges>
+                                        <CircularGaugeRange Start="0" End="500" StartWidth="15" EndWidth="15" Color="#000"></CircularGaugeRange>
+                                    </CircularGaugeRanges>
+                                    <CircularGaugePointers>
+                                        <CircularGaugePointer Value="@br.persons.Count(x => x.PersonStatus == null)" Radius="60%" Color="#777777" PointerWidth="5">
+                                            <CircularGaugePointerAnimation Enable="false" Duration="900"></CircularGaugePointerAnimation>
+                                            <CircularGaugeCap Radius="6" Color="#777777">
+                                                <CircularGaugeCapBorder Width="0">
+                                                </CircularGaugeCapBorder>
+                                            </CircularGaugeCap>
+                                            <CircularGaugeNeedleTail Length="25%" Color="#777777">
+                                            </CircularGaugeNeedleTail>
+                                        </CircularGaugePointer>
+                                    </CircularGaugePointers>
+                                    <CircularGaugeAnnotations>
+                                        <CircularGaugeAnnotation Angle="180" ZIndex="1" Radius="30%">
+                                            <ContentTemplate>
+                                                <div id='templateWrap'>
+
+                                                    <div class='des'>
+                                                        <div style="color:#424242;font-size:20px;font-family:Roboto">@br.persons.Count(x => x.PersonStatus == null).ToString()</div>
+                                                    </div>
+                                                </div>
+                                            </ContentTemplate>
+                                        </CircularGaugeAnnotation>
+                                        <CircularGaugeAnnotation Angle="180" ZIndex="1" Radius="65%" Content="UK">
+                                            <ContentTemplate>
+                                                <div style="color:#9E9E9E;font-size:20px;font-style:Roboto;">DEATH</div>
+                                            </ContentTemplate>
+                                        </CircularGaugeAnnotation>
+                                    </CircularGaugeAnnotations>
+                                </CircularGaugeAxis>
+                            </CircularGaugeAxes>
+                        </EjsCircularGauge>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-sm-2">
+                <div>
+                    <EjsMaps>
+                        <MapsTitleSettings Text="@br.BarangayName">
+                        </MapsTitleSettings>
+                        <MapsCenterPosition Latitude=10.54175 Longitude=123.952703></MapsCenterPosition>
+                        <MapsZoomSettings Enable="true" ZoomFactor=10></MapsZoomSettings>
+                        <MapsLayers>
+                            <MapsLayer LayerType="ShapeLayerType.OSM" AnimationDuration=0>
+                                <MapsMarkerSettings>
+                                    <MapsMarker Visible="true" DataSource="@MarkerDatas" Height='30' Width='30' Shape='Syncfusion.EJ2.Blazor.Maps.MarkerType.Image' ImageUrl='styles/images/maps/ballon.png'>
+                                        <MapsMarkerTooltipSettings Visible="true" ValuePath="name"></MapsMarkerTooltipSettings>
+                                    </MapsMarker>
+                                </MapsMarkerSettings>
+                            </MapsLayer>
+                        </MapsLayers>
+                    </EjsMaps>
+                </div>
+                </div>
+                }
+            </div>
+        </div>
+<style>
+    #templateWrap img {
+        width: 16px;
+        height: 16px;
+        margin-top: 4px;
+        margin-left: -25px
+    }
+
+    #templateWrap .des {
+        float: right;
+    }
+
+
+    /****************************************/
+    /* Styling rules, such as font and colors */
+    .date-as-calendar {
+        font-variant: normal;
+        font-style: normal;
+        font-weight: normal;
+        font-family: "Helvetica", "Arial", sans-serif;
+        /* It seems vertical-align: baseline does not work correctly with display: inline-flex. */
+        vertical-align: top;
+        /* margin: 1ex; */
+        color: black;
+        background: white;
+        background: linear-gradient(to bottom right, #fff 0%, #eee 100%);
+        border: 1px solid #888;
+        border-radius: 3px;
+        overflow: hidden;
+        box-shadow: 2px 2px 2px -2px black;
+    }
+
+        .date-as-calendar .weekday,
+        .date-as-calendar .day,
+        .date-as-calendar .month,
+        .date-as-calendar .year {
+            text-align: center;
+            line-height: 1;
+        }
+
+        .date-as-calendar .month {
+            font-family: "Oswald", sans-serif;
+            text-transform: uppercase;
+            background: #b11;
+            background: linear-gradient(to bottom right, #d66 0%, #a00 100%);
+            color: white;
+        }
+
+    /****************************************/
+    /* Layout rules using position: absolute and pixels. */
+    .position-pixels.date-as-calendar {
+        display: inline-block;
+        position: relative;
+        width: 64px;
+        height: 64px;
+    }
+
+        .position-pixels.date-as-calendar .weekday,
+        .position-pixels.date-as-calendar .day,
+        .position-pixels.date-as-calendar .month,
+        .position-pixels.date-as-calendar .year {
+            display: block;
+            position: absolute;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 1em;
+        }
+
+        .position-pixels.date-as-calendar .month {
+            top: 0px;
+            font-size: 12px;
+            padding: 2px 0;
+        }
+
+        .position-pixels.date-as-calendar .weekday {
+            top: 16px;
+            font-size: 10px;
+        }
+
+        .position-pixels.date-as-calendar .day {
+            top: 26px;
+            font-size: 24px;
+        }
+
+        .position-pixels.date-as-calendar .year {
+            top: 50px;
+            font-size: 14px;
+        }
+
+    /****************************************/
+    /* Layout rules using position: absolute and relative dimensions using em. */
+    .position-em.date-as-calendar {
+        display: inline-block;
+        position: relative;
+        width: 4em;
+        height: 4em;
+    }
+
+        .position-em.date-as-calendar .weekday,
+        .position-em.date-as-calendar .day,
+        .position-em.date-as-calendar .month,
+        .position-em.date-as-calendar .year {
+            display: block;
+            position: absolute;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 1em;
+        }
+
+        .position-em.date-as-calendar .month {
+            top: 0px;
+            font-size: 0.75em;
+            padding: 0.1em 0;
+        }
+
+        .position-em.date-as-calendar .weekday {
+            top: 1.6em;
+            font-size: 0.6125em;
+        }
+
+        .position-em.date-as-calendar .day {
+            top: 1.1em;
+            font-size: 1.5em;
+        }
+
+        .position-em.date-as-calendar .year {
+            bottom: 0px;
+            font-size: 0.8775em;
+        }
+
+    /****************************************/
+    /* Layout rules using display: inline-flex and relative dimensions using em. */
+    .inline-flex.date-as-calendar {
+        display: inline-flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        width: 4em;
+        height: 4em;
+    }
+
+        .inline-flex.date-as-calendar .weekday,
+        .inline-flex.date-as-calendar .day,
+        .inline-flex.date-as-calendar .month,
+        .inline-flex.date-as-calendar .year {
+            display: block;
+            flex: 1 1 auto;
+        }
+
+        .inline-flex.date-as-calendar .month {
+            order: 1;
+            font-size: 0.75em;
+            padding: 0.1em 0;
+        }
+
+        .inline-flex.date-as-calendar .weekday {
+            order: 2;
+            font-size: 0.6125em;
+        }
+
+        .inline-flex.date-as-calendar .day {
+            order: 3;
+            font-size: 1.5em;
+        }
+
+        .inline-flex.date-as-calendar .year {
+            order: 4;
+            font-size: 0.8775em;
+        }
+
+    /****************************************/
+    /* Multiple sizes. */
+    .date-as-calendar.size0_5x {
+        font-size: 8px;
+    }
+
+    .date-as-calendar.size0_75x {
+        font-size: 12px;
+    }
+
+    .date-as-calendar.size1x {
+        font-size: 16px;
+    }
+
+    .date-as-calendar.size1_25x {
+        font-size: 20px;
+    }
+
+    .date-as-calendar.size1_5x {
+        font-size: 24px;
+    }
+
+    .date-as-calendar.size1_75x {
+        font-size: 28px;
+    }
+
+    .date-as-calendar.size2x {
+        font-size: 32px;
+    }
+
+    .date-as-calendar.size3x {
+        font-size: 48px;
+    }
+</style>
 
 @code {
-    int currentCount = 0;
-    int profileCurrentCount = -1;
+    public string[] Months { get; set; } = {
+       "January", "February", "March",
+       "April", "May", "June", "July",
+       "August", "September", "October",
+       "November", "December" };
+    public class MarkerData
+    {
+        public string name;
+        public double latitude;
+        public double longitude;
+    }
+    public List<MarkerData> MarkerDatas = new List<MarkerData> {
+        new MarkerData { name= "Danao City, Cebu, PH",  latitude= 10.54175, longitude= 123.952703 }
+    };
+    EjsCircularGauge lguTotalPosRef;
+    EjsCircularGauge lguTotalPUIRef;
+    EjsCircularGauge lguTotalPUMRef;
+    EjsCircularGauge lguTotalRecRef;
+    EjsCircularGauge lguTotalDeathRef;
+    EjsCircularGauge brgyTotal;
 
+    private int lguTotalPosRefValue = 75;
+    private int lguTotalPUIRefValue = 60;
+    private int lguTotalPUMRefValue = 25;
+    private int lguTotalRecRefValue = 25;
+    private int lguTotalDeathRefValue = 25;
+
+    private string lguTotalPosRefValueAnnot = "";
+    private string lguTotalPUIRefValueAnnot = "";
+    private string lguTotalPUMRefValueAnnot = "";
+    private string lguTotalRecRefValueAnnot = "";
+    private string lguTotalDeathRefValueAnnot = "";
+    List<BarangayModel> brgys = new List<BarangayModel>();
+    List<PersonProfilesModel> persons { get; set; }
     protected override async Task OnInitializedAsync()
     {
-        profileCurrentCount = await appState.GetUserProfileCount();
+        await LoadProfile();
+        await LoadBarangay();
+
+    }
+    async Task LoadBarangay()
+    {
+        string apis = _helper.ApiUrl(ApiType.Admin);
+        string uris = apis + "/Barangay";
+        brgys = await http.GetJsonAsync<List<BarangayModel>>(uris);
+    }
+    async Task LoadProfile()
+    {
+        string apis = _helper.ApiUrl(ApiType.Agent);
+        string uris = apis + "/Person";
+        persons = await http.GetJsonAsync<List<PersonProfilesModel>>(uris);
+        lguTotalPosRefValue = persons.Count(x => x.PersonStatus == "P");
+        lguTotalPUIRefValue = persons.Count(x => x.PersonStatus == "D");
+        lguTotalPUMRefValue = persons.Count(x => x.PersonStatus == "S");
+        lguTotalRecRefValue = persons.Count(x => x.PersonStatus == "N");
+        lguTotalDeathRefValue = persons.Count(x => x.PersonStatus == null);
+
+        lguTotalPosRefValueAnnot = lguTotalPosRefValue.ToString();
+        lguTotalPUIRefValueAnnot = lguTotalPUIRefValue.ToString();
+        lguTotalPUMRefValueAnnot = lguTotalPUMRefValue.ToString();
+        lguTotalRecRefValueAnnot = lguTotalRecRefValue.ToString();
+        lguTotalDeathRefValueAnnot = lguTotalDeathRefValue.ToString();
+
+
     }
 
-    public async Task IncrementCount()
-    {
-        currentCount++;
-        profileCurrentCount++;
-        await appState.UpdateUserProfileCount(profileCurrentCount);
-    }
 }

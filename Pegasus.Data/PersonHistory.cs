@@ -15,7 +15,7 @@ namespace Pegasus.Data
         public string Remarks { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? DateCreated { get; set; }
-        public int? CreatedBy { get; set; }
+        public Guid? CreatedBy { get; set; }
 
         [ForeignKey(nameof(PersonProfileid))]
         [InverseProperty("PersonHistory")]

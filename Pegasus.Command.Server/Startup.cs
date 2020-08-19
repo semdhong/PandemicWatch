@@ -54,7 +54,7 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using System.Reflection;
 using Pegasus.Command.Server.Data;
-
+using Syncfusion.EJ2.Blazor;
 
 namespace Pegasus.Command.Server
 {
@@ -102,7 +102,7 @@ namespace Pegasus.Command.Server
 
             services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = true; });
             services.AddDbContext<ApplicationDbContext>(DbContextOptionsBuilder);
-
+            services.AddSyncfusionBlazor();
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -414,6 +414,7 @@ namespace Pegasus.Command.Server
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NDE3N0AzMTM3MmUzNDJlMzBKN3dMWUVOWjFxK1NDTi9od05ISndHV1JUYUJGU0pZR3MydlhSaWY3SjJRPQ==");
             // cookie policy to deal with temporary browser incompatibilities
             app.UseCookiePolicy();
 

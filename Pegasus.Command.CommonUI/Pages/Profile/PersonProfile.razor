@@ -11,13 +11,12 @@
 @using System.Net
 @using Pegasus.Command.Shared.Dto.Account
 @using Microsoft.AspNetCore.Components
+@using Syncfusion.EJ2.Blazor.BarcodeGenerator
 <center><h3>Cases</h3></center>
 <br />
 
-
-<br />
-<br />
-<a class="btn btn-success" href="/cases/create">Create New</a>
+<RadzenButton Icon="fiber_new" Size="ButtonSize.Medium" Click="@(args => OpenUpsertRoleDialog(person))" Text="Create New Case">
+</RadzenButton>
 <br />
 
 @if (person == null)
@@ -29,136 +28,556 @@
 else
 {
     <div class="col-12">
-        <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="20"
-                    AllowSorting="true" Data="@persons" TItem="PersonProfilesModel" ColumnWidth="300px">
-            <Columns>
-                <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px" Title="View Profile">
-                    <Template Context="person">
-                        <RadzenButton Icon="edit" Size="ButtonSize.Medium" Click="@(args => OpenUpsertRoleDialog(person))">
-                        </RadzenButton>
-                    </Template>
-                </RadzenGridColumn>
-                <RadzenGridColumn TItem="PersonProfilesModel" Property="CaseNo" Title="Case No" />
-                <RadzenGridColumn TItem="PersonProfilesModel" Property="Fullname" Title="Fullname" />
-                <RadzenGridColumn TItem="PersonProfilesModel" Property="Barangay.BarangayName" Title="Barangay" />
-                <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px" Title="Status">
-                    <Template Context="person">
-                        <RadzenButton Icon="edit" Size="ButtonSize.Small" Click="@(args => OpenChangeStatDialog(person.Id))">
-                        </RadzenButton>
-                        @switch (person.PersonStatus)
-                        {
-                            case "P":
-                                <h4 class="badge badge-danger">Positive</h4>
-                                break;
-                            case "N":
-                                <h4 class="badge badge-success">Negative</h4>
-                                break;
-                            case "D":
-                                <h4 class="badge badge-warning">PUI</h4>
-                                break;
-                            case "S":
-                                <h4 class="badge badge-secondary">PUM</h4>
-                                break;
-                            default:
-                                <h4 class="badge badge-dark">Unknown</h4>
-                                break;
+        <RadzenTabs>
+            <Tabs>
+                <RadzenTabsItem Text="Positive">
+                    <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="20"
+                                AllowSorting="true" Data="@ppersons" TItem="PersonProfilesModel" ColumnWidth="300px">
+                        <Columns>
+                            <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px" Title="View Profile">
+                                <Template Context="person">
+                                    <RadzenButton Icon="edit" Size="ButtonSize.Small" Click="@(args => OpenUpsertRoleDialog(person))" Text="View">
+                                    </RadzenButton>
+                                    <br />
+                                    <RadzenButton Icon="history_edu" Size="ButtonSize.Small" Click="@(args => OpenHistStatDialog(person.Id))" Text="History">
+                                    </RadzenButton>
+                                </Template>
+                            </RadzenGridColumn>
+                            <RadzenGridColumn TItem="PersonProfilesModel" Property="CaseNo" Title="Case No" Width="50px" />
 
-                        }
+                            <RadzenGridColumn TItem="PersonProfilesModel" Property="Fullname" Title="Fullname" Width="100px" />
+                            <RadzenGridColumn TItem="PersonProfilesModel" Property="Barangay.BarangayName" Title="Barangay" Width="50px" />
+                            <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="50px" Title="Status">
+                                <Template Context="person">
+                                    <RadzenButton Icon="edit" Size="ButtonSize.Small" Click="@(args => OpenChangeStatDialog(person.Id))">
+                                    </RadzenButton>
+                                    @switch (person.PersonStatus)
+                                    {
+                                        case "P":
+                                            <h3 class="badge badge-danger">Positive</h3>
+                                            break;
+                                        case "N":
+                                            <h3 class="badge badge-success">Negative</h3>
+                                            break;
+                                        case "D":
+                                            <h3 class="badge badge-warning">PUI</h3>
+                                            break;
+                                        case "S":
+                                            <h3 class="badge badge-secondary">PUM</h3>
+                                            break;
+                                        default:
+                                            <h3 class="badge badge-dark">Unknown</h3>
+                                            break;
 
-                    </Template>
-                </RadzenGridColumn>
-                <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px" Title="Verification">
-                    <Template Context="person">
-                        @if (person.CHDOHVerified.HasValue && person.BrgyVerified.HasValue)
-                        {
-                            @if (person.CHDOHVerified.Value && person.BrgyVerified.Value)
-                            {
-                                <Radzen.Blazor.RadzenIcon Icon="verified_user" />
+                                    }
 
-                            }
-                        }
+                                </Template>
+                            </RadzenGridColumn>
+                            <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="50px" Title="Verification">
+                                <Template Context="person">
+                                    @if (person.CHDOHVerified.HasValue && person.BrgyVerified.HasValue)
+                                    {
+                                        @if (person.CHDOHVerified.Value && person.BrgyVerified.Value)
+                                        {
+                                            <Radzen.Blazor.RadzenIcon Icon="verified_user" />
 
-                        @if (person.BrgyVerified.HasValue && !person.CHDOHVerified.HasValue)
-                        {
-                            <Radzen.Blazor.RadzenIcon Icon="verified_user" />
-                        }
-                        @if (!person.BrgyVerified.HasValue)
-                        {
-                            <RadzenButton Icon="how_to_reg" Size="ButtonSize.Medium" Click="@(args => OpenVerifyDialog(person))" Text="Verify" />
+                                        }
+                                    }
 
-
-                        }
-
-                    </Template>
-                </RadzenGridColumn>
-                <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="150px" Title="Confirmation">
-                    <Template Context="person">
-
-                        @if (!person.CHDOHVerified.HasValue && !person.BrgyVerified.HasValue)
-                        {
-                            <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Disabled="true" Text="Confirm">
-                            </RadzenButton>
-                        }
-                        @if (person.CHDOHVerified.HasValue && person.BrgyVerified.HasValue)
-                        {
-                            @if (person.CHDOHVerified.Value && person.BrgyVerified.Value)
-                            {
-                                <Radzen.Blazor.RadzenIcon Icon="verified_user" />
-
-                            }
-
-                        }
+                                    @if (person.BrgyVerified.HasValue && !person.CHDOHVerified.HasValue)
+                                    {
+                                        <Radzen.Blazor.RadzenIcon Icon="verified_user" />
+                                    }
+                                    @if (!person.BrgyVerified.HasValue)
+                                    {
+                                        <RadzenButton Icon="how_to_reg" Size="ButtonSize.Medium" Click="@(args => OpenVerifyDialog(person))" Text="Verify" Width="50px" />
 
 
-                        @if (person.BrgyVerified.HasValue && !person.CHDOHVerified.HasValue)
-                        {
+                                    }
 
-                            <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Click="@(args => OpenConfirmDialog(person))" Text="Confirm">
-                            </RadzenButton>
-                        }
+                                </Template>
+                            </RadzenGridColumn>
+                            <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="50px" Title="Confirmation">
+                                <Template Context="person">
 
-                    </Template>
-                </RadzenGridColumn>
-                <RadzenGridColumn TItem="PersonProfilesModel" Bubble="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px" Title="Quarantine Days">
-                    <Template Context="person">
-                        @if (person.QDays.HasValue)
-                        {
-                            var days = DateTime.Now.Date.Subtract(person.QDateStarted.Value.Date).Days;
-                            if (days >= person.QDays.Value)
-                            {
-                                <h4 class="badge badge-success">@days.ToString() of @person.QDays.Value</h4>
-                                <p> Completed</p>
-                                <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Click="@(args => OpenQdaysDialog(person))" Text="Extend">
-                                </RadzenButton>
-                            }
-                            else
-                            {
-                                <h4 class="badge badge-danger">@days.ToString() of @person.QDays.Value</h4>
+                                    @if (!person.CHDOHVerified.HasValue && !person.BrgyVerified.HasValue)
+                                    {
+                                        <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Disabled="true" Text="Confirm">
+                                        </RadzenButton>
+                                    }
+                                    @if (person.CHDOHVerified.HasValue && person.BrgyVerified.HasValue)
+                                    {
+                                        @if (person.CHDOHVerified.Value && person.BrgyVerified.Value)
+                                        {
+                                            <Radzen.Blazor.RadzenIcon Icon="verified_user" />
 
-                            }
+                                        }
 
-                        }
-                        @if (person.CHDOHVerified.HasValue && person.BrgyVerified.HasValue && !person.QDays.HasValue)
-                        {
-                            @if (person.CHDOHVerified.Value && person.BrgyVerified.Value)
-                            {
-                                <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Click="@(args => OpenQdaysDialog(person))" Text="Days">
-                                </RadzenButton>
-
-                            }
-                            else
-                            {
-                                <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Text="Q Days" Disabled="true">
-                                </RadzenButton>
-                            }
-                        }
-
-                    </Template>
-                </RadzenGridColumn>
+                                    }
 
 
-            </Columns>
-        </RadzenGrid>
+                                    @if (person.BrgyVerified.HasValue && !person.CHDOHVerified.HasValue)
+                                    {
+
+                                        <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Click="@(args => OpenConfirmDialog(person))" Text="Confirm">
+                                        </RadzenButton>
+                                    }
+
+                                </Template>
+                            </RadzenGridColumn>
+                            <RadzenGridColumn TItem="PersonProfilesModel" Bubble="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="50px" Title="Quarantine Days">
+                                <Template Context="person">
+                                    @if (person.QDays.HasValue)
+                                    {
+                                        var days = DateTime.Now.Date.Subtract(person.QDateStarted.Value.Date).Days;
+                                        if (days >= person.QDays.Value)
+                                        {
+                                            <h4 class="badge badge-success">@days.ToString() of @person.QDays.Value</h4>
+                                            <p> Completed</p>
+                                            <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Click="@(args => OpenQdaysDialog(person))" Text="Extend">
+                                            </RadzenButton>
+                                        }
+                                        else
+                                        {
+                                            <h4 class="badge badge-danger">@days.ToString() of @person.QDays.Value</h4>
+
+                                        }
+
+                                    }
+                                    @if (person.CHDOHVerified.HasValue && person.BrgyVerified.HasValue && !person.QDays.HasValue)
+                                    {
+                                        @if (person.CHDOHVerified.Value && person.BrgyVerified.Value)
+                                        {
+                                            <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Click="@(args => OpenQdaysDialog(person))" Text="Days">
+                                            </RadzenButton>
+
+                                        }
+                                        else
+                                        {
+                                            <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Text="Q Days" Disabled="true">
+                                            </RadzenButton>
+                                        }
+                                    }
+
+                                </Template>
+                            </RadzenGridColumn>
+
+
+                        </Columns>
+                    </RadzenGrid>
+                </RadzenTabsItem>
+                <RadzenTabsItem Text="PUI">
+                    <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="20"
+                                AllowSorting="true" Data="@puipersons" TItem="PersonProfilesModel" ColumnWidth="300px">
+                        <Columns>
+                            <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px" Title="View Profile">
+                                <Template Context="person">
+                                    <RadzenButton Icon="edit" Size="ButtonSize.Small" Click="@(args => OpenUpsertRoleDialog(person))" Text="View">
+                                    </RadzenButton>
+                                    <br />
+                                    <RadzenButton Icon="history_edu" Size="ButtonSize.Small" Click="@(args => OpenHistStatDialog(person.Id))" Text="History">
+                                    </RadzenButton>
+                                </Template>
+                            </RadzenGridColumn>
+                            <RadzenGridColumn TItem="PersonProfilesModel" Property="CaseNo" Title="Case No" Width="50px" />
+
+                            <RadzenGridColumn TItem="PersonProfilesModel" Property="Fullname" Title="Fullname" Width="100px" />
+                            <RadzenGridColumn TItem="PersonProfilesModel" Property="Barangay.BarangayName" Title="Barangay" Width="50px" />
+                            <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="50px" Title="Status">
+                                <Template Context="person">
+                                    <RadzenButton Icon="edit" Size="ButtonSize.Small" Click="@(args => OpenChangeStatDialog(person.Id))">
+                                    </RadzenButton>
+                                    @switch (person.PersonStatus)
+                                    {
+                                        case "P":
+                                            <h3 class="badge badge-danger">Positive</h3>
+                                            break;
+                                        case "N":
+                                            <h3 class="badge badge-success">Negative</h3>
+                                            break;
+                                        case "D":
+                                            <h3 class="badge badge-warning">PUI</h3>
+                                            break;
+                                        case "S":
+                                            <h3 class="badge badge-secondary">PUM</h3>
+                                            break;
+                                        default:
+                                            <h3 class="badge badge-dark">Unknown</h3>
+                                            break;
+
+                                    }
+
+                                </Template>
+                            </RadzenGridColumn>
+                            <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="50px" Title="Verification">
+                                <Template Context="person">
+                                    @if (person.CHDOHVerified.HasValue && person.BrgyVerified.HasValue)
+                                    {
+                                        @if (person.CHDOHVerified.Value && person.BrgyVerified.Value)
+                                        {
+                                            <Radzen.Blazor.RadzenIcon Icon="verified_user" />
+
+                                        }
+                                    }
+
+                                    @if (person.BrgyVerified.HasValue && !person.CHDOHVerified.HasValue)
+                                    {
+                                        <Radzen.Blazor.RadzenIcon Icon="verified_user" />
+                                    }
+                                    @if (!person.BrgyVerified.HasValue)
+                                    {
+                                        <RadzenButton Icon="how_to_reg" Size="ButtonSize.Medium" Click="@(args => OpenVerifyDialog(person))" Text="Verify" Width="50px" />
+
+
+                                    }
+
+                                </Template>
+                            </RadzenGridColumn>
+                            <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="50px" Title="Confirmation">
+                                <Template Context="person">
+
+                                    @if (!person.CHDOHVerified.HasValue && !person.BrgyVerified.HasValue)
+                                    {
+                                        <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Disabled="true" Text="Confirm">
+                                        </RadzenButton>
+                                    }
+                                    @if (person.CHDOHVerified.HasValue && person.BrgyVerified.HasValue)
+                                    {
+                                        @if (person.CHDOHVerified.Value && person.BrgyVerified.Value)
+                                        {
+                                            <Radzen.Blazor.RadzenIcon Icon="verified_user" />
+
+                                        }
+
+                                    }
+
+
+                                    @if (person.BrgyVerified.HasValue && !person.CHDOHVerified.HasValue)
+                                    {
+
+                                        <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Click="@(args => OpenConfirmDialog(person))" Text="Confirm">
+                                        </RadzenButton>
+                                    }
+
+                                </Template>
+                            </RadzenGridColumn>
+                            <RadzenGridColumn TItem="PersonProfilesModel" Bubble="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="50px" Title="Quarantine Days">
+                                <Template Context="person">
+                                    @if (person.QDays.HasValue)
+                                    {
+                                        var days = DateTime.Now.Date.Subtract(person.QDateStarted.Value.Date).Days;
+                                        if (days >= person.QDays.Value)
+                                        {
+                                            <h4 class="badge badge-success">@days.ToString() of @person.QDays.Value</h4>
+                                            <p> Completed</p>
+                                            <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Click="@(args => OpenQdaysDialog(person))" Text="Extend">
+                                            </RadzenButton>
+                                        }
+                                        else
+                                        {
+                                            <h4 class="badge badge-danger">@days.ToString() of @person.QDays.Value</h4>
+
+                                        }
+
+                                    }
+                                    @if (person.CHDOHVerified.HasValue && person.BrgyVerified.HasValue && !person.QDays.HasValue)
+                                    {
+                                        @if (person.CHDOHVerified.Value && person.BrgyVerified.Value)
+                                        {
+                                            <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Click="@(args => OpenQdaysDialog(person))" Text="Days">
+                                            </RadzenButton>
+
+                                        }
+                                        else
+                                        {
+                                            <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Text="Q Days" Disabled="true">
+                                            </RadzenButton>
+                                        }
+                                    }
+
+                                </Template>
+                            </RadzenGridColumn>
+
+
+                        </Columns>
+                    </RadzenGrid>
+                </RadzenTabsItem>
+                <RadzenTabsItem Text="PUM">
+                    <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="20"
+                                AllowSorting="true" Data="@pumpersons" TItem="PersonProfilesModel" ColumnWidth="300px">
+                        <Columns>
+                            <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px" Title="View Profile">
+                                <Template Context="person">
+                                    <RadzenButton Icon="edit" Size="ButtonSize.Small" Click="@(args => OpenUpsertRoleDialog(person))" Text="View">
+                                    </RadzenButton>
+                                    <br />
+                                    <RadzenButton Icon="history_edu" Size="ButtonSize.Small" Click="@(args => OpenHistStatDialog(person.Id))" Text="History">
+                                    </RadzenButton>
+                                </Template>
+                            </RadzenGridColumn>
+                            <RadzenGridColumn TItem="PersonProfilesModel" Property="CaseNo" Title="Case No" Width="50px" />
+
+                            <RadzenGridColumn TItem="PersonProfilesModel" Property="Fullname" Title="Fullname" Width="100px" />
+                            <RadzenGridColumn TItem="PersonProfilesModel" Property="Barangay.BarangayName" Title="Barangay" Width="50px" />
+                            <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="50px" Title="Status">
+                                <Template Context="person">
+                                    <RadzenButton Icon="edit" Size="ButtonSize.Small" Click="@(args => OpenChangeStatDialog(person.Id))">
+                                    </RadzenButton>
+                                    @switch (person.PersonStatus)
+                                    {
+                                        case "P":
+                                            <h3 class="badge badge-danger">Positive</h3>
+                                            break;
+                                        case "N":
+                                            <h3 class="badge badge-success">Negative</h3>
+                                            break;
+                                        case "D":
+                                            <h3 class="badge badge-warning">PUI</h3>
+                                            break;
+                                        case "S":
+                                            <h3 class="badge badge-secondary">PUM</h3>
+                                            break;
+                                        default:
+                                            <h3 class="badge badge-dark">Unknown</h3>
+                                            break;
+
+                                    }
+
+                                </Template>
+                            </RadzenGridColumn>
+                            <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="50px" Title="Verification">
+                                <Template Context="person">
+                                    @if (person.CHDOHVerified.HasValue && person.BrgyVerified.HasValue)
+                                    {
+                                        @if (person.CHDOHVerified.Value && person.BrgyVerified.Value)
+                                        {
+                                            <Radzen.Blazor.RadzenIcon Icon="verified_user" />
+
+                                        }
+                                    }
+
+                                    @if (person.BrgyVerified.HasValue && !person.CHDOHVerified.HasValue)
+                                    {
+                                        <Radzen.Blazor.RadzenIcon Icon="verified_user" />
+                                    }
+                                    @if (!person.BrgyVerified.HasValue)
+                                    {
+                                        <RadzenButton Icon="how_to_reg" Size="ButtonSize.Medium" Click="@(args => OpenVerifyDialog(person))" Text="Verify" Width="50px" />
+
+
+                                    }
+
+                                </Template>
+                            </RadzenGridColumn>
+                            <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="50px" Title="Confirmation">
+                                <Template Context="person">
+
+                                    @if (!person.CHDOHVerified.HasValue && !person.BrgyVerified.HasValue)
+                                    {
+                                        <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Disabled="true" Text="Confirm">
+                                        </RadzenButton>
+                                    }
+                                    @if (person.CHDOHVerified.HasValue && person.BrgyVerified.HasValue)
+                                    {
+                                        @if (person.CHDOHVerified.Value && person.BrgyVerified.Value)
+                                        {
+                                            <Radzen.Blazor.RadzenIcon Icon="verified_user" />
+
+                                        }
+
+                                    }
+
+
+                                    @if (person.BrgyVerified.HasValue && !person.CHDOHVerified.HasValue)
+                                    {
+
+                                        <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Click="@(args => OpenConfirmDialog(person))" Text="Confirm">
+                                        </RadzenButton>
+                                    }
+
+                                </Template>
+                            </RadzenGridColumn>
+                            <RadzenGridColumn TItem="PersonProfilesModel" Bubble="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="50px" Title="Quarantine Days">
+                                <Template Context="person">
+                                    @if (person.QDays.HasValue)
+                                    {
+                                        var days = DateTime.Now.Date.Subtract(person.QDateStarted.Value.Date).Days;
+                                        if (days >= person.QDays.Value)
+                                        {
+                                            <h4 class="badge badge-success">@days.ToString() of @person.QDays.Value</h4>
+                                            <p> Completed</p>
+                                            <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Click="@(args => OpenQdaysDialog(person))" Text="Extend">
+                                            </RadzenButton>
+                                        }
+                                        else
+                                        {
+                                            <h4 class="badge badge-danger">@days.ToString() of @person.QDays.Value</h4>
+
+                                        }
+
+                                    }
+                                    @if (person.CHDOHVerified.HasValue && person.BrgyVerified.HasValue && !person.QDays.HasValue)
+                                    {
+                                        @if (person.CHDOHVerified.Value && person.BrgyVerified.Value)
+                                        {
+                                            <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Click="@(args => OpenQdaysDialog(person))" Text="Days">
+                                            </RadzenButton>
+
+                                        }
+                                        else
+                                        {
+                                            <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Text="Q Days" Disabled="true">
+                                            </RadzenButton>
+                                        }
+                                    }
+
+                                </Template>
+                            </RadzenGridColumn>
+
+
+                        </Columns>
+                    </RadzenGrid>
+                </RadzenTabsItem>
+                <RadzenTabsItem Text="Negative">
+                    <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="20"
+                                AllowSorting="true" Data="@npersons" TItem="PersonProfilesModel" ColumnWidth="300px">
+                        <Columns>
+                            <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px" Title="View Profile">
+                                <Template Context="person">
+                                    <RadzenButton Icon="edit" Size="ButtonSize.Small" Click="@(args => OpenUpsertRoleDialog(person))" Text="View">
+                                    </RadzenButton>
+                                    <br />
+                                    <RadzenButton Icon="history_edu" Size="ButtonSize.Small" Click="@(args => OpenHistStatDialog(person.Id))" Text="History">
+                                    </RadzenButton>
+                                </Template>
+                            </RadzenGridColumn>
+                            <RadzenGridColumn TItem="PersonProfilesModel" Property="CaseNo" Title="Case No" Width="50px" />
+
+                            <RadzenGridColumn TItem="PersonProfilesModel" Property="Fullname" Title="Fullname" Width="100px" />
+                            <RadzenGridColumn TItem="PersonProfilesModel" Property="Barangay.BarangayName" Title="Barangay" Width="50px" />
+                            <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="50px" Title="Status">
+                                <Template Context="person">
+                                    <RadzenButton Icon="edit" Size="ButtonSize.Small" Click="@(args => OpenChangeStatDialog(person.Id))">
+                                    </RadzenButton>
+                                    @switch (person.PersonStatus)
+                                    {
+                                        case "P":
+                                            <h3 class="badge badge-danger">Positive</h3>
+                                            break;
+                                        case "N":
+                                            <h3 class="badge badge-success">Negative</h3>
+                                            break;
+                                        case "D":
+                                            <h3 class="badge badge-warning">PUI</h3>
+                                            break;
+                                        case "S":
+                                            <h3 class="badge badge-secondary">PUM</h3>
+                                            break;
+                                        default:
+                                            <h3 class="badge badge-dark">Unknown</h3>
+                                            break;
+
+                                    }
+
+                                </Template>
+                            </RadzenGridColumn>
+                            <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="50px" Title="Verification">
+                                <Template Context="person">
+                                    @if (person.CHDOHVerified.HasValue && person.BrgyVerified.HasValue)
+                                    {
+                                        @if (person.CHDOHVerified.Value && person.BrgyVerified.Value)
+                                        {
+                                            <Radzen.Blazor.RadzenIcon Icon="verified_user" />
+
+                                        }
+                                    }
+
+                                    @if (person.BrgyVerified.HasValue && !person.CHDOHVerified.HasValue)
+                                    {
+                                        <Radzen.Blazor.RadzenIcon Icon="verified_user" />
+                                    }
+                                    @if (!person.BrgyVerified.HasValue)
+                                    {
+                                        <RadzenButton Icon="how_to_reg" Size="ButtonSize.Medium" Click="@(args => OpenVerifyDialog(person))" Text="Verify" Width="50px" />
+
+
+                                    }
+
+                                </Template>
+                            </RadzenGridColumn>
+                            <RadzenGridColumn TItem="PersonProfilesModel" Bubble="true" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="50px" Title="Confirmation">
+                                <Template Context="person">
+
+                                    @if (!person.CHDOHVerified.HasValue && !person.BrgyVerified.HasValue)
+                                    {
+                                        <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Disabled="true" Text="Confirm">
+                                        </RadzenButton>
+                                    }
+                                    @if (person.CHDOHVerified.HasValue && person.BrgyVerified.HasValue)
+                                    {
+                                        @if (person.CHDOHVerified.Value && person.BrgyVerified.Value)
+                                        {
+                                            <Radzen.Blazor.RadzenIcon Icon="verified_user" />
+
+                                        }
+
+                                    }
+
+
+                                    @if (person.BrgyVerified.HasValue && !person.CHDOHVerified.HasValue)
+                                    {
+
+                                        <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Click="@(args => OpenConfirmDialog(person))" Text="Confirm">
+                                        </RadzenButton>
+                                    }
+
+                                </Template>
+                            </RadzenGridColumn>
+                            <RadzenGridColumn TItem="PersonProfilesModel" Bubble="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="50px" Title="Quarantine Days">
+                                <Template Context="person">
+                                    @if (person.QDays.HasValue)
+                                    {
+                                        var days = DateTime.Now.Date.Subtract(person.QDateStarted.Value.Date).Days;
+                                        if (days >= person.QDays.Value)
+                                        {
+                                            <h4 class="badge badge-success">@days.ToString() of @person.QDays.Value</h4>
+                                            <p> Completed</p>
+                                            <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Click="@(args => OpenQdaysDialog(person))" Text="Extend">
+                                            </RadzenButton>
+                                        }
+                                        else
+                                        {
+                                            <h4 class="badge badge-danger">@days.ToString() of @person.QDays.Value</h4>
+
+                                        }
+
+                                    }
+                                    @if (person.CHDOHVerified.HasValue && person.BrgyVerified.HasValue && !person.QDays.HasValue)
+                                    {
+                                        @if (person.CHDOHVerified.Value && person.BrgyVerified.Value)
+                                        {
+                                            <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Click="@(args => OpenQdaysDialog(person))" Text="Days">
+                                            </RadzenButton>
+
+                                        }
+                                        else
+                                        {
+                                            <RadzenButton Icon="medical_services" Size="ButtonSize.Medium" Text="Q Days" Disabled="true">
+                                            </RadzenButton>
+                                        }
+                                    }
+
+                                </Template>
+                            </RadzenGridColumn>
+
+
+                        </Columns>
+                    </RadzenGrid>
+                </RadzenTabsItem>
+
+            </Tabs>
+        </RadzenTabs>
+
     </div>
 
     <MatDialog @bind-IsOpen="@isUpsertRoleDialogOpen">
@@ -166,128 +585,142 @@ else
             @labelUpsertDialogTitle
         </MatDialogTitle>
         <MatDialogContent>
+            <div class="row">
+                <div class="col-md-6">
+                    <fieldset>
+                        <EjsQRCodeGenerator Width="200px" Height="150px" Mode="@RenderingMode.SVG" Value="@person.CaseNo">
+                            <QRCodeGeneratorDisplayText Visibility="false"></QRCodeGeneratorDisplayText>
+                        </EjsQRCodeGenerator>
+                        @if (!string.IsNullOrEmpty(person.Gender))
+                        {
+                            switch (person.Gender)
+                            {
+                                case "M":
+                                    <div class="logo">
+                                        <img src="_content/Pegasus.Command.CommonUI/images/maleperson.svg" style="width:100px;" /><br />
 
-            <fieldset>
-                @if (!string.IsNullOrEmpty(person.Gender))
-                {
-                    switch (person.Gender)
-                    {
-                        case "M":
-                            <div class="logo">
-                                <img src="_content/Pegasus.Command.CommonUI/images/maleperson.svg" style="width:100px;" /><br />
+                                    </div>
+                                    ; break;
+                                case "F": <div class="logo">
+                                        <img src="_content/Pegasus.Command.CommonUI/images/femaleperson.svg" style="width:100px;" /><br />
 
+                                    </div>; break;
+                            }
+
+                        }
+                        <div class="form-group">
+
+
+                            <RadzenDropDown AllowClear="false" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" @bind-Value="@person.BgryId" Placeholder="Select Barangay" Data="@brgys" TextProperty="BarangayName" ValueProperty="Id"
+                                            Style="margin-bottom: 20px; width:300px;">
+
+                            </RadzenDropDown>
+                            <RadzenDropDown AllowClear="false" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" @bind-Value="@person.IsolationCenterId" Placeholder="Select Isolation Center" Data="@isocenters" TextProperty="Centername" ValueProperty="Id"
+                                            Style="margin-bottom: 20px; width:300px;">
+
+                            </RadzenDropDown>
+                        </div>
+                        <div class="form-group">
+                            <MatTextField @bind-Value="@person.CaseNo" Label="Case No" Icon="location_city" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                        </div>
+                        <div class="form-group">
+                            <MatDatePicker @bind-Value="@person.DateLabConfirm" Label="Laboratory Confirmation Date" IconTrailing="true" FullWidth="true" Required="true"></MatDatePicker>
+                        </div>
+                        @if (person.BrgyVerified.HasValue)
+                        {@if (person.BrgyVerified.Value)
+                            {
+                                <h4 class="badge badge-success">Verified</h4>
+                                <p>@person.BrgyRemarks</p>
+                                <p>Verfied by @person.VerifiedName</p>
+                                <p>Verified Date: @person.VerifiedDate</p>
+                            }
+                    }
+                        @if (person.CHDOHVerified.HasValue)
+                        {@if (person.CHDOHVerified.Value)
+                            {
+                                <h4 class="badge badge-success">Confirmed</h4>
+                                <p>@person.CHDOHRemarks</p>
+                                <p>Confirmed by @person.ConfirmedName</p>
+                                <p>Confirmed Date: @person.ConfirmedDate</p>
+                            }
+                    }
+                        @if (person.PersonStatus != null)
+                        {
+                            @switch (person.PersonStatus)
+                            {
+                                case "P":
+                                    <h4 class="badge badge-danger">Positive</h4>
+                                    break;
+                                case "N":
+                                    <h4 class="badge badge-success">Negative</h4>
+                                    break;
+                                case "D":
+                                    <h4 class="badge badge-warning">PUI</h4>
+                                    break;
+                                case "S":
+                                    <h4 class="badge badge-secondary">PUM</h4>
+                                    break;
+                                default:
+                                    <h4 class="badge badge-dark">Unknown</h4>
+                                    break;
+
+                            }
+                        }
+                        <div class="form-group">
+                            <MatTextField @bind-Value="@person.Fullname" Label="Fullname" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                        </div>
+                        <div class="form-group">
+                            <MatH5>Gender</MatH5>
+                            <MatRadioGroup @bind-Value="@person.Gender" TValue="string">
+
+                                <MatRadioButton Value="@("M")" Label="Male" TValue="string"></MatRadioButton>
+                                <MatRadioButton Value="@("F")" TValue="string">Fermale</MatRadioButton>
+
+                            </MatRadioGroup>
+                        </div>
+                        <div class="form-group">
+                            <MatNumericUpDownField @bind-Value="@person.Age" Label="Age" IconTrailing="true" FullWidth="true" Required="true" Minimum="1" Maximum="99"></MatNumericUpDownField>
+                        </div>
+                        <div class="form-group">
+                            <MatTextField @bind-Value="@person.Address" Label="Address" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                        </div>
+                        <div class="form-group">
+                            <MatTextField @bind-Value="@person.Contact" Label="Contact No" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="row">
+                            <div class="form-group">
+                                <MatTextField @bind-Value="@person.SwabArea" Label="Swab Area" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
                             </div>
-                            ; break;
-                        case "F": <div class="logo">
-                                <img src="_content/Pegasus.Command.CommonUI/images/femaleperson.svg" style="width:100px;" /><br />
+                            <div class="form-group">
+                                <MatDatePicker @bind-Value="@person.SwabTestDate" Label="Swab Testing Date" IconTrailing="true" FullWidth="true" Required="true"></MatDatePicker>
+                            </div>
 
-                            </div>; break;
-                    }
+                            @if (person.QDays.HasValue)
+                            {
+                                <br />
+                                <h3>Quarantine Status</h3>
+                                <hr />
 
-                }
-                <div class="form-group">
+                                var days = DateTime.Now.Date.Subtract(person.QDateStarted.Value.Date).Days;
+                                if (days >= person.QDays.Value)
+                                {
+                                    <h4 class="badge badge-success">@days.ToString() of @person.QDays.Value</h4>
+                                    <p> Completed</p>
+                                }
+                                else
+                                {
+                                    <h4 class="badge badge-danger">@days.ToString() of @person.QDays.Value</h4>
 
+                                }
 
-                    <RadzenDropDown AllowClear="false" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" @bind-Value="@person.BgryId" Placeholder="Select Barangay" Data="@brgys" TextProperty="BarangayName" ValueProperty="Id"
-                                    Style="margin-bottom: 20px; width:300px;">
+                            }
+                        </div>
+                    </fieldset>
 
-                    </RadzenDropDown>
-                    <RadzenDropDown AllowClear="false" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" @bind-Value="@person.IsolationCenterId" Placeholder="Select Isolation Center" Data="@isocenters" TextProperty="Centername" ValueProperty="Id"
-                                    Style="margin-bottom: 20px; width:300px;">
-
-                    </RadzenDropDown>
                 </div>
-                <div class="form-group">
-                    <MatTextField @bind-Value="@person.CaseNo" Label="Case No" Icon="location_city" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
-                </div>
-                @if (person.BrgyVerified.HasValue)
-                {
-                    <h4 class="badge badge-success">Verified</h4>
-                    <p>@person.BrgyRemarks</p>
-                }
-                @if (person.CHDOHVerified.HasValue)
-                {
-                    <h4 class="badge badge-success">Confirmed</h4>
-                    <p>@person.CHDOHRemarks</p>
-                }
-
-                @if (person.PersonStatus != null)
-                {
-                    @switch (person.PersonStatus)
-                    {
-                        case "P":
-                            <h4 class="badge badge-danger">Positive</h4>
-                            break;
-                        case "N":
-                            <h4 class="badge badge-success">Negative</h4>
-                            break;
-                        case "D":
-                            <h4 class="badge badge-warning">PUI</h4>
-                            break;
-                        case "S":
-                            <h4 class="badge badge-secondary">PUM</h4>
-                            break;
-                        default:
-                            <h4 class="badge badge-dark">Unknown</h4>
-                            break;
-
-                    }
-                }
-                <div class="form-group">
-                    <MatTextField @bind-Value="@person.Fullname" Label="Fullname" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
-                </div>
-                <div class="form-group">
-                    <MatH5>Gender</MatH5>
-                    <MatRadioGroup @bind-Value="@person.Gender" TValue="string">
-
-                        <MatRadioButton Value="@("M")" Label="Male" TValue="string"></MatRadioButton>
-                        <MatRadioButton Value="@("F")" TValue="string">Fermale</MatRadioButton>
-
-                    </MatRadioGroup>
-                </div>
-                <div class="form-group">
-                    <MatNumericUpDownField @bind-Value="@person.Age" Label="Age" IconTrailing="true" FullWidth="true" Required="true" Minimum="1" Maximum="99"></MatNumericUpDownField>
-                </div>
-                <div class="form-group">
-                    <MatTextField @bind-Value="@person.Address" Label="Address" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
-                </div>
-                <div class="form-group">
-                    <MatTextField @bind-Value="@person.Contact" Label="Contact No" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
-                </div>
-                <br />
-                <h3>Swab Testing Detail</h3>
-                <hr />
-                <div class="form-group">
-                    <MatTextField @bind-Value="@person.SwabArea" Label="Swab Area" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
-                </div>
-                <div class="form-group">
-                    <MatDatePicker @bind-Value="@person.SwabTestDate" Label="Swab Testing Date" IconTrailing="true" FullWidth="true" Required="true"></MatDatePicker>
-                </div>
-                
-                @if (person.QDays.HasValue)
-                {
-                    <br />
-                    <h3>Quarantine Status</h3>
-                    <hr />
-
-                    var days = DateTime.Now.Date.Subtract(person.QDateStarted.Value.Date).Days;
-                    if (days >= person.QDays.Value)
-                    {
-                        <h4 class="badge badge-success">@days.ToString() of @person.QDays.Value</h4>
-                        <p> Completed</p>
-                    }
-                    else
-                    {
-                        <h4 class="badge badge-danger">@days.ToString() of @person.QDays.Value</h4>
-
-                    }
-
-                }
-
-
-            </fieldset>
-
-
+            </div>
         </MatDialogContent>
         <MatDialogActions>
             <MatButton OnClick="@(e => { isUpsertRoleDialogOpen = false; })">Cancel</MatButton>
@@ -375,17 +808,48 @@ else
             <MatButton OnClick="@Qdays">Proceed</MatButton>
         </MatDialogActions>
     </MatDialog>
+    <MatDialog @bind-IsOpen="@isHist">
+        <MatDialogTitle>Person History</MatDialogTitle>
+        <MatDialogContent>
+
+            <div class="form-group">
+                <label>Add History</label>
+                <MatTextField @bind-Value="@personHist.Remarks"></MatTextField>
+            </div>
+            <label>Person History</label>
+            <RadzenGrid AllowFiltering="true" AllowPaging="true" PageSize="4"
+                        AllowSorting="true" Data="@personHistList" TItem="PersonHistoryModel" ColumnWidth="100px">
+                <Columns>
+                    <RadzenGridColumn TItem="PersonHistoryModel" Property="Remarks" Title="Remarks" />
+
+                    <RadzenGridColumn TItem="PersonHistoryModel" Property="User" Title="By" />
+                    <RadzenGridColumn TItem="PersonHistoryModel" Property="DateCreate" Title="Date" FormatString="{0:MM/dd/yyyy}" />
+                </Columns>
+            </RadzenGrid>
+
+        </MatDialogContent>
+        <MatDialogActions>
+            <MatButton OnClick="@CancelHistChanges">Cancel</MatButton>
+            <MatButton OnClick="@UpdateHistoryStatus">Update History</MatButton>
+        </MatDialogActions>
+    </MatDialog>
 }
 
 @code {
     UserInfoDto userInfo = null;
     [CascadingParameter]
     Task<AuthenticationState> authenticationStateTask { get; set; }
-
+    List<UserInfoDto> users;
     List<PersonProfilesModel> persons { get; set; }
+    List<PersonProfilesModel> ppersons { get; set; }
+    List<PersonProfilesModel> npersons { get; set; }
+    List<PersonProfilesModel> puipersons { get; set; }
+    List<PersonProfilesModel> pumpersons { get; set; }
     List<BarangayModel> brgys { get; set; }
     List<IsolationCenterModel> isocenters { get; set; }
     PersonProfilesModel person = new PersonProfilesModel();
+    List<PersonHistoryModel> personHistList { get; set; }
+    PersonHistoryModel personHist = new PersonHistoryModel();
     int quadays = 0;
     string barangayname = "";
     protected override async Task OnInitializedAsync()
@@ -393,7 +857,7 @@ else
         await LoadProfile();
         await LoadBarangay();
         await LoadIsolationCenters();
-
+        await RetrieveUserListAsync();
         userInfo = null;
         var user = (await authenticationStateTask).User;
 
@@ -402,12 +866,35 @@ else
             userInfo = await ((IdentityAuthenticationStateProvider)authStateProvider).GetUserInfo();
         }
     }
+    public async Task RetrieveUserListAsync()
+    {
+        try
+        {
+            var apiResponse = await http.GetFromJsonAsync<ApiResponseDto<List<UserInfoDto>>>($"api/Admin/Users");
 
+            if (apiResponse.IsSuccessStatusCode)
+            {
+                //matToaster.Add(apiResponse.Message, MatToastType.Success, "Users Retrieved");
+                users = apiResponse.Result;
+            }
+            else
+                matToaster.Add(apiResponse.Message + " : " + apiResponse.StatusCode, MatToastType.Danger, "User Retrieval Failed");
+        }
+        catch (Exception ex)
+        {
+            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, "User Retrieval Error");
+        }
+    }
     async Task LoadProfile()
     {
         string apis = _helper.ApiUrl(ApiType.Agent);
         string uris = apis + "/Person";
         persons = await http.GetJsonAsync<List<PersonProfilesModel>>(uris);
+        ppersons = persons.Where(x => x.PersonStatus == "P").ToList();
+        npersons = persons.Where(x => x.PersonStatus == "N").ToList();
+        puipersons = persons.Where(x => x.PersonStatus == "D").ToList();
+        pumpersons = persons.Where(x => x.PersonStatus == "S").ToList();
+
     }
 
     async Task LoadBarangay()
@@ -423,10 +910,6 @@ else
         string uris = apis + "/Isolation";
         isocenters = await http.GetJsonAsync<List<IsolationCenterModel>>(uris);
     }
-
-
-
-
     #region OpenUpsertRoleDialog
 
     bool isUpsertRoleDialogOpen = false;
@@ -447,14 +930,18 @@ else
                 labelUpsertDialogTitle = "New Case";
                 labelUpsertDialogOkButton = "Create Case";
                 person = new PersonProfilesModel();
+
             }
             else
             {
                 isInsertOperation = false;
                 person = await http.GetFromJsonAsync<PersonProfilesModel>(uris + "/" + mperson.Id);
+                mperson.AgentName = users.FirstOrDefault(u => u.UserId == person.UserAgent).UserName;
+                mperson.ConfirmedName = users.FirstOrDefault(u => u.UserId == person.ConfirmedBy).UserName;
+                mperson.VerifiedName = users.FirstOrDefault(u => u.UserId == person.VerifiedBy).UserName;
                 person = mperson;
                 barangayname = person.Barangay.BarangayName;
-                labelUpsertDialogTitle = "Edit Case";
+                labelUpsertDialogTitle = "Edit Case| Created by " + mperson.AgentName;
                 labelUpsertDialogOkButton = "Update Case";
             }
 
@@ -482,7 +969,7 @@ else
 
 
 
-            person.SwabArea = userInfo.UserName;
+            person.UserAgent = userInfo.UserId;
             await http.PutAsJsonAsync(uris, person);
 
 
@@ -527,6 +1014,7 @@ else
             {
 
                 person = await http.GetFromJsonAsync<PersonProfilesModel>(uris + "/" + id);
+
 
             }
 
@@ -595,6 +1083,7 @@ else
 
                 person = await http.GetFromJsonAsync<PersonProfilesModel>(uris + "/" + mperson.Id);
 
+
             }
 
             isVerify = true;
@@ -613,6 +1102,8 @@ else
 
 
             person.BrgyVerified = true;
+            person.VerifiedDate = DateTime.Now;
+            person.VerifiedBy = userInfo.UserId;
             await http.PutAsJsonAsync(uris, person);
 
 
@@ -661,6 +1152,7 @@ else
 
                 person = await http.GetFromJsonAsync<PersonProfilesModel>(uris + "/" + mperson.Id);
 
+
             }
 
             isConfirm = true;
@@ -679,6 +1171,8 @@ else
 
 
             person.CHDOHVerified = true;
+            person.ConfirmedDate = DateTime.Now;
+            person.ConfirmedBy = userInfo.UserId;
             await http.PutAsJsonAsync(uris, person);
 
 
@@ -776,6 +1270,71 @@ else
     {
 
         isQdays = false;
+    }
+    #endregion
+
+    #region PersonHistory
+    bool isHist = false;
+    public async Task OpenHistStatDialog(int id)
+    {
+        string apis = _helper.ApiUrl(ApiType.Admin);
+        string uris = apis + "/PersonHistory";
+        try
+        {
+            personHist = new PersonHistoryModel();
+            personHist.PersonProfileId = id;
+
+            personHistList = await http.GetFromJsonAsync<List<PersonHistoryModel>>(uris + "/" + id);
+            foreach (var hist in personHistList)
+            {
+                hist.User = users.FirstOrDefault(u => u.UserId == hist.CreatedBy).UserName;
+            }
+
+
+
+            isHist = true;
+        }
+        catch (Exception ex)
+        {
+            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, $"{labelUpsertDialogTitle} Error");
+        }
+    }
+    public async Task UpdateHistoryStatus()
+    {
+        try
+        {
+            string apis = _helper.ApiUrl(ApiType.Admin);
+            string uris = apis + "/PersonHistory";
+
+
+            personHist.CreatedBy = userInfo.UserId;
+            await http.PutAsJsonAsync(uris, personHist);
+
+
+
+
+            matToaster.Add("History Updated", MatToastType.Success);
+
+            //await PopulateRoleList();
+            StateHasChanged();
+
+            //  matToaster.Add(apiResponse.Message, MatToastType.Danger);
+
+
+            // this.StateHasChanged();
+            await OnInitializedAsync();
+
+            isHist = false;
+        }
+        catch (Exception ex)
+        {
+            matToaster.Add(ex.GetBaseException().Message, MatToastType.Danger, ex.ToString());
+        }
+    }
+    public void CancelHistChanges()
+    {
+
+        isHist = false;
     }
     #endregion
 }

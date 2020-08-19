@@ -76,7 +76,7 @@ namespace Pegasus.Agent.Server.Controllers
                 UserName = User.Identity.Name,
                 ExposedClaims = User.Claims
                     //Optionally: filter the claims you want to expose to the client
-                    .Where(c => c.Type == "test-claim")
+                    .Where(c => c.Type == "name")
                     .ToDictionary(c => c.Type, c => c.Value)
             };
         }

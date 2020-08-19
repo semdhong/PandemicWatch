@@ -22,5 +22,9 @@ namespace Pegasus.Services.Profile
 
         void RemovePersonProfile(int id);
 
+        void CreatePersonHistory(PersonHistoryModel model);
+        void UpdatePersonHistory(PersonHistoryModel model);
+        IEnumerable<PersonHistoryModel> GetPersonHistoryList(int id);
+
     }
 }
