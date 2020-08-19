@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "wWkPxYN1PSuQ5wyYSKsqYjcju+O9gRj+YzX9us8P1YQtrr3UIo2C1FZZEVDx0lzffnUTYrl8yurViI9PLx71Yg==",
+  "dgSpecHash": "DzKiqekRl/J/u90m4AjcfG8z2pDtK57KEI5/jepXK11Kv/xMNF4/59urKDtT9XfHasMcYbu64fLriijZlPn3MA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Hagutin\\Documents\\GitHub\\PandemicWatch\\Pegasus.Models\\Pegasus.Models.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Models\\Pegasus.Models.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\semdhong\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.2\\microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
+  ],
   "logs": []
 }
