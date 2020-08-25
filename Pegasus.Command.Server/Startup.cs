@@ -445,6 +445,7 @@ namespace Pegasus.Command.Server
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            
 
 #if ClientSideBlazor
             app.UseBlazorFrameworkFiles();

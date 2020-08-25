@@ -36,6 +36,8 @@ namespace Pegasus.Agent.Server
                  options.UseSqlServer(
                      Configuration.GetConnectionString("LocalDb")));
 
+
+
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -95,11 +97,13 @@ namespace Pegasus.Agent.Server
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+           
 
             app.UseHttpsRedirection();
+            app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
-
+           
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
