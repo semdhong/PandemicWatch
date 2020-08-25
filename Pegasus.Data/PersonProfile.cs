@@ -63,6 +63,7 @@ namespace Pegasus.Data
         public Guid? ConfirmedBy { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? ConfirmedDate { get; set; }
+        public bool? Symptomatic { get; set; }
 
         [ForeignKey(nameof(Agent))]
         [InverseProperty(nameof(UserAgents.PersonProfile))]

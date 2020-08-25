@@ -11,19 +11,19 @@ namespace Pegasus.Command.CommonUI
         {
             string url="";
             //Live
-            //switch (apitype)
-            //{
-            //    case ApiType.Admin: url= "https://pegasusapiadmin.azurewebsites.net/api/";break;
-            //    case ApiType.Agent: url= "https://pegasusapiagent.azurewebsites.net/api/";break;
-
-            //}
-            //Local
             switch (apitype)
             {
-                case ApiType.Admin: url = "https://localhost:44399/api"; break;
-                case ApiType.Agent: url = "https://localhost:44326/api"; break;
+                case ApiType.Admin: url = "https://pegasusapiadmin.azurewebsites.net/api/"; break;
+                case ApiType.Agent: url = "https://pegasusapiagent.azurewebsites.net/api/"; break;
 
             }
+            //Local
+            //switch (apitype)
+            //{
+            //    case ApiType.Admin: url = "https://localhost:44399/api"; break;
+            //    case ApiType.Agent: url = "https://localhost:44326/api"; break;
+
+            //}
 
             return url;
         }
