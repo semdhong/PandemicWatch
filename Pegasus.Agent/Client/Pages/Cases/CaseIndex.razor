@@ -5,8 +5,7 @@
 
 @inject NavigationManager navmgr
 
-<center><h1>Cases</h1></center>
-
+    <center><h1>Cases</h1></center><br /><br />
 @if (person == null)
 {
     <p><em>Loading...</em></p>
@@ -24,7 +23,7 @@ else
                 <RadzenGridColumn TItem="PersonProfilesModel" Width="150px" Property="Gender" Title="Sex" />
                 <RadzenGridColumn TItem="PersonProfilesModel" Filterable="false" Property="Barangay.BarangayName" Title="Barangay" />
                 <RadzenGridColumn TItem="PersonProfilesModel" Width="150px" Filterable="false" Property="DateLabConfirm" Title="Laboratory Confirmation" />
-                <RadzenGridColumn TItem="PersonProfilesModel" Width="150px" Filterable="false" Property="History.Remarks" Title="History/Status" />
+                @*<RadzenGridColumn TItem="PersonProfilesModel" Width="150px" Filterable="false" Property="" Title="History/Status" />*@
                 <RadzenGridColumn TItem="PersonProfilesModel" Bubble="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="100px">
                     <Template Context="person">
                 
@@ -47,8 +46,8 @@ else
     protected override async Task OnInitializedAsync()
 
     {
-        //person = await http.GetFromJsonAsync<List<PersonProfilesModel>>($"https://pegasusapiagent.azurewebsites.net/api/Person");
-        person = await http.GetFromJsonAsync<List<PersonProfilesModel>>($"https://localhost:44326/api/Person");
+        person = await http.GetFromJsonAsync<List<PersonProfilesModel>>($"https://pegasusapiagent.azurewebsites.net/api/Person");
+        //person = await http.GetFromJsonAsync<List<PersonProfilesModel>>($"https://localhost:44326/api/Person");
         person = person.Where(x => x.BgryId == brgyId).ToList();
     }
 

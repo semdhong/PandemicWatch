@@ -16,64 +16,81 @@
                 </div>
 
             </div>
-
         </RadzenCard><br />
+                     <div class="row">
+                         <div class="col-md-6">
+                             <RadzenButton ButtonType="Radzen.ButtonType.Submit" Text="Add Contact" ButtonStyle="Radzen.ButtonStyle.Primary" class="btn-block mr-2" Click="AddContact" />
+                         </div>
+                         <div class="col-md-6">
+                                 <RadzenButton ButtonType="Radzen.ButtonType.Button" Text="Back" ButtonStyle="Radzen.ButtonStyle.Secondary" class="btn-block mr-2" Click="GoBack" />
+                           </div>
+                     </div>
+    </div>
 
-        <div class="col-5">
-            <RadzenButton ButtonType="Radzen.ButtonType.Submit" Text="Add New Contact" ButtonStyle="Radzen.ButtonStyle.Primary" class="btn-block mr-2" Click="AddContact" />
-        </div>
-   </div>
-    <br />
-    @if (person == null)
+<br />
+@if (person == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="col-12">
+
+
+        <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="20"
+                    AllowSorting="true" Data="@person" TItem="PersonProfilesModel" ColumnWidth="200px">
+            <Columns>
+
+                <RadzenGridColumn TItem="PersonProfilesModel" Property="CaseNo" Title="CaseNo" />
+                <RadzenGridColumn TItem="PersonProfilesModel" Filterable="false" Property="Barangay.BarangayName" Title="Barangay" />
+            </Columns>
+        </RadzenGrid>
+    </div>
+
+}
+
+@code {
+
+    List<PersonProfilesModel> person = new List<PersonProfilesModel>();
+
+    [Parameter] public int contactId { get; set; }
+    [Parameter] public int brgyId { get; set; }
+
+    PersonProfilesModel personModel = new PersonProfilesModel();
+
+    protected async override Task OnParametersSetAsync()
     {
-        <p><em>Loading...</em></p>
+
+        personModel = await http.GetFromJsonAsync<PersonProfilesModel>($"https://pegasusapiagent.azurewebsites.net/api/Person/" + contactId);
+        //personModel = await http.GetFromJsonAsync<PersonProfilesModel>($"https://localhost:44326/api/Person/" + contactId);
+        
+
+
+
     }
-    else
+    protected override async Task OnInitializedAsync()
     {
-        <div class="col-12">
-
-            <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="20"
-                        AllowSorting="true" Data="@person" TItem="PersonProfilesModel" ColumnWidth="200px">
-                <Columns>
-
-                    <RadzenGridColumn TItem="PersonProfilesModel" Property="CaseNo" Title="CaseNo" />
-                    <RadzenGridColumn TItem="PersonProfilesModel" Filterable="false" Property="Barangay.BarangayName" Title="Barangay" />
-                </Columns>
-            </RadzenGrid>
-        </div>
+        await LoadContactedPerson();
 
     }
 
-    @code {
+    async Task LoadContactedPerson()
+    {
+        person = await http.GetFromJsonAsync<List<PersonProfilesModel>>($"https://pegasusapiagent.azurewebsites.net/api/Contacts/" + contactId);
+        //personModel = await http.GetFromJsonAsync<PersonProfilesModel>($"https://localhost:44326/api/Contacts/" + contactId);
 
-        List<PersonProfilesModel> person = new List<PersonProfilesModel>();
+        
 
-        [Parameter] public int contactId { get; set; }
-
-        PersonProfilesModel personModel = new PersonProfilesModel();
-
-        protected async override Task OnParametersSetAsync()
-        {
-
-            //personModel = await http.GetFromJsonAsync<PersonProfilesModel>($"https://pegasusapiagent.azurewebsites.net/api/Person/" + contactId);
-            personModel = await http.GetFromJsonAsync<PersonProfilesModel>($"https://localhost:44326/api/Person/" + contactId);
-
-        }
-        protected override async Task OnInitializedAsync()
-        {
-            await LoadContactedPerson();
-
-        }
-
-        async Task LoadContactedPerson()
-        {
-            //person = await http.GetFromJsonAsync<List<PersonProfilesModel>>($"https://pegasusapiagent.azurewebsites.net/api/Contacts/" + contactId);
-            personModel = await http.GetFromJsonAsync<PersonProfilesModel>($"https://localhost:44326/api/Contacts/" + contactId);
-        }
-        void AddContact()
-        {
-            navmgr.NavigateTo("cases/createcontact/" + personModel.Id);
-        }
 
     }
+    void AddContact()
+    {
+        navmgr.NavigateTo("cases/createcontact/" + personModel.Id);
+    }
+    void GoBack()
+    {
+        navmgr.NavigateTo("cases/" + personModel.BgryId);
+    }
+
+}
 
