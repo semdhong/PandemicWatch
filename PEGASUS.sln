@@ -24,6 +24,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Security", "Security", "{8EAE6682-206B-4AC8-8F65-256920176117}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WASM COMMAND CENTER", "WASM COMMAND CENTER", "{CD939C74-C080-425C-8613-8157ACD339E4}"
+	ProjectSection(SolutionItems) = preProject
+		Pegasus.Command.Server\appsettings.Development.json = Pegasus.Command.Server\appsettings.Development.json
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pegasus.Command.Storage", "Pegasus.Command.Storage\Pegasus.Command.Storage.csproj", "{DACC4A5C-2115-4A91-8C08-20D46656B76F}"
 EndProject

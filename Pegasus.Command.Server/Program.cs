@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using Microsoft.Extensions.Hosting;
+using Azure.Identity;
 
 namespace Pegasus.Command.Server
 {
@@ -25,7 +26,7 @@ namespace Pegasus.Command.Server
             {
                 //IdentityServer4 seed should be happening here but because of this bug https://github.com/aspnet/AspNetCore/issues/12349
                 //the seeding is not implemented here.
-                Log.Information("Starting Pegasus.Command web server host");
+                Log.Information("Starting BlazorBoilerplate web server host");
 
                 // Per: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/generic-host
                 //    The Web Host is no longer recommended for web apps and remains 
@@ -35,7 +36,7 @@ namespace Pegasus.Command.Server
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "Pegasus.Command Host terminated unexpectedly");
+                Log.Fatal(ex, "BlazorBoilerplate Host terminated unexpectedly");
                 return 1;
             }
         }

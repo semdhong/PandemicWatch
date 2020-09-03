@@ -203,7 +203,7 @@ namespace Pegasus.Command.Server
                         else
                         {
                             // import PFX
-                            cert = new X509Certificate2(Path.Combine(_environment.ContentRootPath, "AuthSample.pfx"), "Admin123",
+                            cert = new X509Certificate2(Path.Combine(_environment.ContentRootPath, "pegasusph.pfx"), "Admin123",
                                                 X509KeyStorageFlags.MachineKeySet |
                                                 X509KeyStorageFlags.PersistKeySet |
                                                 X509KeyStorageFlags.Exportable);

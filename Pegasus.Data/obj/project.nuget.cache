@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "DfEnaEyEjuLWKh/ivmJQcfrKwq6JPPiRB9xhzDp4/55oTuhs7IrDLtsSIR7aT98AVObtAv/IWMx4+I2Tl/swiA==",
+  "dgSpecHash": "1LcVal52mhp14Ei4+rE7XPMqv5OMDeeerKua2o8UgEmleIrwwyybe/oA/IAXxsh+BGF/cG3P5Lwt0hfs+So8lA==",
   "success": true,
   "projectFilePath": "C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Data\\Pegasus.Data.csproj",
   "expectedPackageFiles": [
@@ -107,12 +107,5 @@
     "C:\\Users\\semdhong\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
     "C:\\Users\\semdhong\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.2\\microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\semdhong\\Documents\\GitHub\\PEGASUS\\Pandemic Watch\\PandemicWatch\\Pegasus.Data\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  "logs": []
 }

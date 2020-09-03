@@ -26,7 +26,9 @@
 
     <UserSecretsId>155d7b25-365b-4b8d-8f79-5190d9aa32ba</UserSecretsId>
   </PropertyGroup>
-
+	<PropertyGroup>
+		<AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+	</PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_CSB|AnyCPU'">
     <DefineConstants>ClientSideBlazor;TRACE;DEBUG;NETCOREAPP3_1;</DefineConstants>
     <BlazorWebAssemblyEnableLinking>false</BlazorWebAssemblyEnableLinking>
@@ -59,6 +61,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="3.1.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.5" />
+    <PackageReference Include="Microsoft.Azure.SignalR" Version="1.4.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.5" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
