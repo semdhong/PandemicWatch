@@ -10,6 +10,7 @@ namespace Pegasus.Agent.Shared.Profiles
         public int? PersonProfileId { get; set; }
         public string Remarks { get; set; }
         public DateTime? DateCreate { get; set; }
-        public int? CreatedBy { get; set; }
+        public Guid CreatedBy { get; set; }
+        public string User { get; set; }
     }
 }

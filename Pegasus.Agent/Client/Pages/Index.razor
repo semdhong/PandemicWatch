@@ -6,80 +6,81 @@
 <center><h1>City of Danao</h1></center>
 <br />
 <div class="col-12">
-    @*<RadzenTextBox @bind-Value="SearchTerm" @oninput="@" Placeholder="Search Barangay......." p></RadzenTextBox>*@
-    <input type="text" placeholder="Search Barangay.........." size="40" @bind-value="SearchTerm" @bind-value:event="oninput" />
+    
+        <input type="text" placeholder="Search Barangay.........." size="30" @bind-value="SearchTerm" @bind-value:event="oninput" />
+   
 </div>
 <br />
 <RadzenDataList WrapItems="true" PageSize="9" AllowPaging="true" Data="@FilteredBarangay" TItem="BarangayModel">
     <Template Context="bar">
-        
 
-            <RadzenCard Style="width:350px;">
-                <div class="row">
+        <RadzenCard Style="width:350px;">
+            <div class="row">
 
-                    <div class="col-md-6">
-                        <center>
-                            <div>Barangay</div>
-                            <b>@bar.BarangayName</b>
-                            <a href="/cases/@bar.Id">
-                                <div style="margin-top:20px">
-                                    @switch (bar.BarangayName)
-                                    {
-                                        case "Poblacion":
-                                            <RadzenImage Path="images/poblacion.png" Style="width:100px;" />
-                                            break;
-                                        case "Maslog":
-                                            <RadzenImage Path="images/maslog.png" Style="width:100px;" />
-                                            break;
-
-                                        default:
-                                            <RadzenImage Path="/images/danao.png" Style="width:100px;" />
-                                            break;
-                                    }
-                                </div>
-                            </a>
-                        </center>
-                    </div>
-                    <div class="col-md-6">
-                        <center>
-                            <div>
-                                New Case : &nbsp;
-                                <b>@bar.persons.Where(x => x.PrincipalPersonId == null).Count()</b>
-                            </div>
+                <div class="col-md-6">
+                    <center>
+                        <div>Barangay</div>
+                        <b>@bar.BarangayName</b>
+                        <a href="/cases/@bar.Id">
                             <div style="margin-top:20px">
-                                Total : &nbsp;
-                                <b>@bar.persons.Where(x => x.PersonStatus == "P").Count()</b>
-                            </div>
-                            <div style="margin-top:20px">
-                                Contacted Traced : &nbsp;
-                                <b>@bar.persons.Where(x => x.PersonStatus == "P" || x.PersonStatus == "D" || x.PersonStatus == "S").Count()</b>
-                            </div>
-                        </center>
-                    </div>
+                                @switch (bar.BarangayName)
+                                {
+                                    case "Poblacion":
+                                        <RadzenImage Path="images/poblacion.png" Style="width:100px;" />
+                                        break;
+                                    case "Maslog":
+                                        <RadzenImage Path="images/maslog.png" Style="width:100px;" />
+                                        break;
 
+                                    default:
+                                        <RadzenImage Path="/images/danao.png" Style="width:100px;" />
+                                        break;
+                                }
+                            </div>
+                        </a>
+                    </center>
                 </div>
-            </RadzenCard>
-        
-        </Template>
-    </RadzenDataList>
+                <div class="col-md-6">
+                    <center>
+                        <div>
+                            New Case : &nbsp;
+                            <b>@bar.persons.Where(x => x.PrincipalPersonId == null).Count()</b>
+                        </div>
+                        <div style="margin-top:20px">
+                            Total : &nbsp;
+                            <b>@bar.persons.Where(x => x.PersonStatus == "P").Count()</b>
+                        </div>
+                        <div style="margin-top:20px">
+                            Contacted Traced : &nbsp;
+                            <b>@bar.persons.Where(x => x.PersonStatus == "P" || x.PersonStatus == "D" || x.PersonStatus == "S").Count()</b>
+                        </div>
+                    </center>
+                </div>
 
-        @code {
-            List<BarangayModel> brgy = new List<BarangayModel>();
+            </div>
+        </RadzenCard>
 
-            string SearchTerm { get; set; } = "";
+    </Template>
+</RadzenDataList>
+
+@code {
+    List<BarangayModel> brgy = new List<BarangayModel>();
+
+    string SearchTerm { get; set; } = "";
     protected override async Task OnInitializedAsync()
-        {
-            await LoadBarangays();
+    {
+        await LoadBarangays();
 
-        }
+    }
 
-        async Task LoadBarangays()
-        {
-            brgy = await http.GetFromJsonAsync<List<BarangayModel>>("https://pegasusapiadmin.azurewebsites.net/api/Barangay");
+    async Task LoadBarangays()
+    {
 
-        }
-        List<BarangayModel> FilteredBarangay => brgy.Where(i => i.BarangayName.ToLower().Contains(SearchTerm.ToLower())).ToList();
-        }
+        brgy = await http.GetFromJsonAsync<List<BarangayModel>>("https://pegasusapiadmin.azurewebsites.net/api/Barangay");
+
+    }
+    List<BarangayModel> FilteredBarangay => brgy.Where(i => i.BarangayName.ToLower().Contains(SearchTerm.ToLower())).ToList();
+}
 
 
 

@@ -34,9 +34,8 @@ namespace Pegasus.Agent.Server
             services.AddRazorPages();
             services.AddDbContext<ApplicationDbContext>(options =>
                  options.UseSqlServer(
-                     Configuration.GetConnectionString("LocalDb")));
-
-
+                     //Configuration.GetConnectionString("LocalDb")));
+                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
