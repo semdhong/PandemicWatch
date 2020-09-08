@@ -5,6 +5,9 @@
 
 <h3>Add Contacted Person</h3>
 <CaseForm Person="@Persons" ButtonText="Create" OnValidSubmit="@CreateCase" />
+<div class="form-group">
+    <RadzenButton ButtonType="Radzen.ButtonType.Button" Text="Back" ButtonStyle="Radzen.ButtonStyle.Secondary" Click="GoBack" Style="width: 300px;" />
+</div>
 
 @code {
 
@@ -17,6 +20,10 @@
 
         await http.PutAsJsonAsync("https://pegasusapiagent.azurewebsites.net/api/Person", Persons);
         //await http.PutAsJsonAsync("https://localhost:44326/api/Person", Persons);
+        navmgr.NavigateTo("/cases/contactedperson/" + principalId);
+    }
+    void GoBack()
+    {
         navmgr.NavigateTo("/cases/contactedperson/" + principalId);
     }
 }

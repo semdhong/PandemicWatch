@@ -6,17 +6,28 @@
     <div class="col-12">
         <RadzenCard Style="width:200px;">
             <div class="row">
-                <div class="col-md-6">
-                    <RadzenImage Path="images/person.png" Style="width:100px;" />
+                <div class="col-md-12">
+                    @if (!string.IsNullOrEmpty(personModel.Gender))
+                    {
+                        switch (personModel.Gender)
+                        {
+                            case "M":
+                                <div class="logo">
+                                    <RadzenImage Path="images/maleperson.svg" Style="width:150px;" />
+                                </div>
+                                ; break;
+                            case "F": <div class="logo">
+                                    <RadzenImage Path="images/femaleperson.svg" Style="width:150px;" />
+                                </div>; break;
+                        }
+                    }
+                    <div style="margin-top:20px">
+                        Case No:
+                        <b>@personModel.CaseNo</b>
+                    </div>
                 </div>
-
-                <div style="margin-top:20px">
-                    Case No : &nbsp;
-                    <b>@personModel.CaseNo</b>
-                </div>
-
             </div>
-        </RadzenCard><br />
+</RadzenCard><br />
                      <div class="row">
                          <div class="col-md-6">
                              <RadzenButton ButtonType="Radzen.ButtonType.Submit" Text="Add Contact" ButtonStyle="Radzen.ButtonStyle.Primary" class="btn-block mr-2" Click="AddContact" />
