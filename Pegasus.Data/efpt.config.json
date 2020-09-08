@@ -12,119 +12,7 @@
    "Tables": [
       {
          "HasPrimaryKey": true,
-         "Name": "[dbo].[ApiClaims]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[ApiLogs]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[ApiProperties]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[ApiResources]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[ApiScopeClaims]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[ApiScopes]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[ApiSecrets]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[AspNetRoleClaims]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[AspNetRoles]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[AspNetUserClaims]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[AspNetUserLogins]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[AspNetUserRoles]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[AspNetUsers]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[AspNetUserTokens]"
-      },
-      {
-         "HasPrimaryKey": true,
          "Name": "[dbo].[Barangay]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[ClientClaims]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[ClientCorsOrigins]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[ClientGrantTypes]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[ClientIdPRestrictions]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[ClientPostLogoutRedirectUris]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[ClientProperties]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[ClientRedirectUris]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[Clients]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[ClientScopes]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[ClientSecrets]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[DeviceCodes]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[IdentityClaims]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[IdentityProperties]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[IdentityResources]"
       },
       {
          "HasPrimaryKey": true,
@@ -136,39 +24,11 @@
       },
       {
          "HasPrimaryKey": true,
-         "Name": "[dbo].[Logs]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[Messages]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[PersistedGrants]"
-      },
-      {
-         "HasPrimaryKey": true,
          "Name": "[dbo].[PersonHistory]"
       },
       {
          "HasPrimaryKey": true,
          "Name": "[dbo].[PersonProfile]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[Tenants]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[Todos]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[UserAgents]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[UserProfiles]"
       }
    ],
    "UseDatabaseNames": true,

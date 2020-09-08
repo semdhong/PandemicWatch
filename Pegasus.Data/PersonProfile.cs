@@ -64,10 +64,12 @@ namespace Pegasus.Data
         [Column(TypeName = "datetime")]
         public DateTime? ConfirmedDate { get; set; }
         public bool? Symptomatic { get; set; }
+        public bool? Family { get; set; }
+        public bool? Workmate { get; set; }
+        public bool? Friend { get; set; }
+        public double? Long { get; set; }
+        public double? Lat { get; set; }
 
-        [ForeignKey(nameof(Agent))]
-        [InverseProperty(nameof(UserAgents.PersonProfile))]
-        public virtual UserAgents AgentNavigation { get; set; }
         [ForeignKey(nameof(BrgyId))]
         [InverseProperty(nameof(Barangay.PersonProfile))]
         public virtual Barangay Brgy { get; set; }

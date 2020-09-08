@@ -28,6 +28,8 @@ namespace Pegasus.Data
         public int? LguId { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? DateCreated { get; set; }
+        public double? Long { get; set; }
+        public double? Lat { get; set; }
 
         [ForeignKey(nameof(LguId))]
         [InverseProperty(nameof(LguProfile.Barangay))]

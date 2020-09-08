@@ -48,6 +48,11 @@ namespace Pegasus.Command.Shared.Profiles
         public Guid ConfirmedBy { get; set; }
         public string VerifiedName { get; set; }
         public string ConfirmedName { get; set; }
+        public bool? Symptomatic { get; set; }
+        public bool? Family { get; set; }
+        public bool? Workmate { get; set; }
+        public float? Long { get; set; }
+        public float? Lat { get; set; } 
 
     }
 }

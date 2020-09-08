@@ -81,7 +81,7 @@ namespace Pegasus.Command.Server
             var migrationsAssemblyName = migrationsAssembly.Name;
             var useSqlServer = Convert.ToBoolean(Configuration["Pegasus.Command:UseSqlServer"] ?? "false");
             var dbConnString = useSqlServer
-                ? Configuration.GetConnectionString("DefaultConnection")
+                ? Configuration.GetConnectionString("LocalDB")
                 : $"Filename={Configuration.GetConnectionString("SqlLiteConnectionFileName")}";
 
             void DbContextOptionsBuilder(DbContextOptionsBuilder builder)

@@ -53,7 +53,13 @@ namespace Pegasus.Services.Profile
                 CHDOHRemarks = model.CHDOHRemarks,
                 IsolationCenter = model.IsolationCenterId,
                 Age = model.Age,
-                UserAgent = model.UserAgent
+                UserAgent = model.UserAgent,
+                Family = model.Family,
+                 Workmate = model.Workmate,
+                  Friend = model.Friend,
+                   Symptomatic = model.Symptomatic,
+                   Long = model.Long,
+                   Lat = model.Lat
 
 
             };
@@ -107,7 +113,14 @@ namespace Pegasus.Services.Profile
                 DateLabConfirm = x.DateLabConfirm,
                 IsolationCenterId = x.IsolationCenter,
                 Age = x.Age,
-                UserAgent = (Guid)x.UserAgent
+                UserAgent = (Guid)x.UserAgent,
+                Family = x.Family,
+                Workmate = x.Workmate,
+                Friend = x.Friend,
+                Symptomatic = x.Symptomatic,
+                Long = x.Long,
+                Lat = x.Lat
+
 
             }).Where(x => x.PrincipalPersonId == id).ToList();
         }
@@ -159,7 +172,13 @@ namespace Pegasus.Services.Profile
                 DateLabConfirm = x.DateLabConfirm,
                 IsolationCenterId = x.IsolationCenter,
                 Age = x.Age,
-                UserAgent = (Guid)x.UserAgent
+                UserAgent = (Guid)x.UserAgent,
+                Family = x.Family,
+                Workmate = x.Workmate,
+                Friend = x.Friend,
+                Symptomatic = x.Symptomatic,
+                Long = x.Long,
+                Lat = x.Lat
             }).FirstOrDefault(x => x.Id == id);
         }
 
@@ -186,6 +205,12 @@ namespace Pegasus.Services.Profile
                 BrgyRemarks = x.BrgyRemarks,
                 CHDOHRemarks = x.CHDOHRemarks,
                 SwabTestDate = x.SwabTestDate,
+                Family = x.Family,
+                Workmate = x.Workmate,
+                Friend = x.Friend,
+                Symptomatic = x.Symptomatic,
+                Long = x.Long,
+                Lat = x.Lat
             }).FirstOrDefault(x => x.Fullname == name);
         }
 
@@ -236,7 +261,13 @@ namespace Pegasus.Services.Profile
                 DateLabConfirm = x.DateLabConfirm,
                 IsolationCenterId = x.IsolationCenter,
                 Age = x.Age,
-                UserAgent = (Guid)x.UserAgent
+                UserAgent = (Guid)x.UserAgent,
+                Family = x.Family,
+                Workmate = x.Workmate,
+                Friend = x.Friend,
+                Symptomatic = x.Symptomatic,
+                Long = x.Long,
+                Lat = x.Lat
             });
         }
 

@@ -45,6 +45,12 @@ namespace Pegasus.Models.Profiles
         public Guid ConfirmedBy { get; set; }
         public DateTime? VerifiedDate { get; set; }
         public DateTime? ConfirmedDate { get; set; }
+        public bool? Symptomatic { get; set; }
+        public bool? Family { get; set; }
+        public bool? Workmate { get; set; }
+        public bool? Friend { get; set; }
+        public double? Long { get; set; }
+        public double? Lat { get; set; }
 
     }
 }

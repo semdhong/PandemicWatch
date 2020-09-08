@@ -16,86 +16,17 @@ namespace Pegasus.Data
         {
         }
 
-        public virtual DbSet<ApiClaims> ApiClaims { get; set; }
-        public virtual DbSet<ApiLogs> ApiLogs { get; set; }
-        public virtual DbSet<ApiProperties> ApiProperties { get; set; }
-        public virtual DbSet<ApiResources> ApiResources { get; set; }
-        public virtual DbSet<ApiScopeClaims> ApiScopeClaims { get; set; }
-        public virtual DbSet<ApiScopes> ApiScopes { get; set; }
-        public virtual DbSet<ApiSecrets> ApiSecrets { get; set; }
-        public virtual DbSet<AspNetRoleClaims> AspNetRoleClaims { get; set; }
-        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
-        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
-        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
-        public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
-        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Barangay> Barangay { get; set; }
-        public virtual DbSet<ClientClaims> ClientClaims { get; set; }
-        public virtual DbSet<ClientCorsOrigins> ClientCorsOrigins { get; set; }
-        public virtual DbSet<ClientGrantTypes> ClientGrantTypes { get; set; }
-        public virtual DbSet<ClientIdPRestrictions> ClientIdPRestrictions { get; set; }
-        public virtual DbSet<ClientPostLogoutRedirectUris> ClientPostLogoutRedirectUris { get; set; }
-        public virtual DbSet<ClientProperties> ClientProperties { get; set; }
-        public virtual DbSet<ClientRedirectUris> ClientRedirectUris { get; set; }
-        public virtual DbSet<ClientScopes> ClientScopes { get; set; }
-        public virtual DbSet<ClientSecrets> ClientSecrets { get; set; }
-        public virtual DbSet<Clients> Clients { get; set; }
-        public virtual DbSet<DeviceCodes> DeviceCodes { get; set; }
-        public virtual DbSet<IdentityClaims> IdentityClaims { get; set; }
-        public virtual DbSet<IdentityProperties> IdentityProperties { get; set; }
-        public virtual DbSet<IdentityResources> IdentityResources { get; set; }
         public virtual DbSet<IsolationCenters> IsolationCenters { get; set; }
         public virtual DbSet<LguProfile> LguProfile { get; set; }
-        public virtual DbSet<Logs> Logs { get; set; }
-        public virtual DbSet<Messages> Messages { get; set; }
-        public virtual DbSet<PersistedGrants> PersistedGrants { get; set; }
         public virtual DbSet<PersonHistory> PersonHistory { get; set; }
         public virtual DbSet<PersonProfile> PersonProfile { get; set; }
-        public virtual DbSet<Tenants> Tenants { get; set; }
-        public virtual DbSet<Todos> Todos { get; set; }
-        public virtual DbSet<UserAgents> UserAgents { get; set; }
-        public virtual DbSet<UserProfiles> UserProfiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new ApiClaimsConfiguration());
-            modelBuilder.ApplyConfiguration(new ApiLogsConfiguration());
-            modelBuilder.ApplyConfiguration(new ApiPropertiesConfiguration());
-            modelBuilder.ApplyConfiguration(new ApiResourcesConfiguration());
-            modelBuilder.ApplyConfiguration(new ApiScopeClaimsConfiguration());
-            modelBuilder.ApplyConfiguration(new ApiScopesConfiguration());
-            modelBuilder.ApplyConfiguration(new ApiSecretsConfiguration());
-            modelBuilder.ApplyConfiguration(new AspNetRoleClaimsConfiguration());
-            modelBuilder.ApplyConfiguration(new AspNetRolesConfiguration());
-            modelBuilder.ApplyConfiguration(new AspNetUserClaimsConfiguration());
-            modelBuilder.ApplyConfiguration(new AspNetUserLoginsConfiguration());
-            modelBuilder.ApplyConfiguration(new AspNetUserRolesConfiguration());
-            modelBuilder.ApplyConfiguration(new AspNetUserTokensConfiguration());
-            modelBuilder.ApplyConfiguration(new AspNetUsersConfiguration());
             modelBuilder.ApplyConfiguration(new BarangayConfiguration());
-            modelBuilder.ApplyConfiguration(new ClientClaimsConfiguration());
-            modelBuilder.ApplyConfiguration(new ClientCorsOriginsConfiguration());
-            modelBuilder.ApplyConfiguration(new ClientGrantTypesConfiguration());
-            modelBuilder.ApplyConfiguration(new ClientIdPRestrictionsConfiguration());
-            modelBuilder.ApplyConfiguration(new ClientPostLogoutRedirectUrisConfiguration());
-            modelBuilder.ApplyConfiguration(new ClientPropertiesConfiguration());
-            modelBuilder.ApplyConfiguration(new ClientRedirectUrisConfiguration());
-            modelBuilder.ApplyConfiguration(new ClientScopesConfiguration());
-            modelBuilder.ApplyConfiguration(new ClientSecretsConfiguration());
-            modelBuilder.ApplyConfiguration(new ClientsConfiguration());
-            modelBuilder.ApplyConfiguration(new DeviceCodesConfiguration());
-            modelBuilder.ApplyConfiguration(new IdentityClaimsConfiguration());
-            modelBuilder.ApplyConfiguration(new IdentityPropertiesConfiguration());
-            modelBuilder.ApplyConfiguration(new IdentityResourcesConfiguration());
-            modelBuilder.ApplyConfiguration(new LogsConfiguration());
-            modelBuilder.ApplyConfiguration(new MessagesConfiguration());
-            modelBuilder.ApplyConfiguration(new PersistedGrantsConfiguration());
             modelBuilder.ApplyConfiguration(new PersonHistoryConfiguration());
             modelBuilder.ApplyConfiguration(new PersonProfileConfiguration());
-            modelBuilder.ApplyConfiguration(new TenantsConfiguration());
-            modelBuilder.ApplyConfiguration(new TodosConfiguration());
-            modelBuilder.ApplyConfiguration(new UserProfilesConfiguration());
 
             OnModelCreatingPartial(modelBuilder);
         }

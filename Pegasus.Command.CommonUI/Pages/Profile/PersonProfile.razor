@@ -51,25 +51,14 @@ else
                                 <Template Context="person">
                                     <RadzenButton Icon="edit" Size="ButtonSize.Small" Click="@(args => OpenChangeStatDialog(person.Id))">
                                     </RadzenButton>
-                                    @switch (person.PersonStatus)
-                                    {
-                                        case "P":
-                                            <h3 class="badge badge-danger">Positive</h3>
-                                            break;
-                                        case "N":
-                                            <h3 class="badge badge-success">Negative</h3>
-                                            break;
-                                        case "D":
-                                            <h3 class="badge badge-warning">PUI</h3>
-                                            break;
-                                        case "S":
-                                            <h3 class="badge badge-secondary">PUM</h3>
-                                            break;
-                                        default:
-                                            <h3 class="badge badge-dark">Unknown</h3>
-                                            break;
-
-                                    }
+                                    <RadzenSelectBar @bind-Value="@person.PersonStatus" TValue="string" Style="margin-bottom: 20px;">
+                                        <Items>
+                                            <RadzenSelectBarItem Text="Positive" Value="@("P")" />
+                                            <RadzenSelectBarItem Text="PUI" Value="@("D")" />
+                                            <RadzenSelectBarItem Text="PUM" Value="@("S")" />
+                                            <RadzenSelectBarItem Text="Negative" Value="@("N")" />
+                                        </Items>
+                                    </RadzenSelectBar>
 
                                 </Template>
                             </RadzenGridColumn>
@@ -580,13 +569,13 @@ else
 
     </div>
 
-    <MatDialog @bind-IsOpen="@isUpsertRoleDialogOpen">
+    <MatDialog @bind-IsOpen="@isUpsertRoleDialogOpen" Class="col-10">
         <MatDialogTitle>
             @labelUpsertDialogTitle
         </MatDialogTitle>
         <MatDialogContent>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-10">
                     <fieldset>
                         <EjsQRCodeGenerator Width="200px" Height="150px" Mode="@RenderingMode.SVG" Value="@person.CaseNo">
                             <QRCodeGeneratorDisplayText Visibility="false"></QRCodeGeneratorDisplayText>
@@ -644,49 +633,37 @@ else
                                 <p>Confirmed Date: @person.ConfirmedDate</p>
                             }
                     }
-                        @if (person.PersonStatus != null)
-                        {
-                            @switch (person.PersonStatus)
-                            {
-                                case "P":
-                                    <h4 class="badge badge-danger">Positive</h4>
-                                    break;
-                                case "N":
-                                    <h4 class="badge badge-success">Negative</h4>
-                                    break;
-                                case "D":
-                                    <h4 class="badge badge-warning">PUI</h4>
-                                    break;
-                                case "S":
-                                    <h4 class="badge badge-secondary">PUM</h4>
-                                    break;
-                                default:
-                                    <h4 class="badge badge-dark">Unknown</h4>
-                                    break;
 
-                            }
-                        }
-                        <div class="form-group">
-                            <MatTextField @bind-Value="@person.Fullname" Label="Fullname" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
-                        </div>
-                        <div class="form-group">
-                            <MatH5>Gender</MatH5>
-                            <MatRadioGroup @bind-Value="@person.Gender" TValue="string">
+                        <RadzenSelectBar @bind-Value="@person.PersonStatus" TValue="string" Style="margin-bottom: 20px;">
+                            <Items>
+                                <RadzenSelectBarItem Text="Positive" Value="@("P")" />
+                                <RadzenSelectBarItem Text="PUI" Value="@("D")" />
+                                <RadzenSelectBarItem Text="PUM" Value="@("S")" />
+                                <RadzenSelectBarItem Text="Negative" Value="@("N")" />
+                            </Items>
+                        </RadzenSelectBar>
+                      
+                            <div class="form-group">
+                                <MatTextField @bind-Value="@person.Fullname" Label="Fullname" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                            </div>
+                            <div class="form-group">
+                                <MatH5>Gender</MatH5>
+                                <MatRadioGroup @bind-Value="@person.Gender" TValue="string">
 
-                                <MatRadioButton Value="@("M")" Label="Male" TValue="string"></MatRadioButton>
-                                <MatRadioButton Value="@("F")" TValue="string">Fermale</MatRadioButton>
+                                    <MatRadioButton Value="@("M")" Label="Male" TValue="string"></MatRadioButton>
+                                    <MatRadioButton Value="@("F")" TValue="string">Fermale</MatRadioButton>
 
-                            </MatRadioGroup>
-                        </div>
-                        <div class="form-group">
-                            <MatNumericUpDownField @bind-Value="@person.Age" Label="Age" IconTrailing="true" FullWidth="true" Required="true" Minimum="1" Maximum="99"></MatNumericUpDownField>
-                        </div>
-                        <div class="form-group">
-                            <MatTextField @bind-Value="@person.Address" Label="Address" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
-                        </div>
-                        <div class="form-group">
-                            <MatTextField @bind-Value="@person.Contact" Label="Contact No" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
-                        </div>
+                                </MatRadioGroup>
+                            </div>
+                            <div class="form-group">
+                                <MatNumericUpDownField @bind-Value="@person.Age" Label="Age" IconTrailing="true" FullWidth="true" Required="true" Minimum="1" Maximum="99"></MatNumericUpDownField>
+                            </div>
+                            <div class="form-group">
+                                <MatTextField @bind-Value="@person.Address" Label="Address" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                            </div>
+                            <div class="form-group">
+                                <MatTextField @bind-Value="@person.Contact" Label="Contact No" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                            </div>
                     </fieldset>
                     <fieldset>
                         <div class="row">
@@ -797,7 +774,8 @@ else
                     <RadzenSelectBarItem Text="1-8" Value="8" />
                     <RadzenSelectBarItem Text="1-15" Value="15" />
                     <RadzenSelectBarItem Text="1-22" Value="22" />
-
+                    <p>Custom Days</p>
+                   <Radzen.Blazor.RadzenNumeric TValue="int" />
                 </Items>
             </RadzenSelectBar>
 
